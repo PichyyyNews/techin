@@ -96,8 +96,8 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
     }
 
     if (fixed.current && j1.current && j2.current && j3.current && card.current && band.current) {
-      // Fix jitter on all joint points
-      [j1, j2, j3].forEach((ref) => {
+      // Fix jitter on middle rope joints
+      [j1, j2].forEach((ref) => {
         if (ref.current) {
           if (!ref.current.lerped) {
             ref.current.lerped = new THREE.Vector3().copy(ref.current.translation());
@@ -113,8 +113,8 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
         }
       });
 
-      // Calculate catmull curve
-      curve.points[0].copy(j3.current.lerped || j3.current.translation());
+      // Point 0 stays 100% glued to j3 at the metal clip ring without any lag
+      curve.points[0].copy(j3.current.translation());
       curve.points[1].copy(j2.current.lerped || j2.current.translation());
       curve.points[2].copy(j1.current.lerped || j1.current.translation());
       curve.points[3].copy(fixed.current.translation());
