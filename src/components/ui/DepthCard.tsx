@@ -295,18 +295,18 @@ export const DepthCard: React.FC<DepthCardProps> = ({
         <div className="absolute top-4 left-4 right-4 z-30 flex items-center justify-between pointer-events-none">
           <div className="flex items-center gap-2">
             {icon && (
-              <div className="w-7 h-7 rounded-md bg-white/10 backdrop-blur-md flex items-center justify-center text-white border border-white/15">
+              <div className="w-6 h-6 rounded-xs bg-black/60 backdrop-blur-md flex items-center justify-center text-neutral-200 border border-neutral-700/60">
                 {icon}
               </div>
             )}
             {badge && (
-              <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-medium tracking-wide bg-white/10 backdrop-blur-md text-white/90 border border-white/15">
+              <span className="px-2 py-0.5 rounded-xs text-[11px] font-mono font-medium tracking-tight bg-black/60 backdrop-blur-md text-neutral-300 border border-neutral-700/60">
                 {badge}
               </span>
             )}
           </div>
           {code && (
-            <span className="text-[11px] font-mono text-neutral-400/90 font-medium">
+            <span className="text-[11px] font-mono text-neutral-400 font-medium">
               {code}
             </span>
           )}

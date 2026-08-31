@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowUpRight, Menu, X, BookOpen, Code2, Cpu, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Menu, X, BookOpen, Code2, Cpu } from 'lucide-react';
 import { BlinkingSquares } from './components/ui/BlinkingSquares';
 import { TextType } from './components/ui/TextType';
 import { BadgeCanvas } from './components/ui/BadgeCanvas';
@@ -196,12 +196,12 @@ export const App: React.FC = () => {
           
           {/* Section Header */}
           <div className="max-w-3xl mb-12 sm:mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium tracking-tight bg-neutral-900/5 text-neutral-800 border border-neutral-200/80 mb-4">
-              <Sparkles className="w-3.5 h-3.5 text-neutral-600" />
-              <span>01 // CORE CURRICULUM</span>
+            <div className="flex items-center gap-2 font-mono text-xs font-medium text-neutral-500 uppercase tracking-widest mb-3">
+              <span className="text-neutral-900 font-semibold">[01]</span>
+              <span>Core Instruction</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
-              Core Teaching Instruction
+              Teaching Practicum Courses
             </h2>
             <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-2xl font-normal">
               Active learning methodologies focused on practical software engineering, computational thinking, and digital innovation.
