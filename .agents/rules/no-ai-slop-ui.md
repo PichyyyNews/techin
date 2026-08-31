@@ -12,15 +12,17 @@ We build **developer-grade, high-craft, minimalist web interfaces** inspired by 
 ❌ **NEVER USE:**
 1. **Generic Purple/Pink/Indigo Gradients**:
    - FORBIDDEN: `bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500` on text, hero backgrounds, or primary buttons.
-2. **Meaningless Glassmorphism & Neon Blobs**:
+2. **Pulsing Dot / "Available for Work" Pill Badges**:
+   - FORBIDDEN: Fake floating pill badges with green pulsing dots (`• Available for new opportunities / work`) above hero titles. This is an overused AI portfolio cliché.
+3. **Meaningless Glassmorphism & Neon Blobs**:
    - FORBIDDEN: Random `backdrop-blur-md bg-white/5 border-purple-500/30` floating blobs with no structural purpose.
-3. **Bloated, Childish Corner Radii**:
+4. **Bloated, Childish Corner Radii**:
    - FORBIDDEN: Over-rounded `rounded-3xl` cards that waste screen real estate and create childish bubble aesthetics. Keep card radii crisp (`rounded-lg` or `rounded-xl` / `rounded-2xl` max).
-4. **Cookie-Cutter Feature Cards**:
+5. **Cookie-Cutter Feature Cards**:
    - FORBIDDEN: 3 cards each with an icon inside a soft pastel rounded square followed by generic filler ("Fast", "Secure", "Scalable").
-5. **Low-Contrast Illegibility**:
+6. **Low-Contrast Illegibility**:
    - FORBIDDEN: `#888` gray text on `#222` dark background failing WCAG AA contrast. All text must be clearly readable.
-6. **Fake Marketing Copy & Placeholders**:
+7. **Fake Marketing Copy & Placeholders**:
    - FORBIDDEN: "Unlock the next-gen AI super-intelligence synergy". Write concrete, architectural, engineer-focused copy.
 
 ---

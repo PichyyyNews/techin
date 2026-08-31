@@ -5,6 +5,7 @@ You are building a high-craft, minimalist web application inspired by Linear, Fr
 ## Core Directives
 1. **NO AI SLOP**:
    - Never generate generic purple/violet/pink gradient text or buttons.
+   - Never add cliché floating pill badges with pulsing green dots ("Available for work / opportunities").
    - Never use bloated `rounded-3xl` cards with generic floating icons and empty marketing buzzwords.
    - Never add useless backdrop blur with neon borders.
 2. **High Craft Typography & Layout**:

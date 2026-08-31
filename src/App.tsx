@@ -80,15 +80,6 @@ export const App: React.FC = () => {
         {/* Hero Content Container */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 md:py-32 w-full">
           <div className="max-w-3xl">
-            
-            {/* Status Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-200 bg-neutral-50/80 backdrop-blur-xs text-xs font-mono text-neutral-700 mb-8 shadow-2xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Available for new opportunities</span>
-              <span className="text-neutral-400">•</span>
-              <span className="text-neutral-500">Bangkok, TH</span>
-            </div>
-
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-[#09090B] leading-[1.06]">
               Building high-craft interfaces & digital systems.

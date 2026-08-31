@@ -68,7 +68,6 @@
   />
   ```
 - **Content**:
-  - Eyebrow badge: Status indicator (`Available for new opportunities • Bangkok, TH`).
   - Massive display title: "Building high-craft interfaces & digital systems."
   - Primary button: Solid black `[Explore Projects]`.
   - Secondary button: 1px bordered `[Read Experience]`.
