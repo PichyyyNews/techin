@@ -67,25 +67,22 @@
     background="#FFFFFF"
   />
   ```
-- **Content**:
-  - Massive display title: "Building high-craft interfaces & digital systems."
-  - Primary button: Solid black `[Explore Projects]`.
-  - Secondary button: 1px bordered `[Read Experience]`.
+- **Headline**: "Teaching Practicum Performance & Activity Log" (Rendered via ReactBits `<TextType />` typing effect)
+- **Sub-headline**: "Track daily teaching operations, lesson plans, and educational innovations."
+- **Primary CTA**: Solid black `[Explore Activity Log]`
+- **Secondary CTA**: 1px bordered `[View Lesson Plans]`
 
 ---
 
-## 5. React Bits Pro Integration
-- Registry configured in `components.json`:
-  ```json
-  {
-    "registries": {
-      "@reactbits-starter": {
-        "url": "https://pro.reactbits.dev/r/starter",
-        "headers": {
-          "Authorization": "Bearer ${REACTBITS_LICENSE_KEY}"
-        }
-      }
-    }
-  }
-  ```
-- Direct component implementation in `src/components/ui/BlinkingSquares.tsx` supporting dynamic canvas scaling, direction fade curves, and random twinkling oscillation.
+## 5. ReactBits Components Integration
+
+### 5.1 `<TextType />`
+Dynamic human-like typing effect for the Hero Headline powered by GSAP.
+- `typingSpeed`: `55ms`
+- `pauseDuration`: `2400ms`
+- `deletingSpeed`: `28ms`
+- `showCursor`: `true`
+- `cursorCharacter`: `"|"`
+
+### 5.2 `<BlinkingSquares />`
+- Fine high-density micro-grid background (`gridSize={16}`, `squareSize={0.55}`) with directional dithered fade.

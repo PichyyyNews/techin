@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { BlinkingSquares } from './components/ui/BlinkingSquares';
+import { TextType } from './components/ui/TextType';
 
 export const App: React.FC = () => {
   return (
@@ -22,22 +23,22 @@ export const App: React.FC = () => {
             </span>
           </a>
 
-          {/* Nav Menu Links (Mocked) */}
+          {/* Nav Menu Links */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-600">
-            <a href="#work" className="hover:text-black transition-colors">
-              Work
+            <a href="#practicum" className="hover:text-black transition-colors">
+              Practicum
             </a>
-            <a href="#projects" className="hover:text-black transition-colors">
-              Projects
+            <a href="#logs" className="hover:text-black transition-colors">
+              Activity Logs
             </a>
-            <a href="#experience" className="hover:text-black transition-colors">
-              Experience
+            <a href="#lesson-plans" className="hover:text-black transition-colors">
+              Lesson Plans
             </a>
-            <a href="#about" className="hover:text-black transition-colors">
-              About
+            <a href="#innovations" className="hover:text-black transition-colors">
+              Innovations
             </a>
-            <a href="#contact" className="hover:text-black transition-colors">
-              Contact
+            <a href="#evaluation" className="hover:text-black transition-colors">
+              Evaluation
             </a>
           </nav>
 
@@ -80,32 +81,44 @@ export const App: React.FC = () => {
         {/* Hero Content Container */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 pt-16 md:pt-24 pb-12 md:pb-16 w-full">
           <div className="max-w-3xl">
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-[#09090B] leading-[1.06]">
-              Building high-craft interfaces & digital systems.
+            {/* Main Headline with ReactBits TextType Component */}
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-[#09090B] leading-[1.06] min-h-[140px] sm:min-h-[190px] md:min-h-[220px]">
+              <TextType
+                text={[
+                  "Teaching Practicum Performance & Activity Log",
+                  "Daily Operations & Lesson Plans",
+                  "Educational Innovations & Progress Tracking",
+                ]}
+                typingSpeed={55}
+                pauseDuration={2400}
+                deletingSpeed={28}
+                loop={true}
+                showCursor={true}
+                cursorCharacter="|"
+                cursorClassName="text-neutral-400 font-light"
+              />
             </h1>
 
-            {/* Subtitle / Bio */}
+            {/* Sub-headline */}
             <p className="mt-6 text-base sm:text-xl text-neutral-600 leading-relaxed font-normal max-w-2xl">
-              Software engineer & interface designer focused on minimalist, developer-grade web applications,
-              tactile micro-interactions, and robust TypeScript architectures.
+              Track daily teaching operations, lesson plans, and educational innovations.
             </p>
 
             {/* CTA Button Group (Solid Black Buttons) */}
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <a
-                href="#projects"
+                href="#logs"
                 className="inline-flex items-center gap-2 bg-[#09090B] hover:bg-neutral-800 text-white text-sm font-medium px-6 py-3 rounded-md transition-all shadow-xs group"
               >
-                <span>Explore Projects</span>
+                <span>Explore Activity Log</span>
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
 
               <a
-                href="#contact"
+                href="#plans"
                 className="inline-flex items-center gap-2 border border-neutral-300 hover:border-neutral-900 bg-white text-neutral-900 text-sm font-medium px-6 py-3 rounded-md transition-all"
               >
-                <span>Read Experience</span>
+                <span>View Lesson Plans</span>
               </a>
             </div>
 
