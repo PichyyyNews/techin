@@ -1,0 +1,20 @@
+# Project Rules: High-Craft Web UI (No AI Slop)
+
+You are building a high-craft, minimalist web application inspired by Linear, Frame, Raycast, and Pixelpush.
+
+## Core Directives
+1. **NO AI SLOP**:
+   - Never generate generic purple/violet/pink gradient text or buttons.
+   - Never use bloated `rounded-3xl` cards with generic floating icons and empty marketing buzzwords.
+   - Never add useless backdrop blur with neon borders.
+2. **High Craft Typography & Layout**:
+   - Pair tight grotesque sans (`Geist`, `Inter`, `Plus Jakarta Sans`) with precision monospace (`Geist Mono`).
+   - Use 1px hairline borders (`border-neutral-200 dark:border-neutral-800`), clean tabular dividers, and crisp card radii.
+   - Monochrome foundation (90%) with a single high-contrast accent (e.g. Industrial Orange `#FF5500` / `#F97316`).
+3. **Bespoke Visuals**:
+   - Utilize mathematical textures: ASCII / Halftone dot matrix, pixel dithering, dotted 3D globe spheres, hairline crosshair markers.
+   - Integrate ReactBits components and animations cleanly.
+4. **TypeScript & React Standards**:
+   - Strict TypeScript everywhere, no `any`.
+   - Semantic HTML elements (`<header>`, `<nav>`, `<main>`, `<section>`).
+   - Component modularity with `cn()` utility (`clsx` + `tailwind-merge`).
