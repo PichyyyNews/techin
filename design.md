@@ -70,7 +70,13 @@
 - **Headline**: "Teaching Practicum Performance & Activity Log" (Rendered via ReactBits `<TextType />` typing effect)
 - **Sub-headline**: "Track daily teaching operations, lesson plans, and educational innovations."
 - **Primary CTA**: Solid black `[Explore Activity Log]`
-- **Secondary CTA**: 1px bordered `[View Lesson Plans]`
+- **Secondary CTA**: 1px bordered `[Classroom Research]`
+
+### 4.3 Classroom Action Research (CAR - งานวิจัยในชั้นเรียน)
+- **Phase 01**: Problem Diagnosis & Questions (การวินิจฉัยปัญหาและระบุสมมติฐาน)
+- **Phase 02**: Innovation Design & Action Plan (การออกแบบนวัตกรรมและเครื่องมือ)
+- **Phase 03**: Outcomes & Reflection Report (การประเมินผลสัมฤทธิ์และสรุปผลสะท้อน)
+- **Grid Layout**: 3-column minimal white cards with hairline borders (`border-neutral-200 hover:border-neutral-900`) and monospace metadata badges.
 
 ---
 
