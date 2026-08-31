@@ -118,10 +118,10 @@ export const App: React.FC = () => {
               </a>
 
               <a
-                href="#research"
+                href="#plans"
                 className="inline-flex items-center gap-2 border border-neutral-300 hover:border-neutral-900 bg-white text-neutral-900 text-sm font-medium px-6 py-3 rounded-md transition-all"
               >
-                <span>Classroom Research</span>
+                <span>View Lesson Plans</span>
               </a>
             </div>
 
@@ -129,86 +129,6 @@ export const App: React.FC = () => {
         </div>
 
       </main>
-
-      {/* ========================================================================= */}
-      {/* 3. CLASSROOM ACTION RESEARCH SECTION (งานวิจัยในชั้นเรียน)                  */}
-      {/* ========================================================================= */}
-      <section id="research" className="w-full bg-[#FAFAFA] border-b border-neutral-200/80 py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          
-          {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <div className="text-xs font-mono uppercase tracking-widest text-neutral-500 font-semibold mb-2 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-[#09090B] rounded-xs" />
-                <span>Classroom Action Research (CAR)</span>
-              </div>
-              <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#09090B]">
-                งานวิจัยในชั้นเรียน & นวัตกรรมการสอน
-              </h2>
-            </div>
-            <p className="text-sm text-neutral-600 max-w-md">
-              บันทึกกระบวนการวินิจฉัยปัญหาผู้เรียน การพัฒนานวัตกรรมการจัดการเรียนรู้ และการประเมินผลสัมฤทธิ์อย่างเป็นระบบ
-            </p>
-          </div>
-
-          {/* 3-Column Minimal Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            {/* Card 1 */}
-            <div className="p-6 sm:p-8 rounded-xl bg-white border border-neutral-200 hover:border-neutral-900 transition-all duration-200 flex flex-col justify-between min-h-[220px] shadow-2xs">
-              <div>
-                <div className="text-xs font-mono text-neutral-400 mb-3">PHASE 01</div>
-                <h3 className="text-lg font-semibold tracking-tight text-[#09090B]">
-                  Problem Diagnosis & Questions →
-                </h3>
-                <p className="mt-3 text-sm text-neutral-600 leading-relaxed">
-                  การระบุปัญหาการเรียนรู้ในชั้นเรียน การวิเคราะห์พฤติกรรมผู้เรียน และการตั้งสมมติฐานการวิจัยเชิงปฏิบัติการ
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between text-xs font-mono text-neutral-500">
-                <span>Diagnostic Assessment</span>
-                <span className="font-semibold text-neutral-900">Step 1</span>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="p-6 sm:p-8 rounded-xl bg-white border border-neutral-200 hover:border-neutral-900 transition-all duration-200 flex flex-col justify-between min-h-[220px] shadow-2xs">
-              <div>
-                <div className="text-xs font-mono text-neutral-400 mb-3">PHASE 02</div>
-                <h3 className="text-lg font-semibold tracking-tight text-[#09090B]">
-                  Innovation Design & Action Plan →
-                </h3>
-                <p className="mt-3 text-sm text-neutral-600 leading-relaxed">
-                  การออกแบบสื่อนวัตกรรม เครื่องมือวัดผล และแผนการสอนเพื่อพัฒนาและแก้ไขปัญหาทักษะของผู้เรียน
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between text-xs font-mono text-neutral-500">
-                <span>Intervention Tool</span>
-                <span className="font-semibold text-neutral-900">Step 2</span>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="p-6 sm:p-8 rounded-xl bg-white border border-neutral-200 hover:border-neutral-900 transition-all duration-200 flex flex-col justify-between min-h-[220px] shadow-2xs">
-              <div>
-                <div className="text-xs font-mono text-neutral-400 mb-3">PHASE 03</div>
-                <h3 className="text-lg font-semibold tracking-tight text-[#09090B]">
-                  Outcomes & Reflection Report →
-                </h3>
-                <p className="mt-3 text-sm text-neutral-600 leading-relaxed">
-                  การสรุปผลสัมฤทธิ์ทางการเรียน การวิเคราะห์ข้อมูลสถิติ และการสะท้อนผลการปฏิบัติงานวิจัยเพื่อต่อยอด
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between text-xs font-mono text-neutral-500">
-                <span>Evaluation Report</span>
-                <span className="font-semibold text-neutral-900">Step 3</span>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
 
       {/* ========================================================================= */}
       {/* 3. FOOTER                                                                 */}
