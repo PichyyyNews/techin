@@ -191,107 +191,107 @@ export const App: React.FC = () => {
        {/* ========================================================================= */}
        {/* 3. CORE TEACHING SUBJECTS (3x REACT BITS PRO DEPTH CARDS)                 */}
        {/* ========================================================================= */}
-       <section id="practicum" className="relative w-full py-16 sm:py-20 lg:py-24 border-b border-neutral-200 bg-[#FAFAFA] overflow-hidden">
-         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-           
-           {/* Section Header */}
-           <div className="max-w-3xl mb-12 sm:mb-16">
-             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium tracking-tight bg-neutral-900/5 text-neutral-800 border border-neutral-200/80 mb-4">
-               <Sparkles className="w-3.5 h-3.5 text-neutral-600" />
-               <span>01 // CORE CURRICULUM</span>
-             </div>
-             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
-               วิชาหลักที่จัดการเรียนการสอน
-             </h2>
-             <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-2xl font-normal">
-               การจัดการเรียนรู้เชิงรุก (Active Learning) ที่เน้นการปฏิบัติการจริง พัฒนาทักษะการคิดเชิงคำนวณ และการสร้างสรรค์นวัตกรรมดิจิทัล
-             </p>
-           </div>
+      <section id="practicum" className="relative w-full py-16 sm:py-20 lg:py-24 border-b border-neutral-200 bg-[#FAFAFA] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Section Header */}
+          <div className="max-w-3xl mb-12 sm:mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium tracking-tight bg-neutral-900/5 text-neutral-800 border border-neutral-200/80 mb-4">
+              <Sparkles className="w-3.5 h-3.5 text-neutral-600" />
+              <span>01 // CORE CURRICULUM</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
+              Core Teaching Instruction
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-2xl font-normal">
+              Active learning methodologies focused on practical software engineering, computational thinking, and digital innovation.
+            </p>
+          </div>
 
-           {/* 3x Depth Cards Grid */}
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 justify-items-center">
-             
-             {/* Card 1: Web Application Development */}
-             <div className="w-full max-w-[380px] flex justify-center">
-               <DepthCard
-                 width="100%"
-                 height={440}
-                 code="CS-301"
-                 icon={<Code2 className="w-4 h-4" />}
-                 badge="Frontend & Architecture"
-                 title="Web Application Development"
-                 description="การพัฒนาเว็บแอปพลิเคชันสมัยใหม่ การออกแบบ UI/UX เชิงลึก และการประยุกต์ใช้ React, TypeScript รวมถึง State Management"
-                 maxRotation={16}
-                 maxTranslation={18}
-                 spotlight={true}
-                 layers={[
-                   {
-                     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
-                     depth: 0.9,
-                   },
-                   {
-                     image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
-                     depth: 1.4,
-                   },
-                 ]}
-               />
-             </div>
+          {/* 3x Depth Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 justify-items-center">
+            
+            {/* Card 1: Web Application Development */}
+            <div className="w-full max-w-[380px] flex justify-center">
+              <DepthCard
+                width="100%"
+                height={440}
+                code="CS-301"
+                icon={<Code2 className="w-4 h-4" />}
+                badge="Frontend & Architecture"
+                title="Web Application Development"
+                description="Modern web application architecture, deep UI/UX design systems, and frontend engineering with React, TypeScript, and state management."
+                maxRotation={16}
+                maxTranslation={18}
+                spotlight={true}
+                layers={[
+                  {
+                    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
+                    depth: 0.9,
+                  },
+                  {
+                    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
+                    depth: 1.4,
+                  },
+                ]}
+              />
+            </div>
 
-             {/* Card 2: Computer Programming */}
-             <div className="w-full max-w-[380px] flex justify-center">
-               <DepthCard
-                 width="100%"
-                 height={440}
-                 code="CS-202"
-                 icon={<BookOpen className="w-4 h-4" />}
-                 badge="Python & Algorithms"
-                 title="Computer Programming"
-                 description="พื้นฐานการคิดเชิงคำนวณ โครงสร้างข้อมูล และการแก้ปัญหาอัลกอริทึมอย่างเป็นระบบด้วยภาษา Python ในบริบทสถานการณ์จริง"
-                 maxRotation={16}
-                 maxTranslation={18}
-                 spotlight={true}
-                 layers={[
-                   {
-                     image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80",
-                     depth: 0.9,
-                   },
-                   {
-                     image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80",
-                     depth: 1.4,
-                   },
-                 ]}
-               />
-             </div>
+            {/* Card 2: Computer Programming */}
+            <div className="w-full max-w-[380px] flex justify-center">
+              <DepthCard
+                width="100%"
+                height={440}
+                code="CS-202"
+                icon={<BookOpen className="w-4 h-4" />}
+                badge="Python & Algorithms"
+                title="Computer Programming"
+                description="Foundations of computational thinking, data structures, and systematic algorithmic problem-solving using Python in real-world scenarios."
+                maxRotation={16}
+                maxTranslation={18}
+                spotlight={true}
+                layers={[
+                  {
+                    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80",
+                    depth: 0.9,
+                  },
+                  {
+                    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80",
+                    depth: 1.4,
+                  },
+                ]}
+              />
+            </div>
 
-             {/* Card 3: Microcontroller & IoT */}
-             <div className="w-full max-w-[380px] flex justify-center">
-               <DepthCard
-                 width="100%"
-                 height={440}
-                 code="CS-403"
-                 icon={<Cpu className="w-4 h-4" />}
-                 badge="Embedded & Hardware"
-                 title="Microcontroller & IoT Systems"
-                 description="การเชื่อมต่อเซนเซอร์อัจฉริยะ ระบบสมองกลฝังตัว ESP32 และการสื่อสารข้อมูลผ่านเครือข่าย Internet of Things เพื่อพัฒนาโซลูชันนวัตกรรม"
-                 maxRotation={16}
-                 maxTranslation={18}
-                 spotlight={true}
-                 layers={[
-                   {
-                     image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
-                     depth: 0.9,
-                   },
-                   {
-                     image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80",
-                     depth: 1.4,
-                   },
-                 ]}
-               />
-             </div>
+            {/* Card 3: Microcontroller & IoT */}
+            <div className="w-full max-w-[380px] flex justify-center">
+              <DepthCard
+                width="100%"
+                height={440}
+                code="CS-403"
+                icon={<Cpu className="w-4 h-4" />}
+                badge="Embedded & Hardware"
+                title="Microcontroller & IoT Systems"
+                description="Hardware sensor interfacing, embedded systems design with ESP32/Arduino, and networked IoT telemetry for innovative solutions."
+                maxRotation={16}
+                maxTranslation={18}
+                spotlight={true}
+                layers={[
+                  {
+                    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+                    depth: 0.9,
+                  },
+                  {
+                    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80",
+                    depth: 1.4,
+                  },
+                ]}
+              />
+            </div>
 
-           </div>
-         </div>
-       </section>
+          </div>
+        </div>
+      </section>
 
        {/* ========================================================================= */}
        {/* 4. FOOTER (RESPONSIVE)                                                    */}
