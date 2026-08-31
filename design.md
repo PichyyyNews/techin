@@ -53,17 +53,17 @@
   ```tsx
   <BlinkingSquares
     direction="right"
-    gridSize={52}
-    squareSize={0.57}
-    fadeStart={0.33}
-    fadeEnd={1.0}
-    falloff={1.25}
-    minBrightness={0.45}
-    twinkleSpeed={1.4}
-    twinkleStrength={0.94}
+    gridSize={16}
+    squareSize={0.55}
+    fadeStart={0.35}
+    fadeEnd={0.98}
+    falloff={1.35}
+    minBrightness={0.35}
+    twinkleSpeed={1.2}
+    twinkleStrength={0.92}
     intensity={1.0}
-    opacity={0.85}
-    squareColor="#27272a"
+    opacity={0.75}
+    squareColor="#52525b"
     background="#FFFFFF"
   />
   ```
