@@ -29,7 +29,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
   const fixed = useRef<RapierRigidBody>(null!);
   const j1 = useRef<RapierRigidBody & { lerped?: THREE.Vector3 }>(null!);
   const j2 = useRef<RapierRigidBody & { lerped?: THREE.Vector3 }>(null!);
-  const j3 = useRef<RapierRigidBody>(null!);
+  const j3 = useRef<RapierRigidBody & { lerped?: THREE.Vector3 }>(null!);
   const card = useRef<RapierRigidBody>(null!);
 
   const vec = useRef(new THREE.Vector3()).current;
@@ -41,8 +41,8 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
     type: 'dynamic' as const,
     canSleep: true,
     colliders: false as const,
-    angularDamping: 2,
-    linearDamping: 2,
+    angularDamping: 4,
+    linearDamping: 4,
   };
 
   // Load official 3D GLTF model and texture
@@ -103,8 +103,8 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
     }
 
     if (fixed.current && j1.current && j2.current && j3.current && card.current && band.current) {
-      // Fix jitter when stepping forward
-      [j1, j2].forEach((ref) => {
+      // Fix jitter on all joints including j3
+      [j1, j2, j3].forEach((ref) => {
         if (ref.current) {
           if (!ref.current.lerped) {
             ref.current.lerped = new THREE.Vector3().copy(ref.current.translation());
@@ -120,8 +120,8 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
         }
       });
 
-      // Calculate catmull curve
-      curve.points[0].copy(j3.current.translation());
+      // Calculate smooth catmull curve without jitter
+      curve.points[0].copy(j3.current.lerped || j3.current.translation());
       curve.points[1].copy(j2.current.lerped || j2.current.translation());
       curve.points[2].copy(j1.current.lerped || j1.current.translation());
       curve.points[3].copy(fixed.current.translation());
@@ -131,11 +131,11 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
         points
       );
 
-      // Tilt card back towards the screen
+      // Tilt card back towards the screen smoothly
       ang.copy(card.current.angvel() as THREE.Vector3);
       rot.copy(card.current.rotation() as unknown as THREE.Vector3);
       card.current.setAngvel(
-        { x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z },
+        { x: ang.x * 0.95, y: (ang.y - rot.y * 0.25) * 0.95, z: ang.z * 0.95 },
         true
       );
     }
@@ -161,6 +161,8 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
           position={[2, 0, 0]}
           ref={card}
           {...segmentProps}
+          angularDamping={4}
+          linearDamping={4}
           type={dragged ? 'kinematicPosition' : 'dynamic'}
         >
           <CuboidCollider args={[0.8, 1.125, 0.01]} />
@@ -197,10 +199,16 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
             <mesh
               geometry={nodes.clip.geometry}
               material={materials.metal}
+              material-roughness={0.3}
+              material-polygonOffset={true}
+              material-polygonOffsetFactor={-1}
             />
             <mesh
               geometry={nodes.clamp.geometry}
               material={materials.metal}
+              material-roughness={0.3}
+              material-polygonOffset={true}
+              material-polygonOffsetFactor={1}
             />
           </group>
         </RigidBody>
