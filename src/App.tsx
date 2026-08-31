@@ -11,8 +11,9 @@ export const App: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
+    const onScroll = () => setScrolled(window.scrollY > 8);
     window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
@@ -29,12 +30,12 @@ export const App: React.FC = () => {
     <div className="min-h-screen bg-[#FFFFFF] text-[#09090B] font-sans selection:bg-[#09090B] selection:text-[#FFFFFF] antialiased flex flex-col justify-between overflow-x-hidden">
       
       {/* ========================================================================= */}
-      {/* 1. NAVBAR (100% RESPONSIVE WITH MOBILE DRAWER)                            */}
+      {/* 1. NAVBAR (FIXED ON TOP WITH REALTIME FROSTED GLASS TRANSITION)           */}
       {/* ========================================================================= */}
       <header
-        className={`w-full sticky top-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
           scrolled
-            ? 'bg-white/60 backdrop-blur-xl border-b border-neutral-200/60 shadow-[0_1px_3px_rgba(0,0,0,0.04)]'
+            ? 'bg-white/70 backdrop-blur-2xl border-b border-neutral-200/60 shadow-[0_4px_30px_rgba(0,0,0,0.03)]'
             : 'bg-transparent border-b border-transparent'
         }`}
       >
@@ -85,7 +86,7 @@ export const App: React.FC = () => {
 
         {/* Mobile Dropdown Menu Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-neutral-200/40 bg-white/50 backdrop-blur-xl px-6 py-6 transition-all animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="lg:hidden border-t border-neutral-200/40 bg-white/75 backdrop-blur-2xl px-6 py-6 transition-all animate-in fade-in slide-in-from-top-2 duration-200">
             <nav className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <a
@@ -114,7 +115,7 @@ export const App: React.FC = () => {
       {/* ========================================================================= */}
       {/* 2. HERO SECTION (2-COLUMNS: CONTENT LEFT, 3D LANYARD BADGE RIGHT)         */}
       {/* ========================================================================= */}
-      <main className="relative flex-1 flex flex-col justify-center overflow-hidden border-b border-neutral-200">
+      <main className="relative flex-1 flex flex-col justify-center overflow-hidden border-b border-neutral-200 pt-16">
         
         {/* React Bits Pro Blinking Squares Background */}
         <div className="absolute inset-0 z-0 pointer-events-none">
