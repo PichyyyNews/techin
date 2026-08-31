@@ -74,11 +74,11 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
   const [dragged, drag] = useState<THREE.Vector3 | false>(false);
   const [hovered, hover] = useState(false);
 
-  // Define Physics joints
+  // Define Physics joints - attached precisely at top clamp ring
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
-  useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.45, 0]]);
+  useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.70, 0]]);
 
   useEffect(() => {
     if (hovered) {
@@ -219,7 +219,8 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
         {/* @ts-expect-error meshLineMaterial registered via extend */}
         <meshLineMaterial
           color="white"
-          depthTest={false}
+          depthTest={true}
+          transparent={true}
           resolution={[width, height]}
           useMap={1}
           map={texture}
