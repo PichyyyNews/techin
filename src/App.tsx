@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUpRight, Terminal, Sparkles } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { BlinkingSquares } from './components/ui/BlinkingSquares';
 
 export const App: React.FC = () => {
@@ -78,7 +78,7 @@ export const App: React.FC = () => {
         </div>
 
         {/* Hero Content Container */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 md:py-32 w-full">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 pt-16 md:pt-24 pb-12 md:pb-16 w-full">
           <div className="max-w-3xl">
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-[#09090B] leading-[1.06]">
@@ -107,21 +107,6 @@ export const App: React.FC = () => {
               >
                 <span>Read Experience</span>
               </a>
-            </div>
-
-            {/* Quick Tech Highlights */}
-            <div className="mt-16 pt-8 border-t border-neutral-200/80 flex flex-wrap items-center gap-6 text-xs font-mono text-neutral-500">
-              <div className="flex items-center gap-2">
-                <Terminal className="w-3.5 h-3.5 text-neutral-800" />
-                <span>React 19 / TypeScript</span>
-              </div>
-              <span>•</span>
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-3.5 h-3.5 text-neutral-800" />
-                <span>Tailwind CSS / UI Craft</span>
-              </div>
-              <span>•</span>
-              <span>Blinking Squares Engine</span>
             </div>
 
           </div>
