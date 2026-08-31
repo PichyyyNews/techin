@@ -63,8 +63,8 @@ export const App: React.FC = () => {
         <div className="absolute inset-0 z-0 pointer-events-none">
           <BlinkingSquares
             direction="right"
-            gridSize={43}
-            squareSize={0.59}
+            gridSize={16}
+            squareSize={0.55}
             fadeStart={0.35}
             fadeEnd={1.00}
             falloff={1.25}
