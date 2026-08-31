@@ -191,7 +191,7 @@ export const App: React.FC = () => {
        {/* ========================================================================= */}
        {/* 3. CORE TEACHING SUBJECTS (3x REACT BITS PRO DEPTH CARDS)                 */}
        {/* ========================================================================= */}
-      <section id="practicum" className="relative w-full py-16 sm:py-20 lg:py-24 border-b border-neutral-200 bg-[#FAFAFA] overflow-hidden">
+      <section id="practicum" className="relative w-full py-16 sm:py-20 lg:py-24 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Section Header */}
