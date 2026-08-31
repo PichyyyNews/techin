@@ -61,6 +61,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
         new THREE.Vector3(),
         new THREE.Vector3(),
         new THREE.Vector3(),
+        new THREE.Vector3(),
       ])
   );
   const [dragged, drag] = useState<THREE.Vector3 | false>(false);
@@ -107,12 +108,22 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
           );
         }
       });
-      // Calculate catmull curve
-      curve.points[0].copy(j3.current.translation());
-      curve.points[1].copy(j2.current.lerped || j2.current.translation());
-      curve.points[2].copy(j1.current.lerped || j1.current.translation());
-      curve.points[3].copy(fixed.current.translation());
+
+      // Calculate smooth catmull curve with anchor inside clamp to eliminate end-point pinch
+      const cardRot = card.current.rotation() as unknown as { x: number; y: number; z: number };
+      const downOffset = new THREE.Vector3(0, -0.35, 0).applyEuler(
+        new THREE.Euler(cardRot.x, cardRot.y, cardRot.z)
+      );
+      const j3Pos = j3.current.translation();
+
+      curve.points[0].set(j3Pos.x + downOffset.x, j3Pos.y + downOffset.y, j3Pos.z + downOffset.z);
+      curve.points[1].set(j3Pos.x, j3Pos.y, j3Pos.z);
+      curve.points[2].copy(j2.current.lerped || j2.current.translation());
+      curve.points[3].copy(j1.current.lerped || j1.current.translation());
+      curve.points[4].copy(fixed.current.translation());
+
       band.current.geometry.setPoints(curve.getPoints(32));
+
       // Tilt it back towards the screen
       ang.copy(card.current.angvel() as THREE.Vector3);
       rot.copy(card.current.rotation() as unknown as THREE.Vector3);
