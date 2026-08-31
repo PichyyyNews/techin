@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { BlinkingSquares } from './components/ui/BlinkingSquares';
 import { TextType } from './components/ui/TextType';
@@ -6,6 +6,13 @@ import { BadgeCanvas } from './components/ui/BadgeCanvas';
 
 export const App: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const navLinks = [
     { name: 'Practicum', href: '#practicum' },
@@ -22,7 +29,13 @@ export const App: React.FC = () => {
       {/* ========================================================================= */}
       {/* 1. NAVBAR (100% RESPONSIVE WITH MOBILE DRAWER)                            */}
       {/* ========================================================================= */}
-      <header className="w-full border-b border-neutral-200/80 bg-white/90 backdrop-blur-md sticky top-0 z-50 transition-colors">
+      <header
+        className={`w-full sticky top-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? 'bg-white/60 backdrop-blur-xl border-b border-neutral-200/60 shadow-[0_1px_3px_rgba(0,0,0,0.04)]'
+            : 'bg-transparent border-b border-transparent'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           
           {/* Brand / Logo */}
@@ -52,7 +65,7 @@ export const App: React.FC = () => {
           <div className="flex items-center gap-3">
             <a
               href="#contact"
-              className="hidden sm:inline-flex items-center justify-center bg-[#09090B] text-white hover:bg-neutral-800 text-xs sm:text-sm font-medium px-4 py-2 rounded-md transition-all shadow-xs"
+              className="hidden sm:inline-flex items-center justify-center bg-neutral-900/10 backdrop-blur-sm hover:bg-neutral-900/20 text-[#09090B] text-xs sm:text-sm font-medium px-4 py-2 rounded-md transition-all border border-neutral-200/60"
             >
               Get in touch
             </a>
@@ -70,7 +83,7 @@ export const App: React.FC = () => {
 
         {/* Mobile Dropdown Menu Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-neutral-200 bg-white/95 backdrop-blur-md px-6 py-6 transition-all animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="lg:hidden border-t border-neutral-200/40 bg-white/50 backdrop-blur-xl px-6 py-6 transition-all animate-in fade-in slide-in-from-top-2 duration-200">
             <nav className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <a
@@ -86,7 +99,7 @@ export const App: React.FC = () => {
                 <a
                   href="#contact"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full inline-flex items-center justify-center bg-[#09090B] text-white text-sm font-medium py-2.5 rounded-md shadow-xs"
+                  className="w-full inline-flex items-center justify-center bg-neutral-900/10 backdrop-blur-sm text-[#09090B] text-sm font-medium py-2.5 rounded-md border border-neutral-200/60"
                 >
                   Get in touch
                 </a>
@@ -148,7 +161,7 @@ export const App: React.FC = () => {
               <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
                 <a
                   href="#logs"
-                  className="inline-flex items-center justify-center gap-2 bg-[#09090B] hover:bg-neutral-800 text-white text-sm font-medium px-6 py-3 rounded-md transition-all shadow-xs group w-full sm:w-auto min-h-[44px]"
+                  className="inline-flex items-center justify-center gap-2 bg-neutral-900/10 backdrop-blur-sm hover:bg-neutral-900/20 text-[#09090B] text-sm font-medium px-6 py-3 rounded-md transition-all border border-neutral-200/60 group w-full sm:w-auto min-h-[44px]"
                 >
                   <span>Explore Activity Log</span>
                   <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
@@ -156,7 +169,7 @@ export const App: React.FC = () => {
 
                 <a
                   href="#plans"
-                  className="inline-flex items-center justify-center gap-2 border border-neutral-300 hover:border-neutral-900 bg-white text-neutral-900 text-sm font-medium px-6 py-3 rounded-md transition-all w-full sm:w-auto min-h-[44px]"
+                  className="inline-flex items-center justify-center gap-2 bg-white/40 backdrop-blur-sm hover:bg-white/60 text-neutral-700 hover:text-[#09090B] text-sm font-medium px-6 py-3 rounded-md transition-all border border-neutral-200/40 w-full sm:w-auto min-h-[44px]"
                 >
                   <span>View Lesson Plans</span>
                 </a>
