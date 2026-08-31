@@ -181,21 +181,25 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
               geometry={nodes.clip.geometry}
               material={materials.metal}
               material-roughness={0.3}
+              material-depthWrite={true}
             />
             <mesh
               geometry={nodes.clamp.geometry}
               material={materials.metal}
+              material-depthWrite={true}
             />
           </group>
         </RigidBody>
       </group>
-      <mesh ref={band}>
+      <mesh ref={band} renderOrder={0}>
         {/* @ts-expect-error meshLineGeometry registered via extend */}
         <meshLineGeometry />
         {/* @ts-expect-error meshLineMaterial registered via extend */}
         <meshLineMaterial
           color="white"
-          depthTest={false}
+          depthTest={true}
+          depthWrite={false}
+          transparent={true}
           resolution={[width, height]}
           useMap={1}
           map={texture}
