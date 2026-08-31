@@ -35,8 +35,8 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
     type: 'dynamic' as const,
     canSleep: true,
     colliders: false as const,
-    angularDamping: 2,
-    linearDamping: 2,
+    angularDamping: 4,
+    linearDamping: 4,
   };
 
   const gltf = useGLTF('/tag.glb') as unknown as {
@@ -57,7 +57,6 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
   const [curve] = useState(
     () =>
       new THREE.CatmullRomCurve3([
-        new THREE.Vector3(),
         new THREE.Vector3(),
         new THREE.Vector3(),
         new THREE.Vector3(),
@@ -109,26 +108,18 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
         }
       });
 
-      // Calculate smooth catmull curve with anchor inside clamp to eliminate end-point pinch
-      const cardRot = card.current.rotation() as unknown as { x: number; y: number; z: number };
-      const downOffset = new THREE.Vector3(0, -0.35, 0).applyEuler(
-        new THREE.Euler(cardRot.x, cardRot.y, cardRot.z)
-      );
-      const j3Pos = j3.current.translation();
-
-      curve.points[0].set(j3Pos.x + downOffset.x, j3Pos.y + downOffset.y, j3Pos.z + downOffset.z);
-      curve.points[1].set(j3Pos.x, j3Pos.y, j3Pos.z);
-      curve.points[2].copy(j2.current.lerped || j2.current.translation());
-      curve.points[3].copy(j1.current.lerped || j1.current.translation());
-      curve.points[4].copy(fixed.current.translation());
-
+      // Calculate catmull curve smoothly
+      curve.points[0].copy(j3.current.translation());
+      curve.points[1].copy(j2.current.lerped || j2.current.translation());
+      curve.points[2].copy(j1.current.lerped || j1.current.translation());
+      curve.points[3].copy(fixed.current.translation());
       band.current.geometry.setPoints(curve.getPoints(32));
 
-      // Tilt it back towards the screen
+      // Tilt it back towards the screen smoothly without rotational oscillation
       ang.copy(card.current.angvel() as THREE.Vector3);
       rot.copy(card.current.rotation() as unknown as THREE.Vector3);
       card.current.setAngvel(
-        { x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z },
+        { x: ang.x, y: ang.y - rot.y * 0.15, z: ang.z },
         true
       );
     }
@@ -154,6 +145,8 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
           position={[2, 0, 0]}
           ref={card}
           {...segmentProps}
+          angularDamping={4}
+          linearDamping={4}
           type={dragged ? 'kinematicPosition' : 'dynamic'}
         >
           <CuboidCollider args={[0.8, 1.125, 0.01]} />
@@ -192,24 +185,21 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
               geometry={nodes.clip.geometry}
               material={materials.metal}
               material-roughness={0.3}
-              material-depthWrite={true}
             />
             <mesh
               geometry={nodes.clamp.geometry}
               material={materials.metal}
-              material-depthWrite={true}
             />
           </group>
         </RigidBody>
       </group>
-      <mesh ref={band} renderOrder={0}>
+      <mesh ref={band}>
         {/* @ts-expect-error meshLineGeometry registered via extend */}
         <meshLineGeometry />
         {/* @ts-expect-error meshLineMaterial registered via extend */}
         <meshLineMaterial
           color="white"
           depthTest={true}
-          depthWrite={false}
           transparent={true}
           resolution={[width, height]}
           useMap={1}
