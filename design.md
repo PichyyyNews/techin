@@ -28,16 +28,18 @@
 | `--text-muted` | `#71717A` / `#A1A1AA` | Metadata, tags, footer copyright |
 | `--btn-primary-bg` | `#09090B` | Black primary CTA button background |
 | `--btn-primary-text` | `#FFFFFF` | Primary CTA button text |
-| `--square-color` | `#27272A` | Blinking Squares particle color |
+| `--square-color` | `#000000` | Blinking Squares particle color |
+| `--scrollbar-thumb` | `rgba(0, 0, 0, 0.18)` | Minimalist 6px custom scrollbar thumb |
 
 ---
 
-## 3. Typography Scale
+## 3. Typography Scale & Scroll Mechanics
 
 - **Display Headline**: `text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.06]`
 - **Body & Subtitle**: `text-base sm:text-xl text-neutral-600 leading-relaxed font-normal`
 - **Brand / Monospace Elements**: `font-mono text-xs sm:text-sm font-semibold`
 - **Nav Links**: `text-sm font-medium text-neutral-600 hover:text-black`
+- **Custom Scrollbar**: Ultra-thin 6px rounded thumb with zero arrows/buttons and transparent track matching Swiss-minimalist aesthetics.
 
 ---
 
