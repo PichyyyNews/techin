@@ -1,332 +1,283 @@
-import { useRef, useMemo } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Text, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
+import { useEffect, useRef, useState, Suspense } from 'react';
+import { Canvas, extend, useThree, useFrame } from '@react-three/fiber';
+import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei';
+import {
+  BallCollider,
+  CuboidCollider,
+  Physics,
+  RigidBody,
+  useRopeJoint,
+  useSphericalJoint,
+  RapierRigidBody,
+} from '@react-three/rapier';
+import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 
-interface BadgeProps {
-  name?: string;
-  role?: string;
-  subRole?: string;
-  idNumber?: string;
+// Register meshline geometry and material into Three.js JSX namespace
+extend({ MeshLineGeometry, MeshLineMaterial });
+
+useGLTF.preload('/tag.glb');
+useTexture.preload('/band.jpg');
+
+interface BandProps {
+  maxSpeed?: number;
+  minSpeed?: number;
 }
 
-// ----------------------------------------------------------------------------
-// Physics-driven Lanyard & Card Component (Vercel Ship Interactive 3D Event Badge)
-// ----------------------------------------------------------------------------
-function Lanyard({
-  name = 'S. PICHAYUT',
-  role = 'STUDENT TEACHER',
-  subRole = 'สาธิตมหาวิทยาลัย / CS EDU',
-  idNumber = 'ID: 6710203040',
-}: BadgeProps) {
-  const { camera } = useThree();
-  
-  // Physics simulation state
-  const isDragging = useRef(false);
-  const cardPos = useRef(new THREE.Vector3(0, -0.6, 0));
-  const cardVel = useRef(new THREE.Vector3(0, 0, 0));
-  const cardRot = useRef(new THREE.Euler(0, 0, 0));
-  const rotVel = useRef(new THREE.Euler(0, 0, 0));
+function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
+  const band = useRef<THREE.Mesh>(null!);
+  const fixed = useRef<RapierRigidBody>(null!);
+  const j1 = useRef<RapierRigidBody & { lerped?: THREE.Vector3 }>(null!);
+  const j2 = useRef<RapierRigidBody & { lerped?: THREE.Vector3 }>(null!);
+  const j3 = useRef<RapierRigidBody>(null!);
+  const card = useRef<RapierRigidBody>(null!);
 
-  const cardRef = useRef<THREE.Group>(null);
-  const strapRef = useRef<THREE.Mesh>(null);
+  const vec = useRef(new THREE.Vector3()).current;
+  const ang = useRef(new THREE.Vector3()).current;
+  const rot = useRef(new THREE.Vector3()).current;
+  const dir = useRef(new THREE.Vector3()).current;
 
-  // Anchor point at the top
-  const anchor = useMemo(() => new THREE.Vector3(0, 2.4, 0), []);
+  const segmentProps = {
+    type: 'dynamic' as const,
+    canSleep: true,
+    colliders: false as const,
+    angularDamping: 2,
+    linearDamping: 2,
+  };
 
-  // Curve points for dynamic lanyard ribbon
-  const curve = useMemo(() => {
-    return new THREE.CatmullRomCurve3([
-      new THREE.Vector3(0, 2.4, 0),
-      new THREE.Vector3(0, 1.4, 0),
-      new THREE.Vector3(0, 0.5, 0),
-      new THREE.Vector3(0, -0.6, 0),
-    ]);
-  }, []);
+  // Load official 3D GLTF model and texture
+  const gltf = useGLTF('/tag.glb') as unknown as {
+    nodes: {
+      card: THREE.Mesh;
+      clip: THREE.Mesh;
+      clamp: THREE.Mesh;
+    };
+    materials: {
+      base: THREE.MeshStandardMaterial;
+      metal: THREE.MeshStandardMaterial;
+    };
+  };
+  const { nodes, materials } = gltf;
 
-  // Frame update: Spring kinematics and physics oscillation
+  const texture = useTexture('/band.jpg');
+  const { width, height } = useThree((state) => state.size);
+
+  const [curve] = useState(
+    () =>
+      new THREE.CatmullRomCurve3([
+        new THREE.Vector3(),
+        new THREE.Vector3(),
+        new THREE.Vector3(),
+        new THREE.Vector3(),
+      ])
+  );
+  const [dragged, drag] = useState<THREE.Vector3 | false>(false);
+  const [hovered, hover] = useState(false);
+
+  // Define Physics joints
+  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
+  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
+  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
+  useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.45, 0]]);
+
+  useEffect(() => {
+    if (hovered) {
+      document.body.style.cursor = dragged ? 'grabbing' : 'grab';
+      return () => {
+        document.body.style.cursor = 'auto';
+      };
+    }
+  }, [hovered, dragged]);
+
   useFrame((state, delta) => {
-    const dt = Math.min(delta, 0.05);
-    const t = state.clock.getElapsedTime();
-
-    if (isDragging.current) {
-      // Calculate 3D target point from 2D pointer raycast
-      const vector = new THREE.Vector3(state.pointer.x, state.pointer.y, 0.5);
-      vector.unproject(camera);
-      const dir = vector.sub(camera.position).normalize();
-      const distance = -camera.position.z / dir.z;
-      const target = camera.position.clone().add(dir.multiplyScalar(distance));
-      
-      // Clamp drag area
-      target.x = Math.max(-2.5, Math.min(2.5, target.x));
-      target.y = Math.max(-2.0, Math.min(1.2, target.y));
-      target.z = 0;
-
-      // Spring drag pull
-      const diff = target.clone().sub(cardPos.current);
-      cardVel.current.add(diff.multiplyScalar(24 * dt));
-      
-      // Dynamic tilt when dragging
-      rotVel.current.y += (diff.x * 2.5 - cardRot.current.y) * 15 * dt;
-      rotVel.current.z += (-diff.x * 1.5 - cardRot.current.z) * 15 * dt;
-      rotVel.current.x += (diff.y * 1.5 - cardRot.current.x) * 15 * dt;
-    } else {
-      // Natural hanging gravity & spring pull to rest position
-      const restTarget = new THREE.Vector3(
-        Math.sin(t * 1.2) * 0.12 + (state.pointer.x * 0.15),
-        -0.6 + Math.sin(t * 2) * 0.04,
-        Math.cos(t * 1.5) * 0.08
-      );
-
-      const springForce = restTarget.sub(cardPos.current).multiplyScalar(14);
-      cardVel.current.add(springForce.multiplyScalar(dt));
-
-      // Natural sway rotations
-      const targetRotY = Math.sin(t * 0.9) * 0.2 + (state.pointer.x * 0.3);
-      const targetRotZ = Math.sin(t * 1.4) * 0.08 + (cardVel.current.x * -0.2);
-      const targetRotX = Math.cos(t * 1.1) * 0.06 + (cardVel.current.y * 0.15);
-
-      rotVel.current.y += (targetRotY - cardRot.current.y) * 10 * dt;
-      rotVel.current.z += (targetRotZ - cardRot.current.z) * 10 * dt;
-      rotVel.current.x += (targetRotX - cardRot.current.x) * 10 * dt;
+    if (dragged && card.current) {
+      vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
+      dir.copy(vec).sub(state.camera.position).normalize();
+      vec.add(dir.multiplyScalar(state.camera.position.length()));
+      [card, j1, j2, j3, fixed].forEach((ref) => ref.current?.wakeUp());
+      card.current.setNextKinematicTranslation({
+        x: vec.x - dragged.x,
+        y: vec.y - dragged.y,
+        z: vec.z - dragged.z,
+      });
     }
 
-    // Apply damping
-    cardVel.current.multiplyScalar(0.92);
-    rotVel.current.x *= 0.88;
-    rotVel.current.y *= 0.88;
-    rotVel.current.z *= 0.88;
+    if (fixed.current && j1.current && j2.current && j3.current && card.current && band.current) {
+      // Fix jitter when stepping forward
+      [j1, j2].forEach((ref) => {
+        if (ref.current) {
+          if (!ref.current.lerped) {
+            ref.current.lerped = new THREE.Vector3().copy(ref.current.translation());
+          }
+          const clampedDistance = Math.max(
+            0.1,
+            Math.min(1, ref.current.lerped.distanceTo(ref.current.translation()))
+          );
+          ref.current.lerped.lerp(
+            ref.current.translation(),
+            delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))
+          );
+        }
+      });
 
-    // Integrate position & rotation
-    cardPos.current.add(cardVel.current.clone().multiplyScalar(dt * 10));
-    cardRot.current.x += rotVel.current.x * dt * 10;
-    cardRot.current.y += rotVel.current.y * dt * 10;
-    cardRot.current.z += rotVel.current.z * dt * 10;
+      // Calculate catmull curve
+      curve.points[0].copy(j3.current.translation());
+      curve.points[1].copy(j2.current.lerped || j2.current.translation());
+      curve.points[2].copy(j1.current.lerped || j1.current.translation());
+      curve.points[3].copy(fixed.current.translation());
 
-    // Update 3D card mesh
-    if (cardRef.current) {
-      cardRef.current.position.copy(cardPos.current);
-      cardRef.current.rotation.copy(cardRot.current);
-    }
-
-    // Update lanyard ribbon strap geometry
-    if (strapRef.current) {
-      const mid1 = new THREE.Vector3(
-        cardPos.current.x * 0.35,
-        1.5 + Math.sin(t) * 0.02,
-        cardPos.current.z * 0.35
+      const points = curve.getPoints(32);
+      (band.current.geometry as unknown as { setPoints: (pts: THREE.Vector3[]) => void }).setPoints(
+        points
       );
-      const mid2 = new THREE.Vector3(
-        cardPos.current.x * 0.75,
-        0.4,
-        cardPos.current.z * 0.75
-      );
-      const cardClipTop = cardPos.current.clone().add(new THREE.Vector3(0, 1.7, 0));
 
-      curve.points = [anchor, mid1, mid2, cardClipTop];
-      
-      const newGeom = new THREE.TubeGeometry(curve, 32, 0.035, 8, false);
-      strapRef.current.geometry.dispose();
-      strapRef.current.geometry = newGeom;
+      // Tilt card back towards the screen
+      ang.copy(card.current.angvel() as THREE.Vector3);
+      rot.copy(card.current.rotation() as unknown as THREE.Vector3);
+      card.current.setAngvel(
+        { x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z },
+        true
+      );
     }
   });
 
+  curve.curveType = 'chordal';
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+
   return (
     <>
-      {/* 1. Dynamic Lanyard Ribbon Cord (สายคล้องคอ 3D ที่ขยับตามแรงฟิสิกส์) */}
-      <mesh ref={strapRef}>
-        <tubeGeometry args={[curve, 32, 0.035, 8, false]} />
-        <meshStandardMaterial
-          color="#18181B"
-          roughness={0.7}
-          metalness={0.2}
+      <group position={[0, 4, 0]}>
+        <RigidBody ref={fixed} {...segmentProps} type="fixed" />
+        <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
+          <BallCollider args={[0.1]} />
+        </RigidBody>
+        <RigidBody position={[1, 0, 0]} ref={j2} {...segmentProps}>
+          <BallCollider args={[0.1]} />
+        </RigidBody>
+        <RigidBody position={[1.5, 0, 0]} ref={j3} {...segmentProps}>
+          <BallCollider args={[0.1]} />
+        </RigidBody>
+        <RigidBody
+          position={[2, 0, 0]}
+          ref={card}
+          {...segmentProps}
+          type={dragged ? 'kinematicPosition' : 'dynamic'}
+        >
+          <CuboidCollider args={[0.8, 1.125, 0.01]} />
+          <group
+            scale={2.25}
+            position={[0, -1.2, -0.05]}
+            onPointerOver={() => hover(true)}
+            onPointerOut={() => hover(false)}
+            onPointerUp={(e) => {
+              (e.target as HTMLElement)?.releasePointerCapture?.(e.pointerId);
+              drag(false);
+            }}
+            onPointerDown={(e) => {
+              (e.target as HTMLElement)?.setPointerCapture?.(e.pointerId);
+              if (card.current) {
+                const currentTrans = card.current.translation();
+                drag(
+                  new THREE.Vector3()
+                    .copy(e.point)
+                    .sub(vec.set(currentTrans.x, currentTrans.y, currentTrans.z))
+                );
+              }
+            }}
+          >
+            <mesh geometry={nodes.card.geometry}>
+              <meshPhysicalMaterial
+                map={materials.base.map}
+                clearcoat={1}
+                clearcoatRoughness={0.15}
+                roughness={0.3}
+                metalness={0.5}
+              />
+            </mesh>
+            <mesh
+              geometry={nodes.clip.geometry}
+              material={materials.metal}
+            />
+            <mesh
+              geometry={nodes.clamp.geometry}
+              material={materials.metal}
+            />
+          </group>
+        </RigidBody>
+      </group>
+      <mesh ref={band}>
+        {/* @ts-expect-error meshLineGeometry registered via extend */}
+        <meshLineGeometry />
+        {/* @ts-expect-error meshLineMaterial registered via extend */}
+        <meshLineMaterial
+          color="white"
+          depthTest={false}
+          resolution={[width, height]}
+          useMap={1}
+          map={texture}
+          repeat={[-3, 1]}
+          lineWidth={1}
         />
       </mesh>
-
-      {/* 2. Top Anchor Ring (จุดยึดสายด้านบน) */}
-      <mesh position={[0, 2.4, 0]}>
-        <torusGeometry args={[0.08, 0.02, 16, 32]} />
-        <meshStandardMaterial color="#D4D4D8" metalness={0.9} roughness={0.1} />
-      </mesh>
-
-      {/* 3. Physics Interactive Event Card */}
-      <group
-        ref={cardRef}
-        position={[0, -0.6, 0]}
-        onPointerDown={(e) => {
-          e.stopPropagation();
-          isDragging.current = true;
-          (e.target as HTMLElement)?.setPointerCapture?.(e.pointerId);
-        }}
-        onPointerUp={(e) => {
-          isDragging.current = false;
-          (e.target as HTMLElement)?.releasePointerCapture?.(e.pointerId);
-        }}
-      >
-        {/* Metal Lanyard Clip (คลิปหนีบโลหะ) */}
-        <mesh position={[0, 1.78, 0]}>
-          <boxGeometry args={[0.36, 0.18, 0.1]} />
-          <meshStandardMaterial color="#D4D4D8" metalness={0.95} roughness={0.1} />
-        </mesh>
-
-        {/* Clip Metal Ring */}
-        <mesh position={[0, 1.66, 0]}>
-          <torusGeometry args={[0.09, 0.02, 16, 32]} />
-          <meshStandardMaterial color="#E4E4E7" metalness={0.95} roughness={0.1} />
-        </mesh>
-
-        {/* Main 3D Card Body with Smooth Edges */}
-        <RoundedBox
-          args={[2.35, 3.45, 0.06]}
-          radius={0.1}
-          smoothness={4}
-          castShadow
-          receiveShadow
-        >
-          <meshStandardMaterial
-            color="#09090B"
-            metalness={0.3}
-            roughness={0.3}
-          />
-        </RoundedBox>
-
-        {/* Inset Inner Plate */}
-        <mesh position={[0, 0, 0.035]}>
-          <planeGeometry args={[2.15, 3.25]} />
-          <meshStandardMaterial color="#121215" roughness={0.4} />
-        </mesh>
-
-        {/* Top Hole Slot */}
-        <mesh position={[0, 1.45, 0.04]}>
-          <planeGeometry args={[0.45, 0.07]} />
-          <meshBasicMaterial color="#09090B" />
-        </mesh>
-
-        {/* Header Ribbon Tag */}
-        <mesh position={[0, 1.18, 0.04]}>
-          <planeGeometry args={[1.95, 0.32]} />
-          <meshStandardMaterial color="#27272A" />
-        </mesh>
-
-        <Text
-          position={[0, 1.18, 0.05]}
-          fontSize={0.11}
-          color="#FAFAFA"
-          anchorX="center"
-          anchorY="middle"
-          letterSpacing={0.08}
-        >
-          ACADEMIC PRACTICUM 2026
-        </Text>
-
-        {/* Profile Avatar Graphic Frame */}
-        <mesh position={[0, 0.52, 0.04]}>
-          <planeGeometry args={[1.05, 1.05]} />
-          <meshStandardMaterial color="#18181B" roughness={0.5} />
-        </mesh>
-
-        <mesh position={[0, 0.52, 0.045]}>
-          <planeGeometry args={[0.95, 0.95]} />
-          <meshStandardMaterial color="#27272A" roughness={0.3} metalness={0.4} />
-        </mesh>
-
-        <Text
-          position={[0, 0.52, 0.055]}
-          fontSize={0.35}
-          color="#FFFFFF"
-          anchorX="center"
-          anchorY="middle"
-        >
-          SP
-        </Text>
-
-        {/* Name */}
-        <Text
-          position={[0, -0.22, 0.05]}
-          fontSize={0.17}
-          color="#FFFFFF"
-          anchorX="center"
-          anchorY="middle"
-          letterSpacing={0.04}
-        >
-          {name}
-        </Text>
-
-        {/* Role */}
-        <Text
-          position={[0, -0.48, 0.05]}
-          fontSize={0.12}
-          color="#A1A1AA"
-          anchorX="center"
-          anchorY="middle"
-          letterSpacing={0.06}
-        >
-          {role}
-        </Text>
-
-        {/* Sub-role */}
-        <Text
-          position={[0, -0.72, 0.05]}
-          fontSize={0.1}
-          color="#71717A"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {subRole}
-        </Text>
-
-        {/* Divider */}
-        <mesh position={[0, -0.96, 0.04]}>
-          <planeGeometry args={[1.8, 0.015]} />
-          <meshBasicMaterial color="#27272A" />
-        </mesh>
-
-        {/* ID Number */}
-        <Text
-          position={[-0.45, -1.18, 0.05]}
-          fontSize={0.09}
-          color="#E4E4E7"
-          anchorX="left"
-          anchorY="middle"
-        >
-          {idNumber}
-        </Text>
-
-        {/* Status Light Dot */}
-        <mesh position={[0.68, -1.18, 0.045]}>
-          <circleGeometry args={[0.04, 16]} />
-          <meshBasicMaterial color="#FFFFFF" />
-        </mesh>
-      </group>
     </>
   );
 }
 
 // ----------------------------------------------------------------------------
-// BadgeCanvas Container
+// BadgeCanvas Container with Suspense and Physics Provider
 // ----------------------------------------------------------------------------
 export function BadgeCanvas() {
   return (
-    <div className="relative w-full h-[400px] sm:h-[460px] md:h-[500px] lg:h-[540px] flex items-center justify-center select-none cursor-grab active:cursor-grabbing">
+    <div className="relative w-full h-[420px] sm:h-[480px] md:h-[520px] lg:h-[560px] flex items-center justify-center select-none">
       <Canvas
-        camera={{ position: [0, 0, 5.4], fov: 45 }}
-        className="w-full h-full"
+        camera={{ position: [0, 0, 13], fov: 25 }}
         gl={{ alpha: true, antialias: true }}
+        className="w-full h-full"
       >
-        {/* Studio Lighting */}
-        <ambientLight intensity={0.9} />
-        <directionalLight position={[5, 8, 5]} intensity={1.8} castShadow />
-        <directionalLight position={[-5, -2, -2]} intensity={0.6} />
-        <pointLight position={[0, 2, 4]} intensity={0.8} />
+        <ambientLight intensity={Math.PI} />
+        
+        <Suspense fallback={null}>
+          <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
+            <Band />
+          </Physics>
 
-        {/* 3D Interactive Lanyard with Physics Spring Drag */}
-        <Lanyard />
+          <Environment blur={0.75}>
+            <Lightformer
+              intensity={2}
+              color="white"
+              position={[0, -1, 5]}
+              rotation={[0, 0, Math.PI / 3]}
+              scale={[100, 0.1, 1]}
+            />
+            <Lightformer
+              intensity={3}
+              color="white"
+              position={[-1, -1, 1]}
+              rotation={[0, 0, Math.PI / 3]}
+              scale={[100, 0.1, 1]}
+            />
+            <Lightformer
+              intensity={3}
+              color="white"
+              position={[1, 1, 1]}
+              rotation={[0, 0, Math.PI / 3]}
+              scale={[100, 0.1, 1]}
+            />
+            <Lightformer
+              intensity={10}
+              color="white"
+              position={[-10, 0, 14]}
+              rotation={[0, Math.PI / 2, Math.PI / 3]}
+              scale={[100, 10, 1]}
+            />
+          </Environment>
+        </Suspense>
       </Canvas>
 
-      {/* Interaction Hint Badge */}
+      {/* Interactive Helper Hint */}
       <div className="absolute bottom-2 right-4 pointer-events-none text-[10px] font-mono text-neutral-400 bg-white/80 backdrop-blur-xs px-2.5 py-1 rounded-xs border border-neutral-200 shadow-2xs flex items-center gap-1.5">
         <span className="w-1.5 h-1.5 rounded-full bg-neutral-900 animate-pulse" />
-        <span>Grab & fling 3D badge</span>
+        <span>Click, pull & fling the 3D lanyard badge</span>
       </div>
     </div>
   );
