@@ -80,9 +80,10 @@
 
 ### 5.1 `<TextType />`
 Dynamic human-like typing effect for the Hero Headline powered by GSAP.
-- `typingSpeed`: `55ms`
-- `pauseDuration`: `2400ms`
-- `deletingSpeed`: `28ms`
+- `typingSpeed`: `85ms` (natural, relaxed typing pace)
+- `pauseDuration`: `4200ms` (comfortable reading duration)
+- `deletingSpeed`: `35ms`
+- `initialDelay`: `300ms`
 - `showCursor`: `true`
 - `cursorCharacter`: `"|"`
 

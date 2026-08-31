@@ -92,9 +92,10 @@ export const App: React.FC = () => {
                   "Classroom Action Research & Innovations",
                   "Daily Operations & Lesson Plans",
                 ]}
-                typingSpeed={55}
-                pauseDuration={2400}
-                deletingSpeed={28}
+                typingSpeed={85}
+                pauseDuration={4200}
+                deletingSpeed={35}
+                initialDelay={300}
                 loop={true}
                 showCursor={true}
                 cursorCharacter="|"
