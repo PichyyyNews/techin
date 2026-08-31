@@ -121,11 +121,11 @@ export const App: React.FC = () => {
         </div>
 
         {/* Hero Content Container (2 Columns on Desktop) */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 w-full">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 lg:pt-8 pb-8 sm:pb-12 md:pb-14 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* Left Column: Headlines & CTA (7 Cols) */}
-            <div className="lg:col-span-7 max-w-2xl">
+            <div className="lg:col-span-7 max-w-2xl py-4 sm:py-6">
               
               {/* Main Headline with ReactBits TextType Component */}
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#09090B] leading-[1.15] [text-wrap:balance]">
@@ -164,8 +164,8 @@ export const App: React.FC = () => {
 
             </div>
 
-            {/* Right Column: 3D Interactive Lanyard Badge (5 Cols) */}
-            <div className="lg:col-span-5 w-full flex items-center justify-center">
+            {/* Right Column: 3D Interactive Lanyard Badge (Hangs right from Navbar border) */}
+            <div className="lg:col-span-5 w-full flex items-center justify-center -mt-8 sm:-mt-12 lg:-mt-16">
               <BadgeCanvas />
             </div>
 

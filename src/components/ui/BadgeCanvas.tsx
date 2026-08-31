@@ -146,7 +146,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
 
   return (
     <>
-      <group position={[0, 4, 0]}>
+      <group position={[0, 4.8, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
         <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
@@ -165,10 +165,10 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
           linearDamping={4}
           type={dragged ? 'kinematicPosition' : 'dynamic'}
         >
-          <CuboidCollider args={[0.8, 1.125, 0.01]} />
+          <CuboidCollider args={[0.88, 1.24, 0.01]} />
           <group
-            scale={2.25}
-            position={[0, -1.2, -0.05]}
+            scale={2.48}
+            position={[0, -1.3, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={(e) => {
@@ -224,7 +224,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
           useMap={1}
           map={texture}
           repeat={[-3, 1]}
-          lineWidth={1}
+          lineWidth={1.12}
         />
       </mesh>
     </>
@@ -236,9 +236,9 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
 // ----------------------------------------------------------------------------
 export function BadgeCanvas() {
   return (
-    <div className="relative w-full h-[420px] sm:h-[480px] md:h-[520px] lg:h-[560px] flex items-center justify-center select-none">
+    <div className="relative w-full h-[450px] sm:h-[520px] md:h-[580px] lg:h-[620px] flex items-center justify-center select-none">
       <Canvas
-        camera={{ position: [0, 0, 13], fov: 25 }}
+        camera={{ position: [0, 0.4, 12.8], fov: 25 }}
         gl={{ alpha: true, antialias: true }}
         className="w-full h-full"
       >
