@@ -69,7 +69,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
-  useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.25, 0]]);
+  useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.45, 0]]);
 
   useEffect(() => {
     if (hovered) {
@@ -108,18 +108,25 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
         }
       });
 
-      // Calculate catmull curve smoothly
+      // Calculate catmull curve
       curve.points[0].copy(j3.current.translation());
       curve.points[1].copy(j2.current.lerped || j2.current.translation());
       curve.points[2].copy(j1.current.lerped || j1.current.translation());
       curve.points[3].copy(fixed.current.translation());
-      band.current.geometry.setPoints(curve.getPoints(32));
 
-      // Tilt it back towards the screen smoothly without rotational oscillation
+      const points = curve.getPoints(32);
+      // Lock endpoint tangent vectors so MeshLine screen normal remains perfectly straight and never collapses into flickering triangles
+      points[0].x = points[1].x;
+      points[0].z = points[1].z;
+      points[points.length - 1].x = points[points.length - 2].x;
+      points[points.length - 1].z = points[points.length - 2].z;
+      band.current.geometry.setPoints(points);
+
+      // Tilt it back towards the screen
       ang.copy(card.current.angvel() as THREE.Vector3);
       rot.copy(card.current.rotation() as unknown as THREE.Vector3);
       card.current.setAngvel(
-        { x: ang.x, y: ang.y - rot.y * 0.15, z: ang.z },
+        { x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z },
         true
       );
     }
