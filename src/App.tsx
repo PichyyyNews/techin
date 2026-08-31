@@ -4,6 +4,7 @@ import { BlinkingSquares } from './components/ui/BlinkingSquares';
 import { TextType } from './components/ui/TextType';
 import { BadgeCanvas } from './components/ui/BadgeCanvas';
 import { DepthCard } from './components/ui/DepthCard';
+import { LiquidAscii } from './components/ui/LiquidAscii';
 
 export const App: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -192,7 +193,20 @@ export const App: React.FC = () => {
        {/* 3. CORE TEACHING SUBJECTS (3x REACT BITS PRO DEPTH CARDS)                 */}
        {/* ========================================================================= */}
       <section id="practicum" className="relative w-full py-16 sm:py-20 lg:py-24 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Dynamic Fluid ASCII Background */}
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-25">
+          <LiquidAscii
+            color="#09090B"
+            backgroundColor="transparent"
+            cellSize={15}
+            speed={0.85}
+            gravity={-20}
+            fillHeight={0.35}
+            autoWave={true}
+          />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Section Header (Right Aligned with TextType) */}
           <div className="max-w-3xl ml-auto text-right mb-12 sm:mb-16">
