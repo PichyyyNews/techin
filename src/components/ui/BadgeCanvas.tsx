@@ -74,11 +74,11 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
   const [dragged, drag] = useState<THREE.Vector3 | false>(false);
   const [hovered, hover] = useState(false);
 
-  // Define Physics joints - attached precisely at top clamp ring
+  // Define Physics joints - j3 tucks cleanly inside the metal clamp
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
-  useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.70, 0]]);
+  useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.50, 0]]);
 
   useEffect(() => {
     if (hovered) {
@@ -169,6 +169,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
           <group
             scale={2.48}
             position={[0, -1.3, -0.05]}
+            renderOrder={1}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={(e) => {
@@ -194,12 +195,14 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
                 clearcoatRoughness={0.15}
                 roughness={0.3}
                 metalness={0.5}
+                depthWrite={true}
               />
             </mesh>
             <mesh
               geometry={nodes.clip.geometry}
               material={materials.metal}
               material-roughness={0.3}
+              material-depthWrite={true}
               material-polygonOffset={true}
               material-polygonOffsetFactor={-1}
             />
@@ -207,25 +210,27 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
               geometry={nodes.clamp.geometry}
               material={materials.metal}
               material-roughness={0.3}
+              material-depthWrite={true}
               material-polygonOffset={true}
               material-polygonOffsetFactor={1}
             />
           </group>
         </RigidBody>
       </group>
-      <mesh ref={band}>
+      <mesh ref={band} renderOrder={0}>
         {/* @ts-expect-error meshLineGeometry registered via extend */}
         <meshLineGeometry />
         {/* @ts-expect-error meshLineMaterial registered via extend */}
         <meshLineMaterial
           color="white"
           depthTest={true}
+          depthWrite={false}
           transparent={true}
           resolution={[width, height]}
           useMap={1}
           map={texture}
           repeat={[-3, 1]}
-          lineWidth={1.12}
+          lineWidth={1.05}
         />
       </mesh>
     </>
