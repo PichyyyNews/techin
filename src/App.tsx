@@ -59,21 +59,21 @@ export const App: React.FC = () => {
       {/* ========================================================================= */}
       <main className="relative flex-1 flex flex-col justify-center overflow-hidden border-b border-neutral-200">
         
-        {/* React Bits Pro Blinking Squares Background (Fine & Delicate High-Density Grid) */}
+        {/* React Bits Pro Blinking Squares Background */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <BlinkingSquares
             direction="right"
-            gridSize={16}
-            squareSize={0.55}
+            gridSize={43}
+            squareSize={0.59}
             fadeStart={0.35}
-            fadeEnd={0.98}
-            falloff={1.35}
-            minBrightness={0.35}
-            twinkleSpeed={1.2}
-            twinkleStrength={0.92}
-            intensity={1.0}
-            opacity={0.75}
-            squareColor="#52525b"
+            fadeEnd={1.00}
+            falloff={1.25}
+            minBrightness={0.55}
+            twinkleSpeed={2.05}
+            twinkleStrength={0.94}
+            intensity={1.00}
+            opacity={1.00}
+            squareColor="#000000"
             background="#FFFFFF"
           />
         </div>
