@@ -194,16 +194,20 @@ export const App: React.FC = () => {
       <section id="practicum" className="relative w-full py-16 sm:py-20 lg:py-24 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Section Header */}
-          <div className="max-w-3xl mb-12 sm:mb-16">
-            <div className="flex items-center gap-2 font-mono text-xs font-medium text-neutral-500 uppercase tracking-widest mb-3">
-              <span className="text-neutral-900 font-semibold">[01]</span>
-              <span>Core Instruction</span>
-            </div>
+          {/* Section Header (Right Aligned with TextType) */}
+          <div className="max-w-3xl ml-auto text-right mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
-              Teaching Practicum Courses
+              <TextType
+                text="Teaching Practicum Courses"
+                typingSpeed={65}
+                loop={false}
+                showCursor={true}
+                cursorCharacter="|"
+                cursorClassName="text-neutral-400 font-light"
+                startOnVisible={true}
+              />
             </h2>
-            <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-2xl font-normal">
+            <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed font-normal ml-auto max-w-2xl">
               Active learning methodologies focused on practical software engineering, computational thinking, and digital innovation.
             </p>
           </div>
