@@ -35,8 +35,8 @@
 
 ## 3. Typography Scale & Scroll Mechanics
 
-- **Display Headline**: `text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.06]`
-- **Body & Subtitle**: `text-base sm:text-xl text-neutral-600 leading-relaxed font-normal`
+- **Display Headline**: `text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] [text-wrap:balance]`
+- **Body & Subtitle**: `text-sm sm:text-base md:text-lg text-neutral-600 leading-relaxed font-normal max-w-xl`
 - **Brand / Monospace Elements**: `font-mono text-xs sm:text-sm font-semibold`
 - **Nav Links**: `text-sm font-medium text-neutral-600 hover:text-black`
 - **Custom Scrollbar**: Ultra-thin 6px rounded thumb with zero arrows/buttons and transparent track matching Swiss-minimalist aesthetics.

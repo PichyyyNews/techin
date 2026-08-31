@@ -124,18 +124,11 @@ export const App: React.FC = () => {
           <div className="max-w-3xl">
             
             {/* Main Headline with ReactBits TextType Component */}
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-[#09090B] leading-[1.08] sm:leading-[1.05] min-h-[110px] sm:min-h-[160px] md:min-h-[210px] lg:min-h-[220px]">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#09090B] leading-[1.15] max-w-2xl [text-wrap:balance]">
               <TextType
-                text={[
-                  "Teaching Practicum Performance & Activity Log",
-                  "Classroom Action Research & Innovations",
-                  "Daily Operations & Lesson Plans",
-                ]}
-                typingSpeed={85}
-                pauseDuration={4200}
-                deletingSpeed={35}
-                initialDelay={300}
-                loop={true}
+                text="Teaching Practicum Performance & Activity Log"
+                typingSpeed={65}
+                loop={false}
                 showCursor={true}
                 cursorCharacter="|"
                 cursorClassName="text-neutral-400 font-light"
@@ -143,12 +136,12 @@ export const App: React.FC = () => {
             </h1>
 
             {/* Sub-headline */}
-            <p className="mt-5 sm:mt-6 text-sm sm:text-base md:text-xl text-neutral-600 leading-relaxed font-normal max-w-2xl">
+            <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-neutral-600 leading-relaxed font-normal max-w-xl [text-wrap:balance]">
               Track daily teaching operations, lesson plans, and educational innovations.
             </p>
 
             {/* CTA Button Group (100% Mobile Responsive) */}
-            <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
+            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
               <a
                 href="#logs"
                 className="inline-flex items-center justify-center gap-2 bg-[#09090B] hover:bg-neutral-800 text-white text-sm font-medium px-6 py-3 rounded-md transition-all shadow-xs group w-full sm:w-auto min-h-[44px]"
