@@ -69,10 +69,14 @@ export const BlinkingSquares: React.FC<BlinkingSquaresProps> = ({
       const dpr = window.devicePixelRatio || 1;
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
-      ctx.scale(dpr, dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
     resize();
+    const resizeObserver = new ResizeObserver(() => {
+      resize();
+    });
+    resizeObserver.observe(container);
     window.addEventListener('resize', resize);
 
     const render = (now: number) => {
@@ -158,6 +162,7 @@ export const BlinkingSquares: React.FC<BlinkingSquaresProps> = ({
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      resizeObserver.disconnect();
       window.removeEventListener('resize', resize);
     };
   }, [
