@@ -13,23 +13,17 @@ import {
 } from '@react-three/rapier';
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 
-// Register meshline geometry and material into Three.js JSX namespace
 extend({ MeshLineGeometry, MeshLineMaterial });
 
 useGLTF.preload('/tag.glb');
 useTexture.preload('/band.jpg');
 
-interface BandProps {
-  maxSpeed?: number;
-  minSpeed?: number;
-}
-
-function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
-  const band = useRef<THREE.Mesh>(null!);
+function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: number }) {
+  const band = useRef<THREE.Mesh & { geometry: { setPoints: (pts: THREE.Vector3[]) => void } }>(null!);
   const fixed = useRef<RapierRigidBody>(null!);
   const j1 = useRef<RapierRigidBody & { lerped?: THREE.Vector3 }>(null!);
   const j2 = useRef<RapierRigidBody & { lerped?: THREE.Vector3 }>(null!);
-  const j3 = useRef<RapierRigidBody & { lerped?: THREE.Vector3 }>(null!);
+  const j3 = useRef<RapierRigidBody>(null!);
   const card = useRef<RapierRigidBody>(null!);
 
   const vec = useRef(new THREE.Vector3()).current;
@@ -41,11 +35,10 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
     type: 'dynamic' as const,
     canSleep: true,
     colliders: false as const,
-    angularDamping: 4,
-    linearDamping: 4,
+    angularDamping: 2,
+    linearDamping: 2,
   };
 
-  // Load official 3D GLTF model and texture
   const gltf = useGLTF('/tag.glb') as unknown as {
     nodes: {
       card: THREE.Mesh;
@@ -61,7 +54,6 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
 
   const texture = useTexture('/band.jpg');
   const { width, height } = useThree((state) => state.size);
-
   const [curve] = useState(
     () =>
       new THREE.CatmullRomCurve3([
@@ -74,18 +66,15 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
   const [dragged, drag] = useState<THREE.Vector3 | false>(false);
   const [hovered, hover] = useState(false);
 
-  // Define Physics joints - j3 tucks cleanly inside the metal clamp
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
-  useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.50, 0]]);
+  useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.45, 0]]);
 
   useEffect(() => {
     if (hovered) {
       document.body.style.cursor = dragged ? 'grabbing' : 'grab';
-      return () => {
-        document.body.style.cursor = 'auto';
-      };
+      return () => void (document.body.style.cursor = 'auto');
     }
   }, [hovered, dragged]);
 
@@ -101,10 +90,9 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
         z: vec.z - dragged.z,
       });
     }
-
     if (fixed.current && j1.current && j2.current && j3.current && card.current && band.current) {
-      // Fix jitter on all joints including j3
-      [j1, j2, j3].forEach((ref) => {
+      // Fix most of the jitter when over pulling the card
+      [j1, j2].forEach((ref) => {
         if (ref.current) {
           if (!ref.current.lerped) {
             ref.current.lerped = new THREE.Vector3().copy(ref.current.translation());
@@ -119,23 +107,17 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
           );
         }
       });
-
-      // Calculate smooth catmull curve without jitter
-      curve.points[0].copy(j3.current.lerped || j3.current.translation());
+      // Calculate catmull curve
+      curve.points[0].copy(j3.current.translation());
       curve.points[1].copy(j2.current.lerped || j2.current.translation());
       curve.points[2].copy(j1.current.lerped || j1.current.translation());
       curve.points[3].copy(fixed.current.translation());
-
-      const points = curve.getPoints(32);
-      (band.current.geometry as unknown as { setPoints: (pts: THREE.Vector3[]) => void }).setPoints(
-        points
-      );
-
-      // Tilt card back towards the screen smoothly
+      band.current.geometry.setPoints(curve.getPoints(32));
+      // Tilt it back towards the screen
       ang.copy(card.current.angvel() as THREE.Vector3);
       rot.copy(card.current.rotation() as unknown as THREE.Vector3);
       card.current.setAngvel(
-        { x: ang.x * 0.95, y: (ang.y - rot.y * 0.25) * 0.95, z: ang.z * 0.95 },
+        { x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z },
         true
       );
     }
@@ -146,7 +128,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
 
   return (
     <>
-      <group position={[0, 4.8, 0]}>
+      <group position={[0, 4, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
         <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
@@ -161,15 +143,12 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
           position={[2, 0, 0]}
           ref={card}
           {...segmentProps}
-          angularDamping={4}
-          linearDamping={4}
           type={dragged ? 'kinematicPosition' : 'dynamic'}
         >
-          <CuboidCollider args={[0.88, 1.24, 0.01]} />
+          <CuboidCollider args={[0.8, 1.125, 0.01]} />
           <group
-            scale={2.48}
-            position={[0, -1.3, -0.05]}
-            renderOrder={1}
+            scale={2.25}
+            position={[0, -1.2, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={(e) => {
@@ -191,60 +170,48 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: BandProps) {
             <mesh geometry={nodes.card.geometry}>
               <meshPhysicalMaterial
                 map={materials.base.map}
+                map-anisotropy={16}
                 clearcoat={1}
                 clearcoatRoughness={0.15}
                 roughness={0.3}
                 metalness={0.5}
-                depthWrite={true}
               />
             </mesh>
             <mesh
               geometry={nodes.clip.geometry}
               material={materials.metal}
               material-roughness={0.3}
-              material-depthWrite={true}
-              material-polygonOffset={true}
-              material-polygonOffsetFactor={-1}
             />
             <mesh
               geometry={nodes.clamp.geometry}
               material={materials.metal}
-              material-roughness={0.3}
-              material-depthWrite={true}
-              material-polygonOffset={true}
-              material-polygonOffsetFactor={1}
             />
           </group>
         </RigidBody>
       </group>
-      <mesh ref={band} renderOrder={0}>
+      <mesh ref={band}>
         {/* @ts-expect-error meshLineGeometry registered via extend */}
         <meshLineGeometry />
         {/* @ts-expect-error meshLineMaterial registered via extend */}
         <meshLineMaterial
           color="white"
-          depthTest={true}
-          depthWrite={false}
-          transparent={true}
+          depthTest={false}
           resolution={[width, height]}
           useMap={1}
           map={texture}
           repeat={[-3, 1]}
-          lineWidth={1.05}
+          lineWidth={1}
         />
       </mesh>
     </>
   );
 }
 
-// ----------------------------------------------------------------------------
-// BadgeCanvas Container with Suspense and Physics Provider
-// ----------------------------------------------------------------------------
 export function BadgeCanvas() {
   return (
-    <div className="relative w-full h-[450px] sm:h-[520px] md:h-[580px] lg:h-[620px] flex items-center justify-center select-none">
+    <div className="relative w-full h-[480px] sm:h-[540px] lg:h-[600px] flex items-center justify-center select-none overflow-visible">
       <Canvas
-        camera={{ position: [0, 0.4, 12.8], fov: 25 }}
+        camera={{ position: [0, 0, 13], fov: 25 }}
         gl={{ alpha: true, antialias: true }}
         className="w-full h-full"
       >
@@ -287,12 +254,6 @@ export function BadgeCanvas() {
           </Environment>
         </Suspense>
       </Canvas>
-
-      {/* Interactive Helper Hint */}
-      <div className="absolute bottom-2 right-4 pointer-events-none text-[10px] font-mono text-neutral-400 bg-white/80 backdrop-blur-xs px-2.5 py-1 rounded-xs border border-neutral-200 shadow-2xs flex items-center gap-1.5">
-        <span className="w-1.5 h-1.5 rounded-full bg-neutral-900 animate-pulse" />
-        <span>Click, pull & fling the 3D lanyard badge</span>
-      </div>
     </div>
   );
 }
