@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { BlinkingSquares } from './components/ui/BlinkingSquares';
 import { TextType } from './components/ui/TextType';
+import { BadgeCanvas } from './components/ui/BadgeCanvas';
 
 export const App: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -96,7 +97,7 @@ export const App: React.FC = () => {
       </header>
 
       {/* ========================================================================= */}
-      {/* 2. HERO SECTION (FLUID RESPONSIVE WITH BLINKING SQUARES BACKGROUND)       */}
+      {/* 2. HERO SECTION (2-COLUMNS: CONTENT LEFT, 3D LANYARD BADGE RIGHT)         */}
       {/* ========================================================================= */}
       <main className="relative flex-1 flex flex-col justify-center overflow-hidden border-b border-neutral-200">
         
@@ -119,43 +120,53 @@ export const App: React.FC = () => {
           />
         </div>
 
-        {/* Hero Content Container with Responsive Padding */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-20 md:pt-28 pb-10 sm:pb-14 md:pb-16 w-full">
-          <div className="max-w-3xl">
+        {/* Hero Content Container (2 Columns on Desktop) */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            {/* Main Headline with ReactBits TextType Component */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#09090B] leading-[1.15] max-w-2xl [text-wrap:balance]">
-              <TextType
-                text="Teaching Practicum Performance & Activity Log"
-                typingSpeed={65}
-                loop={false}
-                showCursor={true}
-                cursorCharacter="|"
-                cursorClassName="text-neutral-400 font-light"
-              />
-            </h1>
+            {/* Left Column: Headlines & CTA (7 Cols) */}
+            <div className="lg:col-span-7 max-w-2xl">
+              
+              {/* Main Headline with ReactBits TextType Component */}
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#09090B] leading-[1.15] [text-wrap:balance]">
+                <TextType
+                  text="Teaching Practicum Performance & Activity Log"
+                  typingSpeed={65}
+                  loop={false}
+                  showCursor={true}
+                  cursorCharacter="|"
+                  cursorClassName="text-neutral-400 font-light"
+                />
+              </h1>
 
-            {/* Sub-headline */}
-            <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-neutral-600 leading-relaxed font-normal max-w-xl [text-wrap:balance]">
-              Track daily teaching operations, lesson plans, and educational innovations.
-            </p>
+              {/* Sub-headline */}
+              <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-neutral-600 leading-relaxed font-normal max-w-xl [text-wrap:balance]">
+                Track daily teaching operations, lesson plans, and educational innovations.
+              </p>
 
-            {/* CTA Button Group (100% Mobile Responsive) */}
-            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
-              <a
-                href="#logs"
-                className="inline-flex items-center justify-center gap-2 bg-[#09090B] hover:bg-neutral-800 text-white text-sm font-medium px-6 py-3 rounded-md transition-all shadow-xs group w-full sm:w-auto min-h-[44px]"
-              >
-                <span>Explore Activity Log</span>
-                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
-              </a>
+              {/* CTA Button Group */}
+              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                <a
+                  href="#logs"
+                  className="inline-flex items-center justify-center gap-2 bg-[#09090B] hover:bg-neutral-800 text-white text-sm font-medium px-6 py-3 rounded-md transition-all shadow-xs group w-full sm:w-auto min-h-[44px]"
+                >
+                  <span>Explore Activity Log</span>
+                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
+                </a>
 
-              <a
-                href="#plans"
-                className="inline-flex items-center justify-center gap-2 border border-neutral-300 hover:border-neutral-900 bg-white text-neutral-900 text-sm font-medium px-6 py-3 rounded-md transition-all w-full sm:w-auto min-h-[44px]"
-              >
-                <span>View Lesson Plans</span>
-              </a>
+                <a
+                  href="#plans"
+                  className="inline-flex items-center justify-center gap-2 border border-neutral-300 hover:border-neutral-900 bg-white text-neutral-900 text-sm font-medium px-6 py-3 rounded-md transition-all w-full sm:w-auto min-h-[44px]"
+                >
+                  <span>View Lesson Plans</span>
+                </a>
+              </div>
+
+            </div>
+
+            {/* Right Column: 3D Interactive Lanyard Badge (5 Cols) */}
+            <div className="lg:col-span-5 w-full flex items-center justify-center">
+              <BadgeCanvas />
             </div>
 
           </div>

@@ -89,3 +89,8 @@ Dynamic human-like typing effect for the Hero Headline powered by GSAP.
 
 ### 5.2 `<BlinkingSquares />`
 - Fine high-density micro-grid background (`gridSize={16}`, `squareSize={0.55}`) with directional dithered fade.
+
+### 5.3 `<BadgeCanvas />` (3D Interactive Lanyard Event Badge)
+- Built with **Three.js**, **React Three Fiber (`@react-three/fiber`)**, and **`@react-three/drei`**.
+- Features realistic lanyard strap ribbon, metallic clamp and ring, smooth rounded 3D card body, typography with metallic accents, and interactive drag/rotate via `OrbitControls`.
+- Integrated on the right side of the Hero section in a 2-column responsive layout.
