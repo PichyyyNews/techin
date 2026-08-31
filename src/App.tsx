@@ -164,8 +164,8 @@ export const App: React.FC = () => {
 
             </div>
 
-            {/* Right Column: 3D Interactive Lanyard Badge */}
-            <div className="lg:col-span-5 w-full flex items-center justify-center">
+            {/* Right Column: 3D Interactive Lanyard Badge (Hangs right from Navbar border) */}
+            <div className="lg:col-span-5 w-full flex items-center justify-center -mt-8 sm:-mt-12 lg:-mt-16">
               <BadgeCanvas />
             </div>
 
