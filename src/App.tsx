@@ -27,16 +27,16 @@ export const App: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#09090B] font-sans selection:bg-[#09090B] selection:text-[#FFFFFF] antialiased flex flex-col justify-between overflow-x-hidden">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#09090B] font-sans selection:bg-[#09090B] selection:text-[#FFFFFF] antialiased flex flex-col justify-between overflow-x-clip">
       
       {/* ========================================================================= */}
-      {/* 1. NAVBAR (FIXED ON TOP WITH REALTIME FROSTED GLASS TRANSITION)           */}
+      {/* 1. NAVBAR (STICKY IN-FLOW AT TOP, FROSTED GLASS ON SCROLL)                */}
       {/* ========================================================================= */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+        className={`w-full sticky top-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-white/70 backdrop-blur-2xl border-b border-neutral-200/60 shadow-[0_4px_30px_rgba(0,0,0,0.03)]'
-            : 'bg-transparent border-b border-transparent'
+            ? 'bg-white/75 backdrop-blur-2xl border-b border-neutral-200/60 shadow-[0_4px_30px_rgba(0,0,0,0.03)]'
+            : 'bg-white border-b border-neutral-200/80'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -115,7 +115,7 @@ export const App: React.FC = () => {
       {/* ========================================================================= */}
       {/* 2. HERO SECTION (2-COLUMNS: CONTENT LEFT, 3D LANYARD BADGE RIGHT)         */}
       {/* ========================================================================= */}
-      <main className="relative flex-1 flex flex-col justify-center overflow-hidden border-b border-neutral-200 pt-16">
+      <main className="relative flex-1 flex flex-col justify-center overflow-hidden border-b border-neutral-200">
         
         {/* React Bits Pro Blinking Squares Background */}
         <div className="absolute inset-0 z-0 pointer-events-none">
@@ -195,15 +195,22 @@ export const App: React.FC = () => {
        {/* ========================================================================= */}
       <section id="practicum" className="relative w-full py-16 sm:py-20 lg:py-24 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden">
         {/* Dynamic Fluid ASCII Background */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-25">
+        <div className="absolute inset-0 z-0 pointer-events-none">
           <LiquidAscii
-            color="#09090B"
-            backgroundColor="transparent"
+            speed={0.90}
             cellSize={15}
-            speed={0.85}
-            gravity={-20}
-            fillHeight={0.35}
+            gravity={-25}
+            flipRatio={0.30}
+            fillHeight={0.30}
+            overRelaxation={1.24}
+            cursorRadius={0.25}
+            cursorForce={66}
+            pressureIters={30}
+            separationIters={3}
             autoWave={true}
+            color="#000000"
+            backgroundColor="#FFFFFF"
+            opacity={1.00}
           />
         </div>
 
