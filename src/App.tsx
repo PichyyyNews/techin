@@ -391,7 +391,7 @@ export const App: React.FC = () => {
                   />
                 </div>
 
-                {/* Parallax Cards 3D Stage with Text in Center */}
+                {/* Parallax Cards 3D Stage with Static Text in Center */}
                 <div className="relative z-10 w-full h-full flex items-center justify-center">
                   <ParallaxCards
                     images={institutionImages}
@@ -403,13 +403,15 @@ export const App: React.FC = () => {
                     enableMagneticAttraction={true}
                     magneticStrength={50}
                     className="w-full h-full"
-                  >
-                    {/* CENTERED FLOATING TITLE IN THE MIDDLE OF THE IMAGES */}
-                    <div className="max-w-xl mx-auto flex flex-col items-center text-center p-5 sm:p-7 rounded-2xl bg-white/80 dark:bg-black/70 backdrop-blur-md border border-white/60 dark:border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.08)] select-none">
-                      <p className="font-mono text-[10px] sm:text-xs text-neutral-500 uppercase tracking-widest mb-1 sm:mb-1.5 font-medium">
+                  />
+
+                  {/* STATIC CENTERED TITLE (No background frame, stays completely static while 3D cards move) */}
+                  <div className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-none px-4 text-center">
+                    <div className="max-w-2xl mx-auto flex flex-col items-center text-center select-none">
+                      <p className="font-mono text-[11px] sm:text-xs text-neutral-400 uppercase tracking-widest mb-1.5 sm:mb-2 font-medium drop-shadow-xs">
                         Environment & Facilities
                       </p>
-                      <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-[#09090B] text-center">
+                      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B] text-center drop-shadow-sm">
                         <TextType
                           text="Practicum Institution & Infrastructure"
                           typingSpeed={65}
@@ -420,11 +422,11 @@ export const App: React.FC = () => {
                           startOnVisible={true}
                         />
                       </h2>
-                      <p className="mt-2 text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal max-w-md mx-auto text-center">
+                      <p className="mt-2.5 text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal max-w-lg mx-auto text-center drop-shadow-xs">
                         Specialized computing laboratories, project development studios, and student mentorship spaces supporting active vocational learning.
                       </p>
                     </div>
-                  </ParallaxCards>
+                  </div>
                 </div>
               </motion.section>
 
