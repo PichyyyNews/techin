@@ -251,7 +251,7 @@ export const App: React.FC = () => {
               {/* UNDERLAYER (z-10): 3. CORE TEACHING SUBJECTS */}
               <section
                 id="practicum"
-                className="absolute inset-0 w-full h-full bg-[#FFFFFF] overflow-y-auto pt-10 sm:pt-14 lg:pt-16 pb-12 sm:pb-16 z-10"
+                className="absolute inset-0 w-full h-full bg-[#FFFFFF] flex flex-col justify-center px-4 sm:px-6 lg:px-8 py-4 sm:py-6 overflow-hidden z-10"
               >
                 {/* Dynamic Fluid ASCII Background */}
                 <div className="absolute inset-0 z-0 pointer-events-none">
@@ -273,13 +273,13 @@ export const App: React.FC = () => {
                   />
                 </div>
 
-                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="relative z-10 max-w-7xl mx-auto w-full">
                   {/* Section Header */}
-                  <div className="max-w-3xl ml-auto text-right mb-8 sm:mb-12">
-                    <p className="font-mono text-xs text-neutral-400 uppercase tracking-widest mb-2">
+                  <div className="max-w-3xl ml-auto text-right mb-4 sm:mb-6">
+                    <p className="font-mono text-[10px] sm:text-xs text-neutral-400 uppercase tracking-widest mb-1 sm:mb-1.5">
                       Curriculum
                     </p>
-                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
+                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-[#09090B]">
                       <TextType
                         text="Teaching Practicum Courses"
                         typingSpeed={65}
@@ -290,22 +290,22 @@ export const App: React.FC = () => {
                         startOnVisible={true}
                       />
                     </h2>
-                    <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed font-normal ml-auto max-w-2xl">
+                    <p className="mt-1 text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal ml-auto max-w-xl">
                       Active learning methodologies focused on practical software engineering, computational thinking, and digital innovation.
                     </p>
                   </div>
 
                   {/* 3x Depth Cards Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 justify-items-center">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 justify-items-center">
                     {/* Card 1: Web Application Development */}
-                    <div className="w-full max-w-[380px] flex justify-center">
+                    <div className="w-full max-w-[360px] flex justify-center">
                       <DepthCard
                         width="100%"
-                        height={440}
+                        height={360}
                         title="Web Application Development"
                         description="Modern web application architecture, deep UI/UX design systems, and frontend engineering with React, TypeScript, and state management."
-                        maxRotation={16}
-                        maxTranslation={18}
+                        maxRotation={14}
+                        maxTranslation={16}
                         spotlight={true}
                         layers={[
                           {
@@ -321,14 +321,14 @@ export const App: React.FC = () => {
                     </div>
 
                     {/* Card 2: Computer Programming */}
-                    <div className="w-full max-w-[380px] flex justify-center">
+                    <div className="w-full max-w-[360px] flex justify-center">
                       <DepthCard
                         width="100%"
-                        height={440}
+                        height={360}
                         title="Computer Programming"
                         description="Foundations of computational thinking, data structures, and systematic algorithmic problem-solving using Python in real-world scenarios."
-                        maxRotation={16}
-                        maxTranslation={18}
+                        maxRotation={14}
+                        maxTranslation={16}
                         spotlight={true}
                         layers={[
                           {
@@ -344,14 +344,14 @@ export const App: React.FC = () => {
                     </div>
 
                     {/* Card 3: Microcontroller & IoT */}
-                    <div className="w-full max-w-[380px] flex justify-center">
+                    <div className="w-full max-w-[360px] flex justify-center">
                       <DepthCard
                         width="100%"
-                        height={440}
+                        height={360}
                         title="Microcontroller & IoT Systems"
                         description="Hardware sensor interfacing, embedded systems design with ESP32/Arduino, and networked IoT telemetry for innovative solutions."
-                        maxRotation={16}
-                        maxTranslation={18}
+                        maxRotation={14}
+                        maxTranslation={16}
                         spotlight={true}
                         layers={[
                           {
@@ -373,7 +373,7 @@ export const App: React.FC = () => {
               <motion.section
                 id="institution"
                 style={{ x: institutionSlideX }}
-                className="absolute inset-0 w-full h-full bg-[#FAFAFA] border-l border-neutral-200/90 shadow-[-40px_0_80px_rgba(0,0,0,0.18)] rounded-l-[32px] sm:rounded-l-[48px] overflow-y-auto pt-10 sm:pt-14 lg:pt-16 pb-12 sm:pb-16 z-20 will-change-transform"
+                className="absolute inset-0 w-full h-full bg-[#FAFAFA] border-l border-neutral-200/90 shadow-[-40px_0_80px_rgba(0,0,0,0.18)] rounded-l-[32px] sm:rounded-l-[48px] flex flex-col justify-center px-4 sm:px-6 lg:px-8 py-4 sm:py-6 overflow-hidden z-20 will-change-transform"
               >
                 {/* Background WebGL Light Rays */}
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
@@ -391,12 +391,12 @@ export const App: React.FC = () => {
                   />
                 </div>
 
-                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-10">
+                <div className="relative z-10 max-w-7xl mx-auto w-full mb-3 sm:mb-4">
                   <div className="max-w-3xl">
-                    <p className="font-mono text-xs text-neutral-400 uppercase tracking-widest mb-2">
+                    <p className="font-mono text-[10px] sm:text-xs text-neutral-400 uppercase tracking-widest mb-1 sm:mb-1.5">
                       Environment & Facilities
                     </p>
-                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
+                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-[#09090B]">
                       <TextType
                         text="Practicum Institution & Infrastructure"
                         typingSpeed={65}
@@ -407,14 +407,14 @@ export const App: React.FC = () => {
                         startOnVisible={true}
                       />
                     </h2>
-                    <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed font-normal max-w-2xl">
+                    <p className="mt-1 text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal max-w-xl">
                       Specialized computing laboratories, project development studios, and student mentorship spaces supporting active vocational learning.
                     </p>
                   </div>
                 </div>
 
                 {/* Parallax Cards 3D Display */}
-                <div className="relative z-10 w-full px-2 sm:px-4 lg:px-6">
+                <div className="relative z-10 w-full">
                   <ParallaxCards
                     images={institutionImages}
                     perspective={2500}
@@ -424,6 +424,7 @@ export const App: React.FC = () => {
                     fogIntensity={1}
                     enableMagneticAttraction={true}
                     magneticStrength={50}
+                    className="h-[460px] sm:h-[520px] lg:h-[580px]"
                   />
                 </div>
               </motion.section>
