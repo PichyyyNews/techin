@@ -373,7 +373,7 @@ export const App: React.FC = () => {
               <motion.section
                 id="institution"
                 style={{ x: institutionSlideX }}
-                className="absolute inset-0 w-full h-full bg-[#FAFAFA] border-l border-neutral-200/90 shadow-[-40px_0_80px_rgba(0,0,0,0.18)] rounded-l-[32px] sm:rounded-l-[48px] flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-2 overflow-hidden z-20 will-change-transform"
+                className="absolute inset-0 w-full h-full bg-[#FAFAFA] border-l border-neutral-200/90 shadow-[-40px_0_80px_rgba(0,0,0,0.18)] rounded-l-[32px] sm:rounded-l-[48px] flex items-center justify-center overflow-hidden z-20 will-change-transform"
               >
                 {/* Background WebGL Light Rays */}
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
@@ -391,42 +391,40 @@ export const App: React.FC = () => {
                   />
                 </div>
 
-                {/* Y-axis Centered Content Bundle */}
-                <div className="relative z-10 max-w-7xl w-full flex flex-col items-center justify-center my-auto">
-                  <div className="max-w-3xl mx-auto flex flex-col items-center text-center mb-2 sm:mb-3">
-                    <p className="font-mono text-[10px] sm:text-xs text-neutral-400 uppercase tracking-widest mb-1 sm:mb-1.5">
-                      Environment & Facilities
-                    </p>
-                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-[#09090B] text-center">
-                      <TextType
-                        text="Practicum Institution & Infrastructure"
-                        typingSpeed={65}
-                        loop={false}
-                        showCursor={true}
-                        cursorCharacter="|"
-                        cursorClassName="text-neutral-400 font-light"
-                        startOnVisible={true}
-                      />
-                    </h2>
-                    <p className="mt-1 text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal max-w-2xl mx-auto text-center">
-                      Specialized computing laboratories, project development studios, and student mentorship spaces supporting active vocational learning.
-                    </p>
-                  </div>
-
-                  {/* Parallax Cards 3D Display */}
-                  <div className="w-full flex items-center justify-center">
-                    <ParallaxCards
-                      images={institutionImages}
-                      perspective={2500}
-                      mouseSensitivity={3}
-                      animationDuration={1.2}
-                      enableDepthFog={true}
-                      fogIntensity={1}
-                      enableMagneticAttraction={true}
-                      magneticStrength={50}
-                      className="h-[430px] sm:h-[480px] lg:h-[520px]"
-                    />
-                  </div>
+                {/* Parallax Cards 3D Stage with Text in Center */}
+                <div className="relative z-10 w-full h-full flex items-center justify-center">
+                  <ParallaxCards
+                    images={institutionImages}
+                    perspective={2500}
+                    mouseSensitivity={3}
+                    animationDuration={1.2}
+                    enableDepthFog={true}
+                    fogIntensity={1}
+                    enableMagneticAttraction={true}
+                    magneticStrength={50}
+                    className="w-full h-full"
+                  >
+                    {/* CENTERED FLOATING TITLE IN THE MIDDLE OF THE IMAGES */}
+                    <div className="max-w-xl mx-auto flex flex-col items-center text-center p-5 sm:p-7 rounded-2xl bg-white/80 dark:bg-black/70 backdrop-blur-md border border-white/60 dark:border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.08)] select-none">
+                      <p className="font-mono text-[10px] sm:text-xs text-neutral-500 uppercase tracking-widest mb-1 sm:mb-1.5 font-medium">
+                        Environment & Facilities
+                      </p>
+                      <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-[#09090B] text-center">
+                        <TextType
+                          text="Practicum Institution & Infrastructure"
+                          typingSpeed={65}
+                          loop={false}
+                          showCursor={true}
+                          cursorCharacter="|"
+                          cursorClassName="text-neutral-400 font-light"
+                          startOnVisible={true}
+                        />
+                      </h2>
+                      <p className="mt-2 text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal max-w-md mx-auto text-center">
+                        Specialized computing laboratories, project development studios, and student mentorship spaces supporting active vocational learning.
+                      </p>
+                    </div>
+                  </ParallaxCards>
                 </div>
               </motion.section>
 

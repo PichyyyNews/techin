@@ -16,6 +16,7 @@ export interface ParallaxCardsProps {
   magneticStrength?: number;
   onCardClick?: (index: number, imageUrl: string) => void;
   className?: string;
+  children?: React.ReactNode;
 }
 
 interface CardLayoutDef {
@@ -79,7 +80,8 @@ export const ParallaxCards: React.FC<ParallaxCardsProps> = ({
   enableMagneticAttraction = false,
   magneticStrength = 50,
   onCardClick,
-  className = ''
+  className = '',
+  children
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -167,6 +169,15 @@ export const ParallaxCards: React.FC<ParallaxCardsProps> = ({
             />
           );
         })}
+
+        {children && (
+          <div
+            className="absolute inset-0 flex items-center justify-center pointer-events-none z-30"
+            style={{ transform: 'translateZ(180px)', transformStyle: 'preserve-3d' }}
+          >
+            {children}
+          </div>
+        )}
       </motion.div>
     </div>
   );
