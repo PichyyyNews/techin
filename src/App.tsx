@@ -391,12 +391,12 @@ export const App: React.FC = () => {
                   />
                 </div>
 
-                <div className="relative z-10 max-w-7xl mx-auto w-full mb-3 sm:mb-4">
-                  <div className="max-w-3xl">
+                <div className="relative z-10 max-w-7xl mx-auto w-full mb-2 sm:mb-3 text-center">
+                  <div className="max-w-3xl mx-auto flex flex-col items-center">
                     <p className="font-mono text-[10px] sm:text-xs text-neutral-400 uppercase tracking-widest mb-1 sm:mb-1.5">
                       Environment & Facilities
                     </p>
-                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-[#09090B]">
+                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-[#09090B] text-center">
                       <TextType
                         text="Practicum Institution & Infrastructure"
                         typingSpeed={65}
@@ -407,14 +407,14 @@ export const App: React.FC = () => {
                         startOnVisible={true}
                       />
                     </h2>
-                    <p className="mt-1 text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal max-w-xl">
+                    <p className="mt-1 text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal max-w-2xl mx-auto text-center">
                       Specialized computing laboratories, project development studios, and student mentorship spaces supporting active vocational learning.
                     </p>
                   </div>
                 </div>
 
                 {/* Parallax Cards 3D Display */}
-                <div className="relative z-10 w-full">
+                <div className="relative z-10 w-full flex items-center justify-center">
                   <ParallaxCards
                     images={institutionImages}
                     perspective={2500}
@@ -424,7 +424,7 @@ export const App: React.FC = () => {
                     fogIntensity={1}
                     enableMagneticAttraction={true}
                     magneticStrength={50}
-                    className="h-[460px] sm:h-[520px] lg:h-[580px]"
+                    className="h-[430px] sm:h-[480px] lg:h-[520px]"
                   />
                 </div>
               </motion.section>
