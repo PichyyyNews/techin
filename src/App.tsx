@@ -373,7 +373,7 @@ export const App: React.FC = () => {
               <motion.section
                 id="institution"
                 style={{ x: institutionSlideX }}
-                className="absolute inset-0 w-full h-full bg-[#FAFAFA] border-l border-neutral-200/90 shadow-[-40px_0_80px_rgba(0,0,0,0.18)] rounded-l-[32px] sm:rounded-l-[48px] flex flex-col justify-center px-4 sm:px-6 lg:px-8 py-4 sm:py-6 overflow-hidden z-20 will-change-transform"
+                className="absolute inset-0 w-full h-full bg-[#FAFAFA] border-l border-neutral-200/90 shadow-[-40px_0_80px_rgba(0,0,0,0.18)] rounded-l-[32px] sm:rounded-l-[48px] flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-2 overflow-hidden z-20 will-change-transform"
               >
                 {/* Background WebGL Light Rays */}
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
@@ -391,8 +391,9 @@ export const App: React.FC = () => {
                   />
                 </div>
 
-                <div className="relative z-10 max-w-7xl mx-auto w-full mb-2 sm:mb-3 text-center">
-                  <div className="max-w-3xl mx-auto flex flex-col items-center">
+                {/* Y-axis Centered Content Bundle */}
+                <div className="relative z-10 max-w-7xl w-full flex flex-col items-center justify-center my-auto">
+                  <div className="max-w-3xl mx-auto flex flex-col items-center text-center mb-2 sm:mb-3">
                     <p className="font-mono text-[10px] sm:text-xs text-neutral-400 uppercase tracking-widest mb-1 sm:mb-1.5">
                       Environment & Facilities
                     </p>
@@ -411,21 +412,21 @@ export const App: React.FC = () => {
                       Specialized computing laboratories, project development studios, and student mentorship spaces supporting active vocational learning.
                     </p>
                   </div>
-                </div>
 
-                {/* Parallax Cards 3D Display */}
-                <div className="relative z-10 w-full flex items-center justify-center">
-                  <ParallaxCards
-                    images={institutionImages}
-                    perspective={2500}
-                    mouseSensitivity={3}
-                    animationDuration={1.2}
-                    enableDepthFog={true}
-                    fogIntensity={1}
-                    enableMagneticAttraction={true}
-                    magneticStrength={50}
-                    className="h-[430px] sm:h-[480px] lg:h-[520px]"
-                  />
+                  {/* Parallax Cards 3D Display */}
+                  <div className="w-full flex items-center justify-center">
+                    <ParallaxCards
+                      images={institutionImages}
+                      perspective={2500}
+                      mouseSensitivity={3}
+                      animationDuration={1.2}
+                      enableDepthFog={true}
+                      fogIntensity={1}
+                      enableMagneticAttraction={true}
+                      magneticStrength={50}
+                      className="h-[430px] sm:h-[480px] lg:h-[520px]"
+                    />
+                  </div>
                 </div>
               </motion.section>
 
