@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight, Menu, X, BookOpen, Code2, Cpu } from 'lucide-react';
 import { BlinkingSquares } from './components/ui/BlinkingSquares';
 import { TextType } from './components/ui/TextType';
@@ -10,6 +11,18 @@ import { ScrollStack, ScrollStackItem } from './components/ui/ScrollStack';
 export const App: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: heroScrollProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const heroScale = useTransform(heroScrollProgress, [0, 1], [1, 0.92]);
+  const heroOpacity = useTransform(heroScrollProgress, [0, 0.8], [1, 0.2]);
+  const heroY = useTransform(heroScrollProgress, [0, 1], [0, 80]);
+  const heroFilter = useTransform(heroScrollProgress, [0, 0.8], ['blur(0px)', 'blur(6px)']);
+  const indicatorOpacity = useTransform(heroScrollProgress, [0, 0.25], [1, 0]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -198,10 +211,12 @@ export const App: React.FC = () => {
       </header>
 
       {/* ========================================================================= */}
-      {/* 2. HERO SECTION (2-COLUMNS: CONTENT LEFT, 3D LANYARD BADGE RIGHT)         */}
+      {/* 2. HERO SECTION (TRUE FULL-SCREEN VIEWPORT WITH PARALLAX SCROLL MORPH)     */}
       {/* ========================================================================= */}
-      <main className="relative flex-1 flex flex-col justify-center overflow-hidden border-b border-neutral-200">
-        
+      <main
+        ref={heroRef}
+        className="relative w-full min-h-[calc(100vh-4rem)] flex flex-col justify-between items-center overflow-hidden bg-[#FFFFFF]"
+      >
         {/* React Bits Pro Blinking Squares Background */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <BlinkingSquares
@@ -221,8 +236,16 @@ export const App: React.FC = () => {
           />
         </div>
 
-        {/* Hero Content Container (2 Columns on Desktop) */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 lg:pt-8 pb-8 sm:pb-12 md:pb-14 w-full">
+        {/* Hero Content Container (2 Columns on Desktop with Cinematic Scroll Transform) */}
+        <motion.div
+          style={{
+            scale: heroScale,
+            opacity: heroOpacity,
+            y: heroY,
+            filter: heroFilter,
+          }}
+          className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-auto w-full pt-6 pb-10 sm:py-12"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* Left Column: Headlines & CTA (7 Cols) */}
@@ -271,14 +294,38 @@ export const App: React.FC = () => {
             </div>
 
           </div>
-        </div>
+        </motion.div>
+
+        {/* Minimalist Interactive Scroll Down Indicator */}
+        <motion.div
+          style={{ opacity: indicatorOpacity }}
+          className="relative z-20 pb-6 sm:pb-8 flex flex-col items-center justify-center gap-2 cursor-pointer select-none group"
+          onClick={() => document.getElementById('practicum')?.scrollIntoView({ behavior: 'smooth' })}
+        >
+          <span className="font-mono text-[11px] uppercase tracking-widest text-neutral-400 group-hover:text-neutral-900 transition-colors">
+            Scroll to explore
+          </span>
+          <div className="w-5 h-8 rounded-full border border-neutral-300 group-hover:border-neutral-900 transition-colors flex items-start justify-center p-1 bg-white/70 backdrop-blur-xs">
+            <motion.div
+              animate={{ y: [0, 9, 0] }}
+              transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
+              className="w-1 h-2 bg-neutral-900 rounded-full"
+            />
+          </div>
+        </motion.div>
 
       </main>
  
-       {/* ========================================================================= */}
-       {/* 3. CORE TEACHING SUBJECTS (3x REACT BITS PRO DEPTH CARDS)                 */}
-       {/* ========================================================================= */}
-      <section id="practicum" className="relative w-full py-16 sm:py-20 lg:py-24 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden">
+      {/* ========================================================================= */}
+      {/* 3. CORE TEACHING SUBJECTS (ELEVATED SHEET WITH REACT BITS PRO DEPTH CARDS) */}
+      {/* ========================================================================= */}
+      <section
+        id="practicum"
+        className="relative z-30 w-full pt-16 sm:pt-20 lg:pt-24 pb-20 sm:pb-24 border-t border-b border-neutral-200 bg-[#FFFFFF] rounded-t-[32px] sm:rounded-t-[48px] lg:rounded-t-[56px] shadow-[0_-25px_60px_-15px_rgba(0,0,0,0.07)] -mt-6 sm:-mt-8 lg:-mt-10 overflow-hidden"
+      >
+        {/* Subtle Top Pull Pill Indicator */}
+        <div className="w-12 h-1.5 bg-neutral-200 rounded-full mx-auto mb-8 sm:mb-12 opacity-80" />
+
         {/* Dynamic Fluid ASCII Background */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <LiquidAscii
