@@ -54,6 +54,8 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
   const { nodes, materials } = gltf;
 
   const texture = useTexture('/band.jpg');
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
   const cardTexture = useTexture('/badge-custom.png');
   cardTexture.flipY = false;
   cardTexture.colorSpace = THREE.SRGBColorSpace;
