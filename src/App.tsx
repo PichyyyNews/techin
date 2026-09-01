@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight, Menu, X, BookOpen, Code2, Cpu } from 'lucide-react';
 import { BlinkingSquares } from './components/ui/BlinkingSquares';
 import { TextType } from './components/ui/TextType';
@@ -17,6 +18,17 @@ export const App: React.FC = () => {
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Sticky Hero Reveal: hero stays pinned, next section slides over it
+  const heroWrapperRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroWrapperRef,
+    offset: ['start start', 'end start'],
+  });
+
+  // Subtle transforms — scale down gently, fade out smoothly, NO blur
+  const heroScale = useTransform(heroProgress, [0, 0.8], [1, 0.94]);
+  const heroOpacity = useTransform(heroProgress, [0, 0.7], [1, 0]);
 
   const navLinks = [
     { name: 'Practicum', href: '#practicum' },
@@ -198,89 +210,96 @@ export const App: React.FC = () => {
       </header>
 
       {/* ========================================================================= */}
-      {/* 2. HERO SECTION (FULL-SCREEN VIEWPORT)                                    */}
+      {/* 2. HERO SECTION — Sticky reveal: hero pins in place, next section        */}
+      {/*    slides up over it like a sheet as you scroll.                          */}
       {/* ========================================================================= */}
-      <main className="relative w-full min-h-[calc(100vh-4rem)] flex flex-col justify-center items-center overflow-hidden bg-[#FFFFFF] border-b border-neutral-200">
-        
-        {/* React Bits Pro Blinking Squares Background */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <BlinkingSquares
-            direction="right"
-            gridSize={16}
-            squareSize={0.55}
-            fadeStart={0.35}
-            fadeEnd={1.00}
-            falloff={1.25}
-            minBrightness={0.55}
-            twinkleSpeed={2.05}
-            twinkleStrength={0.94}
-            intensity={1.00}
-            opacity={1.00}
-            squareColor="#000000"
-            background="#FFFFFF"
-          />
-        </div>
+      <div ref={heroWrapperRef} className="relative" style={{ height: 'calc(200vh - 4rem)' }}>
+        {/* Sticky hero viewport — pinned while scrolling through the wrapper */}
+        <div className="sticky top-16 h-[calc(100vh-4rem)] overflow-hidden">
+          <motion.div
+            style={{ scale: heroScale, opacity: heroOpacity }}
+            className="relative w-full h-full flex flex-col justify-center items-center bg-[#FFFFFF]"
+          >
+            {/* React Bits Pro Blinking Squares Background */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+              <BlinkingSquares
+                direction="right"
+                gridSize={16}
+                squareSize={0.55}
+                fadeStart={0.35}
+                fadeEnd={1.00}
+                falloff={1.25}
+                minBrightness={0.55}
+                twinkleSpeed={2.05}
+                twinkleStrength={0.94}
+                intensity={1.00}
+                opacity={1.00}
+                squareColor="#000000"
+                background="#FFFFFF"
+              />
+            </div>
 
-        {/* Hero Content Container (2 Columns on Desktop) */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-auto w-full py-12 sm:py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            
-            {/* Left Column: Headlines & CTA (7 Cols) */}
-            <div className="lg:col-span-7 max-w-2xl py-4 sm:py-6">
-              
-              {/* Main Headline with ReactBits TextType Component */}
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#09090B] leading-[1.15] [text-wrap:balance]">
-                <TextType
-                  text="Teaching Practicum Performance & Activity Log"
-                  typingSpeed={65}
-                  loop={false}
-                  showCursor={true}
-                  cursorCharacter="|"
-                  cursorClassName="text-neutral-400 font-light"
-                />
-              </h1>
+            {/* Hero Content Container (2 Columns on Desktop) */}
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 sm:py-16">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                
+                {/* Left Column: Headlines & CTA (7 Cols) */}
+                <div className="lg:col-span-7 max-w-2xl py-4 sm:py-6">
+                  
+                  {/* Main Headline with ReactBits TextType Component */}
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#09090B] leading-[1.15] [text-wrap:balance]">
+                    <TextType
+                      text="Teaching Practicum Performance & Activity Log"
+                      typingSpeed={65}
+                      loop={false}
+                      showCursor={true}
+                      cursorCharacter="|"
+                      cursorClassName="text-neutral-400 font-light"
+                    />
+                  </h1>
 
-              {/* Sub-headline */}
-              <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-neutral-600 leading-relaxed font-normal max-w-xl [text-wrap:balance]">
-                Track daily teaching operations, lesson plans, and educational innovations.
-              </p>
+                  {/* Sub-headline */}
+                  <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-neutral-600 leading-relaxed font-normal max-w-xl [text-wrap:balance]">
+                    Track daily teaching operations, lesson plans, and educational innovations.
+                  </p>
 
-              {/* CTA Button Group */}
-              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
-                <a
-                  href="#logs"
-                  className="inline-flex items-center justify-center gap-2 bg-neutral-900/10 backdrop-blur-sm hover:bg-neutral-900/20 text-[#09090B] text-sm font-medium px-6 py-3 rounded-md transition-all border border-neutral-200/60 group w-full sm:w-auto min-h-[44px]"
-                >
-                  <span>Explore Activity Log</span>
-                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
-                </a>
+                  {/* CTA Button Group */}
+                  <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                    <a
+                      href="#logs"
+                      className="inline-flex items-center justify-center gap-2 bg-neutral-900/10 backdrop-blur-sm hover:bg-neutral-900/20 text-[#09090B] text-sm font-medium px-6 py-3 rounded-md transition-all border border-neutral-200/60 group w-full sm:w-auto min-h-[44px]"
+                    >
+                      <span>Explore Activity Log</span>
+                      <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
+                    </a>
 
-                <a
-                  href="#plans"
-                  className="inline-flex items-center justify-center gap-2 bg-white/40 backdrop-blur-sm hover:bg-white/60 text-neutral-700 hover:text-[#09090B] text-sm font-medium px-6 py-3 rounded-md transition-all border border-neutral-200/40 w-full sm:w-auto min-h-[44px]"
-                >
-                  <span>View Lesson Plans</span>
-                </a>
+                    <a
+                      href="#plans"
+                      className="inline-flex items-center justify-center gap-2 bg-white/40 backdrop-blur-sm hover:bg-white/60 text-neutral-700 hover:text-[#09090B] text-sm font-medium px-6 py-3 rounded-md transition-all border border-neutral-200/40 w-full sm:w-auto min-h-[44px]"
+                    >
+                      <span>View Lesson Plans</span>
+                    </a>
+                  </div>
+
+                </div>
+
+                {/* Right Column: 3D Interactive Lanyard Badge */}
+                <div className="lg:col-span-5 w-full flex items-center justify-center -mt-8 sm:-mt-12 lg:-mt-16">
+                  <BadgeCanvas />
+                </div>
+
               </div>
-
             </div>
-
-            {/* Right Column: 3D Interactive Lanyard Badge (Hangs right from Navbar border) */}
-            <div className="lg:col-span-5 w-full flex items-center justify-center -mt-8 sm:-mt-12 lg:-mt-16">
-              <BadgeCanvas />
-            </div>
-
-          </div>
+          </motion.div>
         </div>
+      </div>
 
-      </main>
- 
       {/* ========================================================================= */}
-      {/* 3. CORE TEACHING SUBJECTS (REACT BITS PRO DEPTH CARDS)                    */}
+      {/* 3. CORE TEACHING SUBJECTS — Slides up over the hero as a sheet            */}
       {/* ========================================================================= */}
       <section
         id="practicum"
-        className="relative w-full py-20 sm:py-24 lg:py-28 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden"
+        className="relative z-10 w-full py-20 sm:py-24 lg:py-28 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden shadow-[0_-1px_0_0_#e5e5e5]"
       >
         {/* Dynamic Fluid ASCII Background */}
         <div className="absolute inset-0 z-0 pointer-events-none">
@@ -414,7 +433,7 @@ export const App: React.FC = () => {
       {/* ========================================================================= */}
       {/* 4. TEACHING INSTITUTION & ENVIRONMENT (REACT BITS PRO SCROLL STACK)       */}
       {/* ========================================================================= */}
-      <section id="institution" className="relative w-full pt-16 sm:pt-20 lg:pt-24 pb-8 border-b border-neutral-200 bg-[#FAFAFA]">
+      <section id="institution" className="relative z-10 w-full pt-16 sm:pt-20 lg:pt-24 pb-8 border-b border-neutral-200 bg-[#FAFAFA]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-12">
           <div className="max-w-3xl">
             <div className="flex items-center gap-2 text-xs font-mono text-neutral-400 uppercase tracking-wider mb-2">
@@ -455,7 +474,7 @@ export const App: React.FC = () => {
       {/* ========================================================================= */}
       {/* 5. FOOTER (RESPONSIVE)                                                    */}
       {/* ========================================================================= */}
-      <footer className="w-full bg-white py-6 px-4 sm:px-6 lg:px-8 text-xs text-neutral-500 font-mono">
+      <footer className="relative z-10 w-full bg-white py-6 px-4 sm:px-6 lg:px-8 text-xs text-neutral-500 font-mono">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-neutral-900">S.pichayut</span>
