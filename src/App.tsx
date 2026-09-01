@@ -26,9 +26,11 @@ export const App: React.FC = () => {
     offset: ['start start', 'end start'],
   });
 
-  // Subtle transforms — scale down gently, fade out smoothly, NO blur
-  const heroScale = useTransform(heroProgress, [0, 0.8], [1, 0.94]);
-  const heroOpacity = useTransform(heroProgress, [0, 0.7], [1, 0]);
+  // Dramatic cinematic transforms — hero zooms out and recedes behind a dark scrim
+  const heroScale = useTransform(heroProgress, [0, 0.6], [1, 0.82]);
+  const heroY = useTransform(heroProgress, [0, 0.6], [0, -80]);
+  const heroOpacity = useTransform(heroProgress, [0, 0.5], [1, 0]);
+  const heroOverlayOpacity = useTransform(heroProgress, [0, 0.6], [0, 0.5]);
 
   const navLinks = [
     { name: 'Practicum', href: '#practicum' },
@@ -215,10 +217,10 @@ export const App: React.FC = () => {
       {/* ========================================================================= */}
       <div ref={heroWrapperRef} className="relative" style={{ height: 'calc(200vh - 4rem)' }}>
         {/* Sticky hero viewport — pinned while scrolling through the wrapper */}
-        <div className="sticky top-16 h-[calc(100vh-4rem)] overflow-hidden">
+        <div className="sticky top-16 h-[calc(100vh-4rem)] overflow-hidden bg-[#09090B]">
           <motion.div
-            style={{ scale: heroScale, opacity: heroOpacity }}
-            className="relative w-full h-full flex flex-col justify-center items-center bg-[#FFFFFF]"
+            style={{ scale: heroScale, y: heroY, opacity: heroOpacity }}
+            className="relative w-full h-full flex flex-col justify-center items-center bg-[#FFFFFF] origin-center rounded-b-[24px]"
           >
             {/* React Bits Pro Blinking Squares Background */}
             <div className="absolute inset-0 z-0 pointer-events-none">
@@ -291,15 +293,21 @@ export const App: React.FC = () => {
               </div>
             </div>
           </motion.div>
+
+          {/* Dark scrim — fades in over hero as it recedes, creating depth */}
+          <motion.div
+            style={{ opacity: heroOverlayOpacity }}
+            className="absolute inset-0 bg-[#09090B] pointer-events-none"
+          />
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* 3. CORE TEACHING SUBJECTS — Slides up over the hero as a sheet            */}
+      {/* 3. CORE TEACHING SUBJECTS — Sweeps up over the hero as a white sheet      */}
       {/* ========================================================================= */}
       <section
         id="practicum"
-        className="relative z-10 w-full py-20 sm:py-24 lg:py-28 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden shadow-[0_-1px_0_0_#e5e5e5]"
+        className="relative z-10 w-full py-20 sm:py-24 lg:py-28 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden rounded-t-[28px] sm:rounded-t-[40px] shadow-[0_-40px_80px_-20px_rgba(0,0,0,0.12)]"
       >
         {/* Dynamic Fluid ASCII Background */}
         <div className="absolute inset-0 z-0 pointer-events-none">
