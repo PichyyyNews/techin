@@ -30,27 +30,27 @@ interface CardLayoutDef {
 
 const DEFAULT_LAYOUTS: CardLayoutDef[] = [
   // 0: Top Left Large Front Card
-  { x: 6, y: 12, z: 120, w: 28, h: 32, rotate: -1 },
+  { x: 8, y: 16, z: 120, w: 23, h: 25, rotate: -1 },
   // 1: Bottom Left Front Card
-  { x: 5, y: 52, z: 90, w: 24, h: 36, rotate: 1 },
+  { x: 8, y: 55, z: 90, w: 20, h: 28, rotate: 1 },
   // 2: Top Center Middle Card
-  { x: 40, y: 13, z: 30, w: 20, h: 26, rotate: -0.5 },
+  { x: 42, y: 17, z: 30, w: 16, h: 20, rotate: -0.5 },
   // 3: Middle Left Deep Card
-  { x: 34, y: 44, z: -200, w: 10, h: 14, rotate: 0 },
+  { x: 35, y: 46, z: -200, w: 8, h: 11, rotate: 0 },
   // 4: Center Low Deep Card
-  { x: 30, y: 64, z: -100, w: 10, h: 14, rotate: 1 },
+  { x: 33, y: 65, z: -100, w: 8, h: 11, rotate: 1 },
   // 5: Bottom Center Mid-Front Card
-  { x: 43, y: 66, z: 70, w: 14, h: 24, rotate: -1 },
+  { x: 43, y: 64, z: 70, w: 13, h: 19, rotate: -1 },
   // 6: Top Right Large Front Card
-  { x: 66, y: 11, z: 130, w: 27, h: 32, rotate: 1 },
+  { x: 68, y: 15, z: 130, w: 22, h: 25, rotate: 1 },
   // 7: Mid Right Deep Card
-  { x: 64, y: 44, z: -220, w: 12, h: 15, rotate: 0 },
+  { x: 66, y: 46, z: -220, w: 9, h: 12, rotate: 0 },
   // 8: Right Center Mid Card
-  { x: 77, y: 48, z: -80, w: 15, h: 18, rotate: -1 },
+  { x: 78, y: 49, z: -80, w: 12, h: 14, rotate: -1 },
   // 9: Bottom Right Small Deep Card
-  { x: 65, y: 66, z: -160, w: 9, h: 12, rotate: 1 },
+  { x: 67, y: 66, z: -160, w: 7, h: 9, rotate: 1 },
   // 10: Bottom Right Large Front Card
-  { x: 71, y: 56, z: 100, w: 23, h: 32, rotate: 1 },
+  { x: 72, y: 56, z: 100, w: 19, h: 26, rotate: 1 },
 ];
 
 const DEFAULT_IMAGES = [
