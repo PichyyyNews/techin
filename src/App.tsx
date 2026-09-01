@@ -19,18 +19,16 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Sticky Hero Reveal: hero stays pinned, next section slides over it
+  // Sticky Hero: only the CONTENT fades and drifts — background stays full-screen
   const heroWrapperRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroWrapperRef,
     offset: ['start start', 'end start'],
   });
 
-  // Dramatic cinematic transforms — hero zooms out and recedes behind a dark scrim
-  const heroScale = useTransform(heroProgress, [0, 0.6], [1, 0.82]);
-  const heroY = useTransform(heroProgress, [0, 0.6], [0, -80]);
-  const heroOpacity = useTransform(heroProgress, [0, 0.5], [1, 0]);
-  const heroOverlayOpacity = useTransform(heroProgress, [0, 0.6], [0, 0.5]);
+  // Content-only transforms — text fades out and drifts up, background untouched
+  const heroContentOpacity = useTransform(heroProgress, [0, 0.5], [1, 0]);
+  const heroContentY = useTransform(heroProgress, [0, 0.5], [0, -60]);
 
   const navLinks = [
     { name: 'Practicum', href: '#practicum' },
@@ -216,98 +214,89 @@ export const App: React.FC = () => {
       {/*    slides up over it like a sheet as you scroll.                          */}
       {/* ========================================================================= */}
       <div ref={heroWrapperRef} className="relative" style={{ height: 'calc(200vh - 4rem)' }}>
-        {/* Sticky hero viewport — pinned while scrolling through the wrapper */}
-        <div className="sticky top-16 h-[calc(100vh-4rem)] overflow-hidden bg-[#09090B]">
+        {/* Sticky hero viewport — pinned while scrolling, background stays full */}
+        <div className="sticky top-16 h-[calc(100vh-4rem)] overflow-hidden bg-[#FFFFFF]">
+
+          {/* Background stays STATIC — no transforms, always full viewport */}
+          <div className="absolute inset-0 z-0 pointer-events-none">
+            <BlinkingSquares
+              direction="right"
+              gridSize={16}
+              squareSize={0.55}
+              fadeStart={0.35}
+              fadeEnd={1.00}
+              falloff={1.25}
+              minBrightness={0.55}
+              twinkleSpeed={2.05}
+              twinkleStrength={0.94}
+              intensity={1.00}
+              opacity={1.00}
+              squareColor="#000000"
+              background="#FFFFFF"
+            />
+          </div>
+
+          {/* CONTENT ONLY gets motion — fades out and drifts upward */}
           <motion.div
-            style={{ scale: heroScale, y: heroY, opacity: heroOpacity }}
-            className="relative w-full h-full flex flex-col justify-center items-center bg-[#FFFFFF] origin-center rounded-b-[24px]"
+            style={{ opacity: heroContentOpacity, y: heroContentY }}
+            className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full flex items-center"
           >
-            {/* React Bits Pro Blinking Squares Background */}
-            <div className="absolute inset-0 z-0 pointer-events-none">
-              <BlinkingSquares
-                direction="right"
-                gridSize={16}
-                squareSize={0.55}
-                fadeStart={0.35}
-                fadeEnd={1.00}
-                falloff={1.25}
-                minBrightness={0.55}
-                twinkleSpeed={2.05}
-                twinkleStrength={0.94}
-                intensity={1.00}
-                opacity={1.00}
-                squareColor="#000000"
-                background="#FFFFFF"
-              />
-            </div>
-
-            {/* Hero Content Container (2 Columns on Desktop) */}
-            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 sm:py-16">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full py-12 sm:py-16">
+              
+              {/* Left Column: Headlines & CTA (7 Cols) */}
+              <div className="lg:col-span-7 max-w-2xl py-4 sm:py-6">
                 
-                {/* Left Column: Headlines & CTA (7 Cols) */}
-                <div className="lg:col-span-7 max-w-2xl py-4 sm:py-6">
-                  
-                  {/* Main Headline with ReactBits TextType Component */}
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#09090B] leading-[1.15] [text-wrap:balance]">
-                    <TextType
-                      text="Teaching Practicum Performance & Activity Log"
-                      typingSpeed={65}
-                      loop={false}
-                      showCursor={true}
-                      cursorCharacter="|"
-                      cursorClassName="text-neutral-400 font-light"
-                    />
-                  </h1>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#09090B] leading-[1.15] [text-wrap:balance]">
+                  <TextType
+                    text="Teaching Practicum Performance & Activity Log"
+                    typingSpeed={65}
+                    loop={false}
+                    showCursor={true}
+                    cursorCharacter="|"
+                    cursorClassName="text-neutral-400 font-light"
+                  />
+                </h1>
 
-                  {/* Sub-headline */}
-                  <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-neutral-600 leading-relaxed font-normal max-w-xl [text-wrap:balance]">
-                    Track daily teaching operations, lesson plans, and educational innovations.
-                  </p>
+                <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-neutral-600 leading-relaxed font-normal max-w-xl [text-wrap:balance]">
+                  Track daily teaching operations, lesson plans, and educational innovations.
+                </p>
 
-                  {/* CTA Button Group */}
-                  <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
-                    <a
-                      href="#logs"
-                      className="inline-flex items-center justify-center gap-2 bg-neutral-900/10 backdrop-blur-sm hover:bg-neutral-900/20 text-[#09090B] text-sm font-medium px-6 py-3 rounded-md transition-all border border-neutral-200/60 group w-full sm:w-auto min-h-[44px]"
-                    >
-                      <span>Explore Activity Log</span>
-                      <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
-                    </a>
+                <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                  <a
+                    href="#logs"
+                    className="inline-flex items-center justify-center gap-2 bg-neutral-900/10 backdrop-blur-sm hover:bg-neutral-900/20 text-[#09090B] text-sm font-medium px-6 py-3 rounded-md transition-all border border-neutral-200/60 group w-full sm:w-auto min-h-[44px]"
+                  >
+                    <span>Explore Activity Log</span>
+                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
+                  </a>
 
-                    <a
-                      href="#plans"
-                      className="inline-flex items-center justify-center gap-2 bg-white/40 backdrop-blur-sm hover:bg-white/60 text-neutral-700 hover:text-[#09090B] text-sm font-medium px-6 py-3 rounded-md transition-all border border-neutral-200/40 w-full sm:w-auto min-h-[44px]"
-                    >
-                      <span>View Lesson Plans</span>
-                    </a>
-                  </div>
-
-                </div>
-
-                {/* Right Column: 3D Interactive Lanyard Badge */}
-                <div className="lg:col-span-5 w-full flex items-center justify-center -mt-8 sm:-mt-12 lg:-mt-16">
-                  <BadgeCanvas />
+                  <a
+                    href="#plans"
+                    className="inline-flex items-center justify-center gap-2 bg-white/40 backdrop-blur-sm hover:bg-white/60 text-neutral-700 hover:text-[#09090B] text-sm font-medium px-6 py-3 rounded-md transition-all border border-neutral-200/40 w-full sm:w-auto min-h-[44px]"
+                  >
+                    <span>View Lesson Plans</span>
+                  </a>
                 </div>
 
               </div>
+
+              {/* Right Column: 3D Interactive Lanyard Badge */}
+              <div className="lg:col-span-5 w-full flex items-center justify-center">
+                <BadgeCanvas />
+              </div>
+
             </div>
           </motion.div>
 
-          {/* Dark scrim — fades in over hero as it recedes, creating depth */}
-          <motion.div
-            style={{ opacity: heroOverlayOpacity }}
-            className="absolute inset-0 bg-[#09090B] pointer-events-none"
-          />
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* 3. CORE TEACHING SUBJECTS — Sweeps up over the hero as a white sheet      */}
+      {/* 3. CORE TEACHING SUBJECTS — White sheet sweeps up over hero background    */}
       {/* ========================================================================= */}
       <section
         id="practicum"
-        className="relative z-10 w-full py-20 sm:py-24 lg:py-28 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden rounded-t-[28px] sm:rounded-t-[40px] shadow-[0_-40px_80px_-20px_rgba(0,0,0,0.12)]"
+        className="relative z-10 w-full py-20 sm:py-24 lg:py-28 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden rounded-t-[28px] sm:rounded-t-[40px] shadow-[0_-40px_80px_-20px_rgba(0,0,0,0.08)]"
       >
         {/* Dynamic Fluid ASCII Background */}
         <div className="absolute inset-0 z-0 pointer-events-none">
