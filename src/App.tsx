@@ -230,8 +230,8 @@ export const App: React.FC = () => {
               </div>
 
               {/* Desktop-only Right Column 3D Badge */}
-              <div className="hidden lg:flex lg:col-span-5 w-full items-start justify-center -mt-20 sm:-mt-28 lg:-mt-36">
-                <BadgeCanvas className="h-[560px] lg:h-[640px]" />
+              <div className="hidden lg:flex lg:col-span-5 w-full items-center justify-center -mt-4 lg:-mt-6">
+                <BadgeCanvas className="h-[520px] sm:h-[580px] lg:h-[640px]" />
               </div>
 
             </div>
