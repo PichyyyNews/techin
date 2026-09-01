@@ -17,6 +17,7 @@ extend({ MeshLineGeometry, MeshLineMaterial });
 
 useGLTF.preload('/tag.glb');
 useTexture.preload('/band.jpg');
+useTexture.preload('/badge-custom.png');
 
 function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: number }) {
   const band = useRef<THREE.Mesh & { geometry: { setPoints: (pts: THREE.Vector3[]) => void } }>(null!);
@@ -53,6 +54,9 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
   const { nodes, materials } = gltf;
 
   const texture = useTexture('/band.jpg');
+  const cardTexture = useTexture('/badge-custom.png');
+  cardTexture.flipY = false;
+  cardTexture.colorSpace = THREE.SRGBColorSpace;
   const { width, height } = useThree((state) => state.size);
 
   const [curve] = useState(
@@ -178,12 +182,12 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
           >
             <mesh geometry={nodes.card.geometry}>
               <meshPhysicalMaterial
-                map={materials.base.map}
+                map={cardTexture}
                 map-anisotropy={16}
                 clearcoat={1}
                 clearcoatRoughness={0.15}
                 roughness={0.3}
-                metalness={0.5}
+                metalness={0.2}
               />
             </mesh>
             <mesh
