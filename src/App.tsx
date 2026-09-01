@@ -280,8 +280,8 @@ export const App: React.FC = () => {
 
               </div>
 
-              {/* Right Column: 3D Interactive Lanyard Badge */}
-              <div className="lg:col-span-5 w-full flex items-center justify-center">
+              {/* Right Column: 3D Interactive Lanyard Badge — pulled up to hang from navbar */}
+              <div className="lg:col-span-5 w-full flex items-start justify-center -mt-8 sm:-mt-12 lg:-mt-16">
                 <BadgeCanvas />
               </div>
 
@@ -292,11 +292,11 @@ export const App: React.FC = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* 3. CORE TEACHING SUBJECTS — White sheet sweeps up over hero background    */}
+      {/* 3. CORE TEACHING SUBJECTS — White sheet floats up over hero background    */}
       {/* ========================================================================= */}
       <section
         id="practicum"
-        className="relative z-10 w-full py-20 sm:py-24 lg:py-28 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden rounded-t-[28px] sm:rounded-t-[40px] shadow-[0_-40px_80px_-20px_rgba(0,0,0,0.08)]"
+        className="relative z-10 w-full py-20 sm:py-24 lg:py-28 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden rounded-t-[28px] sm:rounded-t-[40px] -mt-10 shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.1)]"
       >
         {/* Dynamic Fluid ASCII Background */}
         <div className="absolute inset-0 z-0 pointer-events-none">
