@@ -254,7 +254,7 @@ export const App: React.FC = () => {
                 className="absolute inset-0 w-full h-full bg-[#FFFFFF] flex flex-col justify-center px-4 sm:px-6 lg:px-8 py-4 sm:py-6 overflow-hidden z-10"
               >
                 {/* Dynamic Fluid ASCII Background */}
-                <div className="absolute inset-0 z-0 pointer-events-none">
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-50">
                   <LiquidAscii
                     speed={0.90}
                     cellSize={15}
@@ -267,9 +267,9 @@ export const App: React.FC = () => {
                     pressureIters={30}
                     separationIters={3}
                     autoWave={true}
-                    color="#000000"
-                    backgroundColor="#FFFFFF"
-                    opacity={1.00}
+                    color="#525252"
+                    backgroundColor="transparent"
+                    opacity={0.70}
                   />
                 </div>
 
