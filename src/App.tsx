@@ -31,15 +31,14 @@ export const App: React.FC = () => {
   const heroContentOpacity = useTransform(heroProgress, [0, 0.5], [1, 0]);
   const heroContentY = useTransform(heroProgress, [0, 0.5], [0, -60]);
 
-  // Section 4: Institution & Environment scroll-driven Right-to-Left slide-in
-  const institutionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: institutionScroll } = useScroll({
-    target: institutionRef,
-    offset: ['start end', 'start center'],
+  // Two-section Scroll Stage: Practicum (Underlayer) + Institution (Upper layer sliding in from Right to Left)
+  const twoSectionsContainerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: twoSectionsProgress } = useScroll({
+    target: twoSectionsContainerRef,
+    offset: ['start start', 'end end'],
   });
 
-  const institutionSlideX = useTransform(institutionScroll, [0, 1], ['25%', '0%']);
-  const institutionOpacity = useTransform(institutionScroll, [0, 0.7], [0.2, 1]);
+  const institutionSlideX = useTransform(twoSectionsProgress, [0.15, 0.75], ['100%', '0%']);
 
   const navLinks = [
     { name: 'Practicum', href: '#practicum' },
@@ -245,189 +244,191 @@ export const App: React.FC = () => {
           {/* Spacer: 100vh so hero is visible for a full screen before sections cover it */}
           <div className="h-[100vh] pointer-events-none" />
 
-          {/* 3. CORE TEACHING SUBJECTS */}
-          <section
-            id="practicum"
-            className="relative pointer-events-auto w-full py-20 sm:py-24 lg:py-28 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden rounded-t-[28px] sm:rounded-t-[40px] shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.1)]"
-          >
-            {/* Dynamic Fluid ASCII Background */}
-            <div className="absolute inset-0 z-0 pointer-events-none">
-              <LiquidAscii
-                speed={0.90}
-                cellSize={15}
-                gravity={-25}
-                flipRatio={0.30}
-                fillHeight={0.30}
-                overRelaxation={1.24}
-                cursorRadius={0.25}
-                cursorForce={66}
-                pressureIters={30}
-                separationIters={3}
-                autoWave={true}
-                color="#000000"
-                backgroundColor="#FFFFFF"
-                opacity={1.00}
-              />
-            </div>
-
-            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* 3 & 4. DUAL LAYERED SCROLL STAGE: PRACTICUM (Underlayer) + INSTITUTION (Upper Layer Right-to-Left Slide-In) */}
+          <div ref={twoSectionsContainerRef} className="relative h-[260vh] pointer-events-auto">
+            <div className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden rounded-t-[28px] sm:rounded-t-[40px] shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.12)]">
               
-              {/* Section Header */}
-              <div className="max-w-3xl ml-auto text-right mb-12 sm:mb-16">
-                <p className="font-mono text-xs text-neutral-400 uppercase tracking-widest mb-2">
-                  Curriculum
-                </p>
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
-                  <TextType
-                    text="Teaching Practicum Courses"
-                    typingSpeed={65}
-                    loop={false}
-                    showCursor={true}
-                    cursorCharacter="|"
-                    cursorClassName="text-neutral-400 font-light"
-                    startOnVisible={true}
-                  />
-                </h2>
-                <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed font-normal ml-auto max-w-2xl">
-                  Active learning methodologies focused on practical software engineering, computational thinking, and digital innovation.
-                </p>
-              </div>
-
-              {/* 3x Depth Cards Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 justify-items-center">
-                
-                {/* Card 1: Web Application Development */}
-                <div className="w-full max-w-[380px] flex justify-center">
-                  <DepthCard
-                    width="100%"
-                    height={440}
-                    title="Web Application Development"
-                    description="Modern web application architecture, deep UI/UX design systems, and frontend engineering with React, TypeScript, and state management."
-                    maxRotation={16}
-                    maxTranslation={18}
-                    spotlight={true}
-                    layers={[
-                      {
-                        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
-                        depth: 0.9,
-                      },
-                      {
-                        image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
-                        depth: 1.4,
-                      },
-                    ]}
+              {/* UNDERLAYER (z-10): 3. CORE TEACHING SUBJECTS */}
+              <section
+                id="practicum"
+                className="absolute inset-0 w-full h-full bg-[#FFFFFF] overflow-y-auto pt-10 sm:pt-14 lg:pt-16 pb-12 sm:pb-16 z-10"
+              >
+                {/* Dynamic Fluid ASCII Background */}
+                <div className="absolute inset-0 z-0 pointer-events-none">
+                  <LiquidAscii
+                    speed={0.90}
+                    cellSize={15}
+                    gravity={-25}
+                    flipRatio={0.30}
+                    fillHeight={0.30}
+                    overRelaxation={1.24}
+                    cursorRadius={0.25}
+                    cursorForce={66}
+                    pressureIters={30}
+                    separationIters={3}
+                    autoWave={true}
+                    color="#000000"
+                    backgroundColor="#FFFFFF"
+                    opacity={1.00}
                   />
                 </div>
 
-                {/* Card 2: Computer Programming */}
-                <div className="w-full max-w-[380px] flex justify-center">
-                  <DepthCard
-                    width="100%"
-                    height={440}
-                    title="Computer Programming"
-                    description="Foundations of computational thinking, data structures, and systematic algorithmic problem-solving using Python in real-world scenarios."
-                    maxRotation={16}
-                    maxTranslation={18}
-                    spotlight={true}
-                    layers={[
-                      {
-                        image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80",
-                        depth: 0.9,
-                      },
-                      {
-                        image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80",
-                        depth: 1.4,
-                      },
-                    ]}
+                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                  {/* Section Header */}
+                  <div className="max-w-3xl ml-auto text-right mb-8 sm:mb-12">
+                    <p className="font-mono text-xs text-neutral-400 uppercase tracking-widest mb-2">
+                      Curriculum
+                    </p>
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
+                      <TextType
+                        text="Teaching Practicum Courses"
+                        typingSpeed={65}
+                        loop={false}
+                        showCursor={true}
+                        cursorCharacter="|"
+                        cursorClassName="text-neutral-400 font-light"
+                        startOnVisible={true}
+                      />
+                    </h2>
+                    <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed font-normal ml-auto max-w-2xl">
+                      Active learning methodologies focused on practical software engineering, computational thinking, and digital innovation.
+                    </p>
+                  </div>
+
+                  {/* 3x Depth Cards Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 justify-items-center">
+                    {/* Card 1: Web Application Development */}
+                    <div className="w-full max-w-[380px] flex justify-center">
+                      <DepthCard
+                        width="100%"
+                        height={440}
+                        title="Web Application Development"
+                        description="Modern web application architecture, deep UI/UX design systems, and frontend engineering with React, TypeScript, and state management."
+                        maxRotation={16}
+                        maxTranslation={18}
+                        spotlight={true}
+                        layers={[
+                          {
+                            image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
+                            depth: 0.9,
+                          },
+                          {
+                            image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
+                            depth: 1.4,
+                          },
+                        ]}
+                      />
+                    </div>
+
+                    {/* Card 2: Computer Programming */}
+                    <div className="w-full max-w-[380px] flex justify-center">
+                      <DepthCard
+                        width="100%"
+                        height={440}
+                        title="Computer Programming"
+                        description="Foundations of computational thinking, data structures, and systematic algorithmic problem-solving using Python in real-world scenarios."
+                        maxRotation={16}
+                        maxTranslation={18}
+                        spotlight={true}
+                        layers={[
+                          {
+                            image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80",
+                            depth: 0.9,
+                          },
+                          {
+                            image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80",
+                            depth: 1.4,
+                          },
+                        ]}
+                      />
+                    </div>
+
+                    {/* Card 3: Microcontroller & IoT */}
+                    <div className="w-full max-w-[380px] flex justify-center">
+                      <DepthCard
+                        width="100%"
+                        height={440}
+                        title="Microcontroller & IoT Systems"
+                        description="Hardware sensor interfacing, embedded systems design with ESP32/Arduino, and networked IoT telemetry for innovative solutions."
+                        maxRotation={16}
+                        maxTranslation={18}
+                        spotlight={true}
+                        layers={[
+                          {
+                            image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+                            depth: 0.9,
+                          },
+                          {
+                            image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80",
+                            depth: 1.4,
+                          },
+                        ]}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* UPPER LAYER (z-20): 4. TEACHING INSTITUTION & ENVIRONMENT (SLIDES FROM RIGHT TO LEFT OVER PRACTICUM) */}
+              <motion.section
+                id="institution"
+                style={{ x: institutionSlideX }}
+                className="absolute inset-0 w-full h-full bg-[#FAFAFA] border-l border-neutral-200/90 shadow-[-40px_0_80px_rgba(0,0,0,0.18)] rounded-l-[32px] sm:rounded-l-[48px] overflow-y-auto pt-10 sm:pt-14 lg:pt-16 pb-12 sm:pb-16 z-20 will-change-transform"
+              >
+                {/* Background WebGL Light Rays */}
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+                  <LightRays
+                    raysOrigin="top-center"
+                    raysColor="#000000"
+                    raysSpeed={1.2}
+                    lightSpread={1.2}
+                    rayLength={2.0}
+                    followMouse={true}
+                    mouseInfluence={0.15}
+                    noiseAmount={0.05}
+                    distortion={0.02}
+                    lightMode={true}
                   />
                 </div>
 
-                {/* Card 3: Microcontroller & IoT */}
-                <div className="w-full max-w-[380px] flex justify-center">
-                  <DepthCard
-                    width="100%"
-                    height={440}
-                    title="Microcontroller & IoT Systems"
-                    description="Hardware sensor interfacing, embedded systems design with ESP32/Arduino, and networked IoT telemetry for innovative solutions."
-                    maxRotation={16}
-                    maxTranslation={18}
-                    spotlight={true}
-                    layers={[
-                      {
-                        image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
-                        depth: 0.9,
-                      },
-                      {
-                        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80",
-                        depth: 1.4,
-                      },
-                    ]}
-                  />
+                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-10">
+                  <div className="max-w-3xl">
+                    <p className="font-mono text-xs text-neutral-400 uppercase tracking-widest mb-2">
+                      Environment & Facilities
+                    </p>
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
+                      <TextType
+                        text="Practicum Institution & Infrastructure"
+                        typingSpeed={65}
+                        loop={false}
+                        showCursor={true}
+                        cursorCharacter="|"
+                        cursorClassName="text-neutral-400 font-light"
+                        startOnVisible={true}
+                      />
+                    </h2>
+                    <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed font-normal max-w-2xl">
+                      Specialized computing laboratories, project development studios, and student mentorship spaces supporting active vocational learning.
+                    </p>
+                  </div>
                 </div>
 
-              </div>
+                {/* Parallax Cards 3D Display */}
+                <div className="relative z-10 w-full px-2 sm:px-4 lg:px-6">
+                  <ParallaxCards
+                    images={institutionImages}
+                    perspective={2500}
+                    mouseSensitivity={3}
+                    animationDuration={1.2}
+                    enableDepthFog={true}
+                    fogIntensity={1}
+                    enableMagneticAttraction={true}
+                    magneticStrength={50}
+                  />
+                </div>
+              </motion.section>
+
             </div>
-          </section>
-
-          {/* 4. TEACHING INSTITUTION & ENVIRONMENT */}
-          <div ref={institutionRef} className="relative w-full overflow-x-clip">
-            <motion.section
-              id="institution"
-              style={{ x: institutionSlideX, opacity: institutionOpacity }}
-              className="relative pointer-events-auto w-full pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-24 border-b border-neutral-200 bg-[#FAFAFA] overflow-hidden rounded-t-[28px] sm:rounded-t-[40px] shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.08)]"
-            >
-              {/* Background WebGL Light Rays */}
-              <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
-                <LightRays
-                  raysOrigin="top-center"
-                  raysColor="#000000"
-                  raysSpeed={1.2}
-                  lightSpread={1.2}
-                  rayLength={2.0}
-                  followMouse={true}
-                  mouseInfluence={0.15}
-                  noiseAmount={0.05}
-                  distortion={0.02}
-                  lightMode={true}
-                />
-              </div>
-
-              <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 sm:mb-14">
-                <div className="max-w-3xl">
-                  <p className="font-mono text-xs text-neutral-400 uppercase tracking-widest mb-2">
-                    Environment & Facilities
-                  </p>
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
-                    <TextType
-                      text="Practicum Institution & Infrastructure"
-                      typingSpeed={65}
-                      loop={false}
-                      showCursor={true}
-                      cursorCharacter="|"
-                      cursorClassName="text-neutral-400 font-light"
-                      startOnVisible={true}
-                    />
-                  </h2>
-                  <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed font-normal max-w-2xl">
-                    Specialized computing laboratories, project development studios, and student mentorship spaces supporting active vocational learning.
-                  </p>
-                </div>
-              </div>
-
-              {/* Parallax Cards 3D Display */}
-              <div className="relative z-10 w-full px-2 sm:px-4 lg:px-6">
-                <ParallaxCards
-                  images={institutionImages}
-                  perspective={2500}
-                  mouseSensitivity={3}
-                  animationDuration={1.2}
-                  enableDepthFog={true}
-                  fogIntensity={1}
-                  enableMagneticAttraction={true}
-                  magneticStrength={50}
-                />
-              </div>
-            </motion.section>
           </div>
 
           {/* 5. FOOTER */}
