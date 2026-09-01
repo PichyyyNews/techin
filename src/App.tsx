@@ -5,6 +5,7 @@ import { TextType } from './components/ui/TextType';
 import { BadgeCanvas } from './components/ui/BadgeCanvas';
 import { DepthCard } from './components/ui/DepthCard';
 import { LiquidAscii } from './components/ui/LiquidAscii';
+import { ScrollStack, ScrollStackItem } from './components/ui/ScrollStack';
 
 export const App: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -19,11 +20,95 @@ export const App: React.FC = () => {
 
   const navLinks = [
     { name: 'Practicum', href: '#practicum' },
+    { name: 'Institution', href: '#institution' },
     { name: 'Activity Logs', href: '#logs' },
     { name: 'Lesson Plans', href: '#lesson-plans' },
     { name: 'Classroom Research', href: '#research' },
     { name: 'Innovations', href: '#innovations' },
     { name: 'Evaluation', href: '#evaluation' },
+  ];
+
+  const institutionItems: ScrollStackItem[] = [
+    {
+      id: 1,
+      eyebrow: 'Practicum Institution / 01',
+      tag: 'Vocational & Technical Education',
+      title: 'Department of Information Technology & Computer Business',
+      subtitle: 'แผนกวิชาคอมพิวเตอร์ธุรกิจและเทคโนโลยีสารสนเทศ',
+      description:
+        'ศูนย์กลางการจัดการศึกษาด้านวิชาชีพเทคโนโลยี มุ่งเน้นการบ่มเพาะทักษะวิศวกรรมซอฟต์แวร์ การจัดการฐานข้อมูล และระบบสารสนเทศองค์กรตามมาตรฐานวิชาชีพยุคดิจิทัล',
+      image:
+        'https://images.unsplash.com/photo-1562774053-701939374585?w=900&auto=format&fit=crop&q=80',
+      stats: [
+        { value: '600+', label: 'Students' },
+        { value: '100%', label: 'Hands-on Lab' },
+        { value: 'สอศ.', label: 'Vocational Standard' },
+      ],
+      action: {
+        label: 'View Department Details',
+        href: '#logs',
+      },
+    },
+    {
+      id: 2,
+      eyebrow: 'Specialized Facilities / 02',
+      tag: 'High-Performance Infrastructure',
+      title: 'Advanced Computing & Embedded IoT Laboratory',
+      subtitle: 'ศูนย์ปฏิบัติการคอมพิวเตอร์และนวัตกรรมสมองกลฝังตัว',
+      description:
+        'ห้องปฏิบัติการคอมพิวเตอร์ความเร็วสูง พร้อมระบบเครือข่ายความเร็วสูง แท่นทดลองอุปกรณ์ IoT (ESP32/Arduino) และสภาพแวดล้อม Local Cloud Sandbox สำหรับการเรียนรู้ Fullstack Development',
+      image:
+        'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900&auto=format&fit=crop&q=80',
+      stats: [
+        { value: '40+', label: 'High-Spec Workstations' },
+        { value: 'Gigabit', label: 'Network Fabric' },
+        { value: '24/7', label: 'Testbed Availability' },
+      ],
+      action: {
+        label: 'Lab Infrastructure',
+        href: '#innovations',
+      },
+    },
+    {
+      id: 3,
+      eyebrow: 'Learning Methodology / 03',
+      tag: 'Active Practicum & PBL',
+      title: 'Project-Based Learning & Digital Innovation Studio',
+      subtitle: 'สตูดิโอจัดการเรียนรู้เชิงรุกและพัฒนาโครงงานบูรณาการ',
+      description:
+        'กระบวนการจัดการเรียนรู้ที่เน้นผู้เรียนเป็นศูนย์กลาง สร้างผลงานจริงที่ตอบสนองโจทย์ชุมชนและสถานประกอบการ เช่น ระบบลงเวลาอัตโนมัติ และโมบายล์แอปพลิเคชันบริการข้อมูล',
+      image:
+        'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=900&auto=format&fit=crop&q=80',
+      stats: [
+        { value: '12+', label: 'Applied Projects' },
+        { value: '4', label: 'Core Courses' },
+        { value: 'Active', label: 'Constructivism Method' },
+      ],
+      action: {
+        label: 'Explore Student Projects',
+        href: '#research',
+      },
+    },
+    {
+      id: 4,
+      eyebrow: 'Student Mentorship / 04',
+      tag: 'Vocational Skills Excellence',
+      title: 'Skills Competition & Academic Coaching Center',
+      subtitle: 'ศูนย์พัฒนาทักษะวิชาชีพและการให้คำปรึกษาโครงงานนวัตกรรม',
+      description:
+        'การให้คำปรึกษาทางเทคนิคแบบรายกลุ่ม (Mentorship) ฝึกฝนและเตรียมนักศึกษาเข้าร่วมการแข่งขันทักษะวิชาชีพด้านการเขียนโปรแกรมและการพัฒนาเว็บไซต์ในระดับภาคและระดับชาติ',
+      image:
+        'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop&q=80',
+      stats: [
+        { value: '98%', label: 'Evaluation Rating' },
+        { value: '10+', label: 'Awards & Honors' },
+        { value: '1-on-1', label: 'Coaching Format' },
+      ],
+      action: {
+        label: 'Mentorship Summary',
+        href: '#evaluation',
+      },
+    },
   ];
 
   return (
@@ -319,9 +404,50 @@ export const App: React.FC = () => {
         </div>
       </section>
 
-       {/* ========================================================================= */}
-       {/* 4. FOOTER (RESPONSIVE)                                                    */}
-       {/* ========================================================================= */}
+      {/* ========================================================================= */}
+      {/* 4. TEACHING INSTITUTION & ENVIRONMENT (REACT BITS PRO SCROLL STACK)       */}
+      {/* ========================================================================= */}
+      <section id="institution" className="relative w-full pt-16 sm:pt-20 lg:pt-24 pb-8 border-b border-neutral-200 bg-[#FAFAFA]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-12">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-mono bg-neutral-900/5 text-neutral-800 border border-neutral-200 mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#09090B]" />
+              <span>Teaching Environment & Practicum Base</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
+              <TextType
+                text="Practicum Institution & Learning Spaces"
+                typingSpeed={65}
+                loop={false}
+                showCursor={true}
+                cursorCharacter="|"
+                cursorClassName="text-neutral-400 font-light"
+                startOnVisible={true}
+              />
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed font-normal max-w-2xl">
+              Explore the academic departments, specialized computer laboratories, active learning ecosystems, and student development facilities where I conduct my teaching practicum.
+            </p>
+          </div>
+        </div>
+
+        {/* Pinned Scroll Stack Cards */}
+        <ScrollStack
+          items={institutionItems}
+          variant="stack"
+          cardWidth={940}
+          cardHeight={480}
+          peek={28}
+          scaleStep={0.04}
+          blur={3}
+          dim={0.16}
+          scrollLength={1}
+        />
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 5. FOOTER (RESPONSIVE)                                                    */}
+      {/* ========================================================================= */}
       <footer className="w-full bg-white py-6 px-4 sm:px-6 lg:px-8 text-xs text-neutral-500 font-mono">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
