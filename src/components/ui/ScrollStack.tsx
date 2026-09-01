@@ -173,7 +173,7 @@ const StackCardItem: React.FC<StackCardItemProps> = ({
   index,
   totalCount,
   scrollYProgress,
-  variant,
+  variant: _variant,
   peek,
   scaleStep,
   blur,
