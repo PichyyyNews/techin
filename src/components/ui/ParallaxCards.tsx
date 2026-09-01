@@ -45,7 +45,7 @@ export const ParallaxCards: React.FC<ParallaxCardsProps> = ({
   className = ''
 }) => {
   return (
-    <div className={cn('w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 justify-items-center', className)}>
+    <div className={cn('w-full grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto justify-items-center', className)}>
       {items.map((item, index) => (
         <ParallaxCardSingle
           key={item.id || index}
@@ -130,7 +130,7 @@ const ParallaxCardSingle: React.FC<ParallaxCardSingleProps> = ({
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full max-w-[400px] h-[480px] rounded-xl cursor-pointer select-none group"
+      className="relative w-full max-w-[460px] h-[500px] rounded-xl cursor-pointer select-none group"
       style={{ perspective: `${perspective}px` }}
     >
       <motion.div
