@@ -6,7 +6,9 @@ import { TextType } from './components/ui/TextType';
 import { BadgeCanvas } from './components/ui/BadgeCanvas';
 import { DepthCard } from './components/ui/DepthCard';
 import { LiquidAscii } from './components/ui/LiquidAscii';
-import { ScrollStack, ScrollStackItem } from './components/ui/ScrollStack';
+import { ParallaxCards } from './components/ui/ParallaxCards';
+import { LightRays } from './components/ui/LightRays';
+import { ScrollStackItem } from './components/ui/ScrollStack';
 
 export const App: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -428,8 +430,24 @@ export const App: React.FC = () => {
           </section>
 
           {/* 4. TEACHING INSTITUTION & ENVIRONMENT */}
-          <section id="institution" className="relative pointer-events-auto w-full pt-16 sm:pt-20 lg:pt-24 pb-8 border-b border-neutral-200 bg-[#FAFAFA]">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-12">
+          <section id="institution" className="relative pointer-events-auto w-full pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-24 border-b border-neutral-200 bg-[#FAFAFA] overflow-hidden">
+            {/* Background WebGL Light Rays */}
+            <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+              <LightRays
+                raysOrigin="top-center"
+                raysColor="#000000"
+                raysSpeed={1.2}
+                lightSpread={1.2}
+                rayLength={2.0}
+                followMouse={true}
+                mouseInfluence={0.15}
+                noiseAmount={0.05}
+                distortion={0.02}
+                lightMode={true}
+              />
+            </div>
+
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 sm:mb-14">
               <div className="max-w-3xl">
                 <p className="font-mono text-xs text-neutral-400 uppercase tracking-widest mb-2">
                   Environment & Facilities
@@ -451,18 +469,18 @@ export const App: React.FC = () => {
               </div>
             </div>
 
-            {/* Pinned Scroll Stack Cards */}
-            <ScrollStack
-              items={institutionItems}
-              variant="stack"
-              cardWidth={940}
-              cardHeight={480}
-              peek={28}
-              scaleStep={0.04}
-              blur={3}
-              dim={0.16}
-              scrollLength={1}
-            />
+            {/* Parallax Cards Display */}
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <ParallaxCards
+                items={institutionItems}
+                perspective={1200}
+                mouseSensitivity={18}
+                animationDuration={0.4}
+                depthFog={true}
+                magneticAttraction={true}
+                spotlight={true}
+              />
+            </div>
           </section>
 
           {/* 5. FOOTER */}
