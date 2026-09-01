@@ -1,19 +1,17 @@
 ﻿import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { cn } from '../../lib/utils';
+import { ArrowUpRight } from 'lucide-react';
 
 export interface ScrollStackItem {
   id?: string | number;
-  eyebrow?: string;
+  code?: string;
+  category?: string;
   title: string;
   subtitle?: string;
   description?: string;
-  body?: string;
   image?: string;
-  accent?: string;
-  tag?: string;
   stats?: Array<{ label: string; value: string }>;
-  icon?: React.ReactNode;
   action?: {
     label: string;
     href: string;
@@ -24,18 +22,16 @@ export interface ScrollStackItem {
 export interface ScrollStackProps {
   items?: ScrollStackItem[];
   children?: React.ReactNode;
-  variant?: 'stack' | 'deck' | 'fade' | 'flip' | 'zoom' | 'reveal';
+  variant?: 'stack' | 'deck' | 'fade' | 'flip' | 'zoom';
   scrollLength?: number;
   peek?: number;
   scaleStep?: number;
   blur?: number;
   dim?: number;
-  smooth?: number;
   depth?: number;
   cardWidth?: number | string;
   cardHeight?: number | string;
   borderRadius?: number;
-  perspective?: number;
   showProgress?: boolean;
   showCounter?: boolean;
   onIndexChange?: (index: number) => void;
@@ -47,15 +43,14 @@ export const ScrollStack: React.FC<ScrollStackProps> = ({
   children,
   variant = 'stack',
   scrollLength = 1,
-  peek = 24,
-  scaleStep = 0.05,
-  blur = 4,
-  dim = 0.2,
+  peek = 22,
+  scaleStep = 0.04,
+  blur = 2,
+  dim = 0.15,
   depth = 3,
-  cardWidth = 920,
-  cardHeight = 460,
-  borderRadius = 16,
-  perspective = 1400,
+  cardWidth = 960,
+  cardHeight = 440,
+  borderRadius = 12,
   showProgress = true,
   showCounter = true,
   onIndexChange,
@@ -89,15 +84,14 @@ export const ScrollStack: React.FC<ScrollStackProps> = ({
       ref={containerRef}
       className={cn('relative w-full', className)}
       style={{
-        height: `${Math.max(count * scrollLength * 90, 150)}vh`,
+        height: `${Math.max(count * scrollLength * 85, 140)}vh`,
       }}
     >
       <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8">
-        {/* Card Stage with 3D Perspective */}
+        {/* Card Stage */}
         <div
           className="relative w-full flex items-center justify-center"
           style={{
-            perspective: `${perspective}px`,
             maxWidth: typeof cardWidth === 'number' ? `${cardWidth}px` : cardWidth,
             height: typeof cardHeight === 'number' ? `${cardHeight}px` : cardHeight,
           }}
@@ -124,25 +118,30 @@ export const ScrollStack: React.FC<ScrollStackProps> = ({
           })}
         </div>
 
-        {/* Bottom Status Rail (Counter & Progress Bar) */}
+        {/* Minimalist Segmented Indicator */}
         {(showProgress || showCounter) && (
-          <div className="mt-8 w-full max-w-sm flex items-center gap-4 text-xs font-mono text-neutral-500 select-none">
+          <div className="mt-8 flex items-center gap-4 text-xs font-mono text-neutral-400 select-none">
             {showCounter && (
-              <div className="flex items-center gap-1 shrink-0 font-semibold text-neutral-900">
-                <span>{String(activeIndex + 1).padStart(2, '0')}</span>
-                <span className="text-neutral-300">/</span>
-                <span className="text-neutral-400">{String(count).padStart(2, '0')}</span>
-              </div>
+              <span className="tracking-widest">
+                [ <span className="text-neutral-900 font-semibold">{String(activeIndex + 1).padStart(2, '0')}</span> / {String(count).padStart(2, '0')} ]
+              </span>
             )}
 
             {showProgress && (
-              <div className="relative flex-1 h-1 bg-neutral-100 rounded-full overflow-hidden border border-neutral-200/50">
-                <motion.div
-                  className="absolute left-0 top-0 bottom-0 bg-[#09090B] rounded-full"
-                  style={{
-                    width: useTransform(scrollYProgress, [0, 1], ['15%', '100%']),
-                  }}
-                />
+              <div className="flex items-center gap-1.5">
+                {Array.from({ length: count }).map((_, i) => (
+                  <div
+                    key={i}
+                    className={cn(
+                      'h-1 rounded-xs transition-all duration-300',
+                      i === activeIndex
+                        ? 'w-6 bg-[#09090B]'
+                        : i < activeIndex
+                        ? 'w-2 bg-neutral-400'
+                        : 'w-2 bg-neutral-200'
+                    )}
+                  />
+                ))}
               </div>
             )}
           </div>
@@ -156,7 +155,7 @@ interface StackCardItemProps {
   index: number;
   totalCount: number;
   scrollYProgress: ReturnType<typeof useScroll>['scrollYProgress'];
-  variant: 'stack' | 'deck' | 'fade' | 'flip' | 'zoom' | 'reveal';
+  variant: 'stack' | 'deck' | 'fade' | 'flip' | 'zoom';
   peek: number;
   scaleStep: number;
   blur: number;
@@ -189,7 +188,7 @@ const StackCardItem: React.FC<StackCardItemProps> = ({
     if (index === 0 && progress <= cardActive) return 0;
     if (progress < cardActive) {
       const enterProgress = (progress - cardStart) / step;
-      return (1 - Math.min(Math.max(enterProgress, 0), 1)) * 120;
+      return (1 - Math.min(Math.max(enterProgress, 0), 1)) * 100;
     }
     const coveredSteps = Math.min((progress - cardActive) / step, totalCount - index);
     return -coveredSteps * peek;
@@ -199,25 +198,22 @@ const StackCardItem: React.FC<StackCardItemProps> = ({
     if (progress <= cardActive) {
       if (variant === 'zoom') {
         const enterProgress = Math.max(0, (progress - cardStart) / step);
-        return 0.9 + enterProgress * 0.1;
+        return 0.94 + enterProgress * 0.06;
       }
       return 1;
     }
     const coveredSteps = Math.min((progress - cardActive) / step, depth);
-    return Math.max(1 - coveredSteps * scaleStep, 0.7);
+    return Math.max(1 - coveredSteps * scaleStep, 0.85);
   });
 
   const opacity = useTransform(scrollYProgress, (progress) => {
     if (index > 0 && progress < cardStart + step * 0.2) {
-      if (variant === 'fade') {
-        return Math.max(0, (progress - cardStart) / (step * 0.8));
-      }
-      return Math.max(0, (progress - cardStart) / (step * 0.5));
+      return Math.max(0, (progress - cardStart) / (step * 0.6));
     }
     if (progress > cardActive) {
       const coveredSteps = (progress - cardActive) / step;
       if (coveredSteps > depth) return 0;
-      return Math.max(1 - coveredSteps * dim, 0.2);
+      return Math.max(1 - coveredSteps * dim, 0.3);
     }
     return 1;
   });
@@ -226,24 +222,6 @@ const StackCardItem: React.FC<StackCardItemProps> = ({
     if (blur === 0 || progress <= cardActive) return 'blur(0px)';
     const coveredSteps = Math.min((progress - cardActive) / step, depth);
     return `blur(${coveredSteps * blur}px)`;
-  });
-
-  const rotateX = useTransform(scrollYProgress, (progress) => {
-    if (variant !== 'flip') return 0;
-    if (progress < cardActive) {
-      const enterProgress = Math.min(Math.max((progress - cardStart) / step, 0), 1);
-      return (1 - enterProgress) * 35;
-    }
-    return 0;
-  });
-
-  const rotateZ = useTransform(scrollYProgress, (progress) => {
-    if (variant !== 'deck') return 0;
-    if (progress > cardActive) {
-      const coveredSteps = Math.min((progress - cardActive) / step, depth);
-      return (index % 2 === 0 ? 1 : -1) * coveredSteps * 1.5;
-    }
-    return 0;
   });
 
   const zIndex = index * 10;
@@ -256,15 +234,13 @@ const StackCardItem: React.FC<StackCardItemProps> = ({
         scale,
         opacity,
         filter,
-        rotateX,
-        rotateZ,
         zIndex,
         borderRadius: `${borderRadius}px`,
         transformOrigin: 'center top',
       }}
     >
       <div
-        className="w-full h-full bg-[#FFFFFF] border border-neutral-200/90 shadow-[0_12px_40px_-15px_rgba(0,0,0,0.08),0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden transition-colors"
+        className="w-full h-full bg-[#FFFFFF] border border-neutral-200/90 shadow-[0_4px_24px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.02)] overflow-hidden"
         style={{ borderRadius: `${borderRadius}px` }}
       >
         {children ? (
@@ -280,51 +256,52 @@ const StackCardItem: React.FC<StackCardItemProps> = ({
 const DefaultCardLayout: React.FC<{ item: ScrollStackItem }> = ({ item }) => {
   return (
     <div className="w-full h-full grid grid-cols-1 md:grid-cols-12 overflow-hidden bg-white">
-      {/* Left Info Column */}
-      <div className="md:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between overflow-y-auto">
+      {/* Left Column: Details & Technical Data */}
+      <div className="md:col-span-7 p-6 sm:p-8 lg:p-9 flex flex-col justify-between overflow-y-auto">
         <div>
-          {/* Eyebrow / Tag & Badge */}
-          <div className="flex items-center gap-2 mb-3">
-            {item.eyebrow && (
-              <span className="font-mono text-xs uppercase tracking-wider text-neutral-500 font-semibold">
-                {item.eyebrow}
+          {/* Top Metadata Header */}
+          <div className="flex items-center justify-between gap-4 pb-3 border-b border-neutral-100 mb-4">
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-xs font-bold text-neutral-900 bg-neutral-100 px-1.5 py-0.5 rounded-xs">
+                {item.code || 'SEC'}
               </span>
-            )}
-            {item.tag && (
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-mono bg-neutral-100 text-neutral-800 border border-neutral-200">
-                {item.tag}
+              <span className="font-mono text-[11px] uppercase tracking-wider text-neutral-400">
+                // PRACTICUM LOCATION
+              </span>
+            </div>
+            {item.category && (
+              <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest border border-neutral-200/80 bg-neutral-50 px-2 py-0.5 rounded-xs whitespace-nowrap">
+                {item.category}
               </span>
             )}
           </div>
 
-          {/* Title */}
-          <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-[#09090B] leading-tight">
+          {/* Title & Subtitle */}
+          <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-[#09090B] leading-snug">
             {item.title}
           </h3>
-
-          {/* Subtitle / Department */}
           {item.subtitle && (
-            <p className="mt-1 text-xs sm:text-sm font-mono text-neutral-500">
+            <p className="mt-1 font-mono text-xs text-neutral-500">
               {item.subtitle}
             </p>
           )}
 
           {/* Description */}
-          <p className="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed font-normal">
-            {item.description || item.body}
+          <p className="mt-3.5 text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
+            {item.description}
           </p>
         </div>
 
-        {/* Bottom Section: Stats & Action Button */}
-        <div className="mt-6 pt-5 border-t border-neutral-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Bottom Metadata Grid */}
+        <div className="mt-6 pt-4 border-t border-neutral-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           {item.stats && item.stats.length > 0 && (
-            <div className="flex items-center gap-4 sm:gap-6">
+            <div className="flex items-center divide-x divide-neutral-200">
               {item.stats.map((stat, i) => (
-                <div key={i} className="flex flex-col">
-                  <span className="text-lg sm:text-xl font-bold font-mono tracking-tight text-[#09090B]">
+                <div key={i} className={cn('flex flex-col', i === 0 ? 'pr-4' : 'px-4')}>
+                  <span className="text-base sm:text-lg font-bold font-mono tracking-tight text-[#09090B] leading-none">
                     {stat.value}
                   </span>
-                  <span className="text-[11px] font-mono text-neutral-500">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 mt-1 whitespace-nowrap">
                     {stat.label}
                   </span>
                 </div>
@@ -336,25 +313,25 @@ const DefaultCardLayout: React.FC<{ item: ScrollStackItem }> = ({ item }) => {
             <a
               href={item.action.href}
               onClick={item.action.onClick}
-              className="inline-flex items-center justify-center gap-2 bg-[#09090B] hover:bg-neutral-800 text-white text-xs font-mono font-medium px-4 py-2 rounded-md transition-colors w-fit"
+              className="inline-flex items-center justify-center gap-1.5 bg-[#09090B] hover:bg-neutral-800 text-white text-xs font-mono px-3.5 py-2 rounded-xs transition-colors w-fit shrink-0"
             >
               <span>{item.action.label}</span>
-              <span>→</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
           )}
         </div>
       </div>
 
-      {/* Right Image / Visual Column */}
+      {/* Right Column: Visual Frame */}
       {item.image && (
-        <div className="hidden md:block md:col-span-5 relative bg-neutral-100 border-l border-neutral-100 overflow-hidden">
+        <div className="hidden md:block md:col-span-5 relative bg-neutral-900 border-l border-neutral-100 overflow-hidden">
           <img
             src={item.image}
             alt={item.title}
-            className="w-full h-full object-cover grayscale contrast-105 hover:grayscale-0 transition-all duration-500"
+            className="w-full h-full object-cover grayscale contrast-110 hover:grayscale-0 transition-all duration-700"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-neutral-950/10 pointer-events-none" />
         </div>
       )}
     </div>

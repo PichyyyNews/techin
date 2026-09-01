@@ -22,7 +22,6 @@ export const App: React.FC = () => {
   const heroOpacity = useTransform(heroScrollProgress, [0, 0.8], [1, 0.2]);
   const heroY = useTransform(heroScrollProgress, [0, 1], [0, 80]);
   const heroFilter = useTransform(heroScrollProgress, [0, 0.8], ['blur(0px)', 'blur(6px)']);
-  const indicatorOpacity = useTransform(heroScrollProgress, [0, 0.25], [1, 0]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -44,8 +43,8 @@ export const App: React.FC = () => {
   const institutionItems: ScrollStackItem[] = [
     {
       id: 1,
-      eyebrow: 'Practicum Institution / 01',
-      tag: 'Vocational & Technical Education',
+      code: '01',
+      category: 'Vocational Faculty',
       title: 'Department of Information Technology & Computer Business',
       subtitle: 'แผนกวิชาคอมพิวเตอร์ธุรกิจและเทคโนโลยีสารสนเทศ',
       description:
@@ -54,18 +53,18 @@ export const App: React.FC = () => {
         'https://images.unsplash.com/photo-1562774053-701939374585?w=900&auto=format&fit=crop&q=80',
       stats: [
         { value: '600+', label: 'Students' },
-        { value: '100%', label: 'Hands-on Lab' },
-        { value: 'สอศ.', label: 'Vocational Standard' },
+        { value: '100%', label: 'Lab Focus' },
+        { value: 'สอศ.', label: 'Standard' },
       ],
       action: {
-        label: 'View Department Details',
+        label: 'View Department',
         href: '#logs',
       },
     },
     {
       id: 2,
-      eyebrow: 'Specialized Facilities / 02',
-      tag: 'High-Performance Infrastructure',
+      code: '02',
+      category: 'Smart Laboratory',
       title: 'Advanced Computing & Embedded IoT Laboratory',
       subtitle: 'ศูนย์ปฏิบัติการคอมพิวเตอร์และนวัตกรรมสมองกลฝังตัว',
       description:
@@ -73,9 +72,9 @@ export const App: React.FC = () => {
       image:
         'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900&auto=format&fit=crop&q=80',
       stats: [
-        { value: '40+', label: 'High-Spec Workstations' },
-        { value: 'Gigabit', label: 'Network Fabric' },
-        { value: '24/7', label: 'Testbed Availability' },
+        { value: '40+', label: 'Workstations' },
+        { value: 'Gigabit', label: 'Network' },
+        { value: '24/7', label: 'Lab Access' },
       ],
       action: {
         label: 'Lab Infrastructure',
@@ -84,8 +83,8 @@ export const App: React.FC = () => {
     },
     {
       id: 3,
-      eyebrow: 'Learning Methodology / 03',
-      tag: 'Active Practicum & PBL',
+      code: '03',
+      category: 'PBL Studio',
       title: 'Project-Based Learning & Digital Innovation Studio',
       subtitle: 'สตูดิโอจัดการเรียนรู้เชิงรุกและพัฒนาโครงงานบูรณาการ',
       description:
@@ -93,19 +92,19 @@ export const App: React.FC = () => {
       image:
         'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=900&auto=format&fit=crop&q=80',
       stats: [
-        { value: '12+', label: 'Applied Projects' },
-        { value: '4', label: 'Core Courses' },
-        { value: 'Active', label: 'Constructivism Method' },
+        { value: '12+', label: 'Projects' },
+        { value: '4', label: 'Curriculums' },
+        { value: 'Active', label: 'Methodology' },
       ],
       action: {
-        label: 'Explore Student Projects',
+        label: 'Explore Projects',
         href: '#research',
       },
     },
     {
       id: 4,
-      eyebrow: 'Student Mentorship / 04',
-      tag: 'Vocational Skills Excellence',
+      code: '04',
+      category: 'Mentorship',
       title: 'Skills Competition & Academic Coaching Center',
       subtitle: 'ศูนย์พัฒนาทักษะวิชาชีพและการให้คำปรึกษาโครงงานนวัตกรรม',
       description:
@@ -113,12 +112,12 @@ export const App: React.FC = () => {
       image:
         'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop&q=80',
       stats: [
-        { value: '98%', label: 'Evaluation Rating' },
-        { value: '10+', label: 'Awards & Honors' },
-        { value: '1-on-1', label: 'Coaching Format' },
+        { value: '98%', label: 'Evaluation' },
+        { value: '10+', label: 'Awards' },
+        { value: '1-on-1', label: 'Mentoring' },
       ],
       action: {
-        label: 'Mentorship Summary',
+        label: 'Mentorship Log',
         href: '#evaluation',
       },
     },
@@ -296,24 +295,6 @@ export const App: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Minimalist Interactive Scroll Down Indicator */}
-        <motion.div
-          style={{ opacity: indicatorOpacity }}
-          className="relative z-20 pb-6 sm:pb-8 flex flex-col items-center justify-center gap-2 cursor-pointer select-none group"
-          onClick={() => document.getElementById('practicum')?.scrollIntoView({ behavior: 'smooth' })}
-        >
-          <span className="font-mono text-[11px] uppercase tracking-widest text-neutral-400 group-hover:text-neutral-900 transition-colors">
-            Scroll to explore
-          </span>
-          <div className="w-5 h-8 rounded-full border border-neutral-300 group-hover:border-neutral-900 transition-colors flex items-start justify-center p-1 bg-white/70 backdrop-blur-xs">
-            <motion.div
-              animate={{ y: [0, 9, 0] }}
-              transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
-              className="w-1 h-2 bg-neutral-900 rounded-full"
-            />
-          </div>
-        </motion.div>
-
       </main>
  
       {/* ========================================================================= */}
@@ -323,9 +304,6 @@ export const App: React.FC = () => {
         id="practicum"
         className="relative z-30 w-full pt-16 sm:pt-20 lg:pt-24 pb-20 sm:pb-24 border-t border-b border-neutral-200 bg-[#FFFFFF] rounded-t-[32px] sm:rounded-t-[48px] lg:rounded-t-[56px] shadow-[0_-25px_60px_-15px_rgba(0,0,0,0.07)] -mt-6 sm:-mt-8 lg:-mt-10 overflow-hidden"
       >
-        {/* Subtle Top Pull Pill Indicator */}
-        <div className="w-12 h-1.5 bg-neutral-200 rounded-full mx-auto mb-8 sm:mb-12 opacity-80" />
-
         {/* Dynamic Fluid ASCII Background */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <LiquidAscii
@@ -350,6 +328,10 @@ export const App: React.FC = () => {
           
           {/* Section Header (Right Aligned with TextType) */}
           <div className="max-w-3xl ml-auto text-right mb-12 sm:mb-16">
+            <div className="flex items-center justify-end gap-2 text-xs font-mono text-neutral-400 uppercase tracking-wider mb-2">
+              <span>COURSE CURRICULUM —</span>
+              <span className="text-neutral-900 font-semibold">[ 01 // PRACTICUM ]</span>
+            </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
               <TextType
                 text="Teaching Practicum Courses"
@@ -457,13 +439,13 @@ export const App: React.FC = () => {
       <section id="institution" className="relative w-full pt-16 sm:pt-20 lg:pt-24 pb-8 border-b border-neutral-200 bg-[#FAFAFA]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-12">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-mono bg-neutral-900/5 text-neutral-800 border border-neutral-200 mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#09090B]" />
-              <span>Teaching Environment & Practicum Base</span>
+            <div className="flex items-center gap-2 text-xs font-mono text-neutral-400 uppercase tracking-wider mb-2">
+              <span className="text-neutral-900 font-semibold">[ 02 // ENVIRONMENT ]</span>
+              <span>— PRACTICUM INFRASTRUCTURE</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
               <TextType
-                text="Practicum Institution & Learning Spaces"
+                text="Practicum Institution & Infrastructure"
                 typingSpeed={65}
                 loop={false}
                 showCursor={true}
@@ -473,7 +455,7 @@ export const App: React.FC = () => {
               />
             </h2>
             <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed font-normal max-w-2xl">
-              Explore the academic departments, specialized computer laboratories, active learning ecosystems, and student development facilities where I conduct my teaching practicum.
+              Specialized computing laboratories, project development studios, and student mentorship spaces supporting active vocational learning.
             </p>
           </div>
         </div>
