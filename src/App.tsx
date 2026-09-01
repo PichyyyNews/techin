@@ -8,7 +8,6 @@ import { DepthCard } from './components/ui/DepthCard';
 import { LiquidAscii } from './components/ui/LiquidAscii';
 import { ParallaxCards } from './components/ui/ParallaxCards';
 import { LightRays } from './components/ui/LightRays';
-import { ScrollStackItem } from './components/ui/ScrollStack';
 
 export const App: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -42,87 +41,18 @@ export const App: React.FC = () => {
     { name: 'Evaluation', href: '#evaluation' },
   ];
 
-  const institutionItems: ScrollStackItem[] = [
-    {
-      id: 1,
-      code: '01',
-      category: 'Vocational Faculty',
-      title: 'Department of Information Technology & Computer Business',
-      subtitle: 'แผนกวิชาคอมพิวเตอร์ธุรกิจและเทคโนโลยีสารสนเทศ',
-      description:
-        'ศูนย์กลางการจัดการศึกษาด้านวิชาชีพเทคโนโลยี มุ่งเน้นการบ่มเพาะทักษะวิศวกรรมซอฟต์แวร์ การจัดการฐานข้อมูล และระบบสารสนเทศองค์กรตามมาตรฐานวิชาชีพยุคดิจิทัล',
-      image:
-        'https://images.unsplash.com/photo-1562774053-701939374585?w=900&auto=format&fit=crop&q=80',
-      stats: [
-        { value: '600+', label: 'Students' },
-        { value: '100%', label: 'Lab Focus' },
-        { value: 'สอศ.', label: 'Standard' },
-      ],
-      action: {
-        label: 'View Department',
-        href: '#logs',
-      },
-    },
-    {
-      id: 2,
-      code: '02',
-      category: 'Smart Laboratory',
-      title: 'Advanced Computing & Embedded IoT Laboratory',
-      subtitle: 'ศูนย์ปฏิบัติการคอมพิวเตอร์และนวัตกรรมสมองกลฝังตัว',
-      description:
-        'ห้องปฏิบัติการคอมพิวเตอร์ความเร็วสูง พร้อมระบบเครือข่ายความเร็วสูง แท่นทดลองอุปกรณ์ IoT (ESP32/Arduino) และสภาพแวดล้อม Local Cloud Sandbox สำหรับการเรียนรู้ Fullstack Development',
-      image:
-        'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900&auto=format&fit=crop&q=80',
-      stats: [
-        { value: '40+', label: 'Workstations' },
-        { value: 'Gigabit', label: 'Network' },
-        { value: '24/7', label: 'Lab Access' },
-      ],
-      action: {
-        label: 'Lab Infrastructure',
-        href: '#innovations',
-      },
-    },
-    {
-      id: 3,
-      code: '03',
-      category: 'PBL Studio',
-      title: 'Project-Based Learning & Digital Innovation Studio',
-      subtitle: 'สตูดิโอจัดการเรียนรู้เชิงรุกและพัฒนาโครงงานบูรณาการ',
-      description:
-        'กระบวนการจัดการเรียนรู้ที่เน้นผู้เรียนเป็นศูนย์กลาง สร้างผลงานจริงที่ตอบสนองโจทย์ชุมชนและสถานประกอบการ เช่น ระบบลงเวลาอัตโนมัติ และโมบายล์แอปพลิเคชันบริการข้อมูล',
-      image:
-        'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=900&auto=format&fit=crop&q=80',
-      stats: [
-        { value: '12+', label: 'Projects' },
-        { value: '4', label: 'Curriculums' },
-        { value: 'Active', label: 'Methodology' },
-      ],
-      action: {
-        label: 'Explore Projects',
-        href: '#research',
-      },
-    },
-    {
-      id: 4,
-      code: '04',
-      category: 'Mentorship',
-      title: 'Skills Competition & Academic Coaching Center',
-      subtitle: 'ศูนย์พัฒนาทักษะวิชาชีพและการให้คำปรึกษาโครงงานนวัตกรรม',
-      description:
-        'การให้คำปรึกษาทางเทคนิคแบบรายกลุ่ม (Mentorship) ฝึกฝนและเตรียมนักศึกษาเข้าร่วมการแข่งขันทักษะวิชาชีพด้านการเขียนโปรแกรมและการพัฒนาเว็บไซต์ในระดับภาคและระดับชาติ',
-      image:
-        'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop&q=80',
-      stats: [
-        { value: '98%', label: 'Evaluation' },
-        { value: '10+', label: 'Awards' },
-        { value: '1-on-1', label: 'Mentoring' },
-      ],
-      action: {
-        label: 'Mentorship Log',
-        href: '#evaluation',
-      },
-    },
+  const institutionImages = [
+    'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=900&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1448375240586-882707db888b?w=900&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1562774053-701939374585?w=900&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=900&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=900&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=900&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&auto=format&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?w=900&auto=format&fit=crop&q=80',
   ];
 
   return (
@@ -469,16 +399,17 @@ export const App: React.FC = () => {
               </div>
             </div>
 
-            {/* Parallax Cards Display */}
-            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Parallax Cards 3D Display */}
+            <div className="relative z-10 w-full">
               <ParallaxCards
-                items={institutionItems}
-                perspective={1200}
-                mouseSensitivity={18}
-                animationDuration={0.4}
-                depthFog={true}
-                magneticAttraction={true}
-                spotlight={true}
+                images={institutionImages}
+                perspective={2500}
+                mouseSensitivity={3}
+                animationDuration={1.2}
+                enableDepthFog={true}
+                fogIntensity={1}
+                enableMagneticAttraction={true}
+                magneticStrength={50}
               />
             </div>
           </section>
