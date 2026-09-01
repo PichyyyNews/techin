@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
 import { ArrowUpRight, Menu, X, BookOpen, Code2, Cpu } from 'lucide-react';
 import { BlinkingSquares } from './components/ui/BlinkingSquares';
 import { TextType } from './components/ui/TextType';
@@ -11,17 +10,6 @@ import { ScrollStack, ScrollStackItem } from './components/ui/ScrollStack';
 export const App: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress: heroScrollProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
-
-  const heroScale = useTransform(heroScrollProgress, [0, 1], [1, 0.92]);
-  const heroOpacity = useTransform(heroScrollProgress, [0, 0.8], [1, 0.2]);
-  const heroY = useTransform(heroScrollProgress, [0, 1], [0, 80]);
-  const heroFilter = useTransform(heroScrollProgress, [0, 0.8], ['blur(0px)', 'blur(6px)']);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -210,12 +198,10 @@ export const App: React.FC = () => {
       </header>
 
       {/* ========================================================================= */}
-      {/* 2. HERO SECTION (TRUE FULL-SCREEN VIEWPORT WITH PARALLAX SCROLL MORPH)     */}
+      {/* 2. HERO SECTION (FULL-SCREEN VIEWPORT)                                    */}
       {/* ========================================================================= */}
-      <main
-        ref={heroRef}
-        className="relative w-full min-h-[calc(100vh-4rem)] flex flex-col justify-between items-center overflow-hidden bg-[#FFFFFF]"
-      >
+      <main className="relative w-full min-h-[calc(100vh-4rem)] flex flex-col justify-center items-center overflow-hidden bg-[#FFFFFF] border-b border-neutral-200">
+        
         {/* React Bits Pro Blinking Squares Background */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <BlinkingSquares
@@ -235,16 +221,8 @@ export const App: React.FC = () => {
           />
         </div>
 
-        {/* Hero Content Container (2 Columns on Desktop with Cinematic Scroll Transform) */}
-        <motion.div
-          style={{
-            scale: heroScale,
-            opacity: heroOpacity,
-            y: heroY,
-            filter: heroFilter,
-          }}
-          className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-auto w-full pt-6 pb-10 sm:py-12"
-        >
+        {/* Hero Content Container (2 Columns on Desktop) */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-auto w-full py-12 sm:py-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* Left Column: Headlines & CTA (7 Cols) */}
@@ -293,16 +271,16 @@ export const App: React.FC = () => {
             </div>
 
           </div>
-        </motion.div>
+        </div>
 
       </main>
  
       {/* ========================================================================= */}
-      {/* 3. CORE TEACHING SUBJECTS (ELEVATED SHEET WITH REACT BITS PRO DEPTH CARDS) */}
+      {/* 3. CORE TEACHING SUBJECTS (REACT BITS PRO DEPTH CARDS)                    */}
       {/* ========================================================================= */}
       <section
         id="practicum"
-        className="relative z-30 w-full pt-16 sm:pt-20 lg:pt-24 pb-20 sm:pb-24 border-t border-b border-neutral-200 bg-[#FFFFFF] rounded-t-[32px] sm:rounded-t-[48px] lg:rounded-t-[56px] shadow-[0_-25px_60px_-15px_rgba(0,0,0,0.07)] -mt-6 sm:-mt-8 lg:-mt-10 overflow-hidden"
+        className="relative w-full py-20 sm:py-24 lg:py-28 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden"
       >
         {/* Dynamic Fluid ASCII Background */}
         <div className="absolute inset-0 z-0 pointer-events-none">
