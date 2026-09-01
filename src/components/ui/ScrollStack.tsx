@@ -94,6 +94,7 @@ export const ScrollStack: React.FC<ScrollStackProps> = ({
           style={{
             maxWidth: typeof cardWidth === 'number' ? `${cardWidth}px` : cardWidth,
             height: typeof cardHeight === 'number' ? `${cardHeight}px` : cardHeight,
+            maxHeight: 'min(500px, 82vh)',
           }}
         >
           {Array.from({ length: count }).map((_, index) => {

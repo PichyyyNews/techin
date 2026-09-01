@@ -241,11 +241,12 @@ export const App: React.FC = () => {
             style={{ opacity: heroContentOpacity, y: heroContentY }}
             className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full flex items-center"
           >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full py-12 sm:py-16">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-12 items-center w-full py-4 sm:py-8 lg:py-12">
               
-              {/* Left Column: Headlines & CTA */}
-              <div className="lg:col-span-7 max-w-2xl py-4 sm:py-6">
+              {/* Left Column (Desktop) / Main Flow (Mobile) */}
+              <div className="lg:col-span-7 max-w-2xl flex flex-col justify-center py-2 sm:py-4">
                 
+                {/* 1. Headline */}
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#09090B] leading-[1.15] [text-wrap:balance]">
                   <TextType
                     text="Teaching Practicum Performance & Activity Log"
@@ -257,11 +258,18 @@ export const App: React.FC = () => {
                   />
                 </h1>
 
-                <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-neutral-600 leading-relaxed font-normal max-w-xl [text-wrap:balance]">
+                {/* 2. Sub-headline */}
+                <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-neutral-600 leading-relaxed font-normal max-w-xl [text-wrap:balance]">
                   Track daily teaching operations, lesson plans, and educational innovations.
                 </p>
 
-                <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                {/* 3. Mobile Badge: Placed immediately before buttons on mobile */}
+                <div className="block lg:hidden w-full my-2 sm:my-4">
+                  <BadgeCanvas className="h-[320px] sm:h-[380px]" />
+                </div>
+
+                {/* 4. CTA Button Group: After Badge on mobile */}
+                <div className="mt-4 sm:mt-6 lg:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
                   <a
                     href="#logs"
                     className="inline-flex items-center justify-center gap-2 bg-neutral-900/10 backdrop-blur-sm hover:bg-neutral-900/20 text-[#09090B] text-sm font-medium px-6 py-3 rounded-md transition-all border border-neutral-200/60 group w-full sm:w-auto min-h-[44px]"
@@ -280,9 +288,9 @@ export const App: React.FC = () => {
 
               </div>
 
-              {/* Right Column: 3D Badge — hangs right from navbar */}
-              <div className="lg:col-span-5 w-full flex items-start justify-center -mt-20 sm:-mt-28 lg:-mt-36">
-                <BadgeCanvas />
+              {/* Desktop-only Right Column 3D Badge */}
+              <div className="hidden lg:flex lg:col-span-5 w-full items-start justify-center -mt-20 sm:-mt-28 lg:-mt-36">
+                <BadgeCanvas className="h-[560px] lg:h-[640px]" />
               </div>
 
             </div>
