@@ -291,26 +291,28 @@ export const DepthCard: React.FC<DepthCardProps> = ({
           />
         )}
 
-        {/* Card Header Info (Badge / Code / Icon) */}
-        <div className="absolute top-4 left-4 right-4 z-30 flex items-center justify-between pointer-events-none">
-          <div className="flex items-center gap-2">
-            {icon && (
-              <div className="w-6 h-6 rounded-xs bg-black/60 backdrop-blur-md flex items-center justify-center text-neutral-200 border border-neutral-700/60">
-                {icon}
-              </div>
-            )}
-            {badge && (
-              <span className="px-2 py-0.5 rounded-xs text-[11px] font-mono font-medium tracking-tight bg-black/60 backdrop-blur-md text-neutral-300 border border-neutral-700/60">
-                {badge}
+        {/* Card Header Info (Optional) */}
+        {(icon || badge || code) && (
+          <div className="absolute top-4 left-4 right-4 z-30 flex items-center justify-between pointer-events-none">
+            <div className="flex items-center gap-2">
+              {icon && (
+                <div className="w-6 h-6 rounded-xs bg-black/60 backdrop-blur-md flex items-center justify-center text-neutral-200 border border-neutral-700/60">
+                  {icon}
+                </div>
+              )}
+              {badge && (
+                <span className="px-2 py-0.5 rounded-xs text-[11px] font-mono font-medium tracking-tight bg-black/60 backdrop-blur-md text-neutral-300 border border-neutral-700/60">
+                  {badge}
+                </span>
+              )}
+            </div>
+            {code && (
+              <span className="text-[11px] font-mono text-neutral-400 font-medium">
+                {code}
               </span>
             )}
           </div>
-          {code && (
-            <span className="text-[11px] font-mono text-neutral-400 font-medium">
-              {code}
-            </span>
-          )}
-        </div>
+        )}
 
         {/* Content Details Bottom */}
         <div className={cn('absolute inset-0 z-30 flex flex-col justify-end p-6 pointer-events-none', contentClassName)}>

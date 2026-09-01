@@ -1,4 +1,4 @@
-﻿import React, { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { cn } from '../../lib/utils';
 import { ArrowUpRight } from 'lucide-react';
@@ -123,7 +123,9 @@ export const ScrollStack: React.FC<ScrollStackProps> = ({
           <div className="mt-8 flex items-center gap-4 text-xs font-mono text-neutral-400 select-none">
             {showCounter && (
               <span className="tracking-widest">
-                [ <span className="text-neutral-900 font-semibold">{String(activeIndex + 1).padStart(2, '0')}</span> / {String(count).padStart(2, '0')} ]
+                <span className="text-neutral-900 font-semibold">{String(activeIndex + 1).padStart(2, '0')}</span>
+                <span className="text-neutral-300 mx-1.5">/</span>
+                <span>{String(count).padStart(2, '0')}</span>
               </span>
             )}
 
@@ -185,18 +187,19 @@ const StackCardItem: React.FC<StackCardItemProps> = ({
   const cardActive = index * step;
 
   const y = useTransform(scrollYProgress, (progress) => {
-    if (index === 0 && progress <= cardActive) return 0;
-    if (progress < cardActive) {
+    if (index === 0) return 0;
+    if (progress < cardStart) return 1000;
+    if (progress <= cardActive) {
       const enterProgress = (progress - cardStart) / step;
-      return (1 - Math.min(Math.max(enterProgress, 0), 1)) * 100;
+      return (1 - enterProgress) * 600;
     }
-    const coveredSteps = Math.min((progress - cardActive) / step, totalCount - index);
+    const coveredSteps = Math.min((progress - cardActive) / step, depth);
     return -coveredSteps * peek;
   });
 
   const scale = useTransform(scrollYProgress, (progress) => {
     if (progress <= cardActive) {
-      if (variant === 'zoom') {
+      if (index > 0 && progress >= cardStart) {
         const enterProgress = Math.max(0, (progress - cardStart) / step);
         return 0.94 + enterProgress * 0.06;
       }
@@ -261,16 +264,11 @@ const DefaultCardLayout: React.FC<{ item: ScrollStackItem }> = ({ item }) => {
         <div>
           {/* Top Metadata Header */}
           <div className="flex items-center justify-between gap-4 pb-3 border-b border-neutral-100 mb-4">
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-xs font-bold text-neutral-900 bg-neutral-100 px-1.5 py-0.5 rounded-xs">
-                {item.code || 'SEC'}
-              </span>
-              <span className="font-mono text-[11px] uppercase tracking-wider text-neutral-400">
-                // PRACTICUM LOCATION
-              </span>
-            </div>
+            <span className="font-mono text-xs font-semibold text-neutral-900">
+              {item.code || '01'}
+            </span>
             {item.category && (
-              <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest border border-neutral-200/80 bg-neutral-50 px-2 py-0.5 rounded-xs whitespace-nowrap">
+              <span className="font-mono text-[11px] text-neutral-500 uppercase tracking-wider">
                 {item.category}
               </span>
             )}

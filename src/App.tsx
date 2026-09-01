@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowUpRight, Menu, X, BookOpen, Code2, Cpu } from 'lucide-react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { BlinkingSquares } from './components/ui/BlinkingSquares';
 import { TextType } from './components/ui/TextType';
 import { BadgeCanvas } from './components/ui/BadgeCanvas';
@@ -324,10 +324,9 @@ export const App: React.FC = () => {
               
               {/* Section Header */}
               <div className="max-w-3xl ml-auto text-right mb-12 sm:mb-16">
-                <div className="flex items-center justify-end gap-2 text-xs font-mono text-neutral-400 uppercase tracking-wider mb-2">
-                  <span>COURSE CURRICULUM —</span>
-                  <span className="text-neutral-900 font-semibold">[ 01 // PRACTICUM ]</span>
-                </div>
+                <p className="font-mono text-xs text-neutral-400 uppercase tracking-widest mb-2">
+                  Curriculum
+                </p>
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
                   <TextType
                     text="Teaching Practicum Courses"
@@ -352,9 +351,6 @@ export const App: React.FC = () => {
                   <DepthCard
                     width="100%"
                     height={440}
-                    code="CS-301"
-                    icon={<Code2 className="w-4 h-4" />}
-                    badge="Frontend & Architecture"
                     title="Web Application Development"
                     description="Modern web application architecture, deep UI/UX design systems, and frontend engineering with React, TypeScript, and state management."
                     maxRotation={16}
@@ -378,9 +374,6 @@ export const App: React.FC = () => {
                   <DepthCard
                     width="100%"
                     height={440}
-                    code="CS-202"
-                    icon={<BookOpen className="w-4 h-4" />}
-                    badge="Python & Algorithms"
                     title="Computer Programming"
                     description="Foundations of computational thinking, data structures, and systematic algorithmic problem-solving using Python in real-world scenarios."
                     maxRotation={16}
@@ -404,9 +397,6 @@ export const App: React.FC = () => {
                   <DepthCard
                     width="100%"
                     height={440}
-                    code="CS-403"
-                    icon={<Cpu className="w-4 h-4" />}
-                    badge="Embedded & Hardware"
                     title="Microcontroller & IoT Systems"
                     description="Hardware sensor interfacing, embedded systems design with ESP32/Arduino, and networked IoT telemetry for innovative solutions."
                     maxRotation={16}
@@ -433,10 +423,9 @@ export const App: React.FC = () => {
           <section id="institution" className="relative w-full pt-16 sm:pt-20 lg:pt-24 pb-8 border-b border-neutral-200 bg-[#FAFAFA]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-12">
               <div className="max-w-3xl">
-                <div className="flex items-center gap-2 text-xs font-mono text-neutral-400 uppercase tracking-wider mb-2">
-                  <span className="text-neutral-900 font-semibold">[ 02 // ENVIRONMENT ]</span>
-                  <span>— PRACTICUM INFRASTRUCTURE</span>
-                </div>
+                <p className="font-mono text-xs text-neutral-400 uppercase tracking-widest mb-2">
+                  Environment & Facilities
+                </p>
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
                   <TextType
                     text="Practicum Institution & Infrastructure"
