@@ -290,15 +290,15 @@ export const App: React.FC = () => {
         </div>
 
         {/* ─── ALL SECTIONS: Scroll over hero on z-10 ─── */}
-        <div className="relative z-10">
+        <div className="relative z-10 pointer-events-none">
 
           {/* Spacer: 100vh so hero is visible for a full screen before sections cover it */}
-          <div className="h-[100vh]" />
+          <div className="h-[100vh] pointer-events-none" />
 
           {/* 3. CORE TEACHING SUBJECTS */}
           <section
             id="practicum"
-            className="relative w-full py-20 sm:py-24 lg:py-28 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden rounded-t-[28px] sm:rounded-t-[40px] shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.1)]"
+            className="relative pointer-events-auto w-full py-20 sm:py-24 lg:py-28 border-b border-neutral-200 bg-[#FFFFFF] overflow-hidden rounded-t-[28px] sm:rounded-t-[40px] shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.1)]"
           >
             {/* Dynamic Fluid ASCII Background */}
             <div className="absolute inset-0 z-0 pointer-events-none">
@@ -420,7 +420,7 @@ export const App: React.FC = () => {
           </section>
 
           {/* 4. TEACHING INSTITUTION & ENVIRONMENT */}
-          <section id="institution" className="relative w-full pt-16 sm:pt-20 lg:pt-24 pb-8 border-b border-neutral-200 bg-[#FAFAFA]">
+          <section id="institution" className="relative pointer-events-auto w-full pt-16 sm:pt-20 lg:pt-24 pb-8 border-b border-neutral-200 bg-[#FAFAFA]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-12">
               <div className="max-w-3xl">
                 <p className="font-mono text-xs text-neutral-400 uppercase tracking-widest mb-2">
@@ -458,7 +458,7 @@ export const App: React.FC = () => {
           </section>
 
           {/* 5. FOOTER */}
-          <footer className="w-full bg-white py-6 px-4 sm:px-6 lg:px-8 text-xs text-neutral-500 font-mono">
+          <footer className="relative pointer-events-auto w-full bg-white py-6 px-4 sm:px-6 lg:px-8 text-xs text-neutral-500 font-mono">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-2">
                 <span className="font-semibold text-neutral-900">S.pichayut</span>
