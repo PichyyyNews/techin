@@ -31,6 +31,16 @@ export const App: React.FC = () => {
   const heroContentOpacity = useTransform(heroProgress, [0, 0.5], [1, 0]);
   const heroContentY = useTransform(heroProgress, [0, 0.5], [0, -60]);
 
+  // Section 4: Institution & Environment scroll-driven Right-to-Left slide-in
+  const institutionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: institutionScroll } = useScroll({
+    target: institutionRef,
+    offset: ['start end', 'start center'],
+  });
+
+  const institutionSlideX = useTransform(institutionScroll, [0, 1], ['25%', '0%']);
+  const institutionOpacity = useTransform(institutionScroll, [0, 0.7], [0.2, 1]);
+
   const navLinks = [
     { name: 'Practicum', href: '#practicum' },
     { name: 'Institution', href: '#institution' },
@@ -360,59 +370,65 @@ export const App: React.FC = () => {
           </section>
 
           {/* 4. TEACHING INSTITUTION & ENVIRONMENT */}
-          <section id="institution" className="relative pointer-events-auto w-full pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-24 border-b border-neutral-200 bg-[#FAFAFA] overflow-hidden">
-            {/* Background WebGL Light Rays */}
-            <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
-              <LightRays
-                raysOrigin="top-center"
-                raysColor="#000000"
-                raysSpeed={1.2}
-                lightSpread={1.2}
-                rayLength={2.0}
-                followMouse={true}
-                mouseInfluence={0.15}
-                noiseAmount={0.05}
-                distortion={0.02}
-                lightMode={true}
-              />
-            </div>
-
-            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 sm:mb-14">
-              <div className="max-w-3xl">
-                <p className="font-mono text-xs text-neutral-400 uppercase tracking-widest mb-2">
-                  Environment & Facilities
-                </p>
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
-                  <TextType
-                    text="Practicum Institution & Infrastructure"
-                    typingSpeed={65}
-                    loop={false}
-                    showCursor={true}
-                    cursorCharacter="|"
-                    cursorClassName="text-neutral-400 font-light"
-                    startOnVisible={true}
-                  />
-                </h2>
-                <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed font-normal max-w-2xl">
-                  Specialized computing laboratories, project development studios, and student mentorship spaces supporting active vocational learning.
-                </p>
+          <div ref={institutionRef} className="relative w-full overflow-x-clip">
+            <motion.section
+              id="institution"
+              style={{ x: institutionSlideX, opacity: institutionOpacity }}
+              className="relative pointer-events-auto w-full pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-24 border-b border-neutral-200 bg-[#FAFAFA] overflow-hidden rounded-t-[28px] sm:rounded-t-[40px] shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.08)]"
+            >
+              {/* Background WebGL Light Rays */}
+              <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+                <LightRays
+                  raysOrigin="top-center"
+                  raysColor="#000000"
+                  raysSpeed={1.2}
+                  lightSpread={1.2}
+                  rayLength={2.0}
+                  followMouse={true}
+                  mouseInfluence={0.15}
+                  noiseAmount={0.05}
+                  distortion={0.02}
+                  lightMode={true}
+                />
               </div>
-            </div>
 
-            {/* Parallax Cards 3D Display */}
-            <div className="relative z-10 w-full">
-              <ParallaxCards
-                images={institutionImages}
-                perspective={2500}
-                mouseSensitivity={3}
-                animationDuration={1.2}
-                enableDepthFog={true}
-                fogIntensity={1}
-                enableMagneticAttraction={true}
-                magneticStrength={50}
-              />
-            </div>
-          </section>
+              <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 sm:mb-14">
+                <div className="max-w-3xl">
+                  <p className="font-mono text-xs text-neutral-400 uppercase tracking-widest mb-2">
+                    Environment & Facilities
+                  </p>
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B]">
+                    <TextType
+                      text="Practicum Institution & Infrastructure"
+                      typingSpeed={65}
+                      loop={false}
+                      showCursor={true}
+                      cursorCharacter="|"
+                      cursorClassName="text-neutral-400 font-light"
+                      startOnVisible={true}
+                    />
+                  </h2>
+                  <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed font-normal max-w-2xl">
+                    Specialized computing laboratories, project development studios, and student mentorship spaces supporting active vocational learning.
+                  </p>
+                </div>
+              </div>
+
+              {/* Parallax Cards 3D Display */}
+              <div className="relative z-10 w-full px-2 sm:px-4 lg:px-6">
+                <ParallaxCards
+                  images={institutionImages}
+                  perspective={2500}
+                  mouseSensitivity={3}
+                  animationDuration={1.2}
+                  enableDepthFog={true}
+                  fogIntensity={1}
+                  enableMagneticAttraction={true}
+                  magneticStrength={50}
+                />
+              </div>
+            </motion.section>
+          </div>
 
           {/* 5. FOOTER */}
           <footer className="relative pointer-events-auto w-full bg-white py-6 px-4 sm:px-6 lg:px-8 text-xs text-neutral-500 font-mono">

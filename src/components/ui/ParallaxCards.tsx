@@ -29,27 +29,27 @@ interface CardLayoutDef {
 
 const DEFAULT_LAYOUTS: CardLayoutDef[] = [
   // 0: Top Left Large Front Card
-  { x: 4, y: 12, z: 140, w: 32, h: 44, rotate: -1.5 },
-  // 1: Bottom Left Tall Front Card
-  { x: 3, y: 58, z: 110, w: 27, h: 38, rotate: 1 },
+  { x: 6, y: 6, z: 120, w: 29, h: 38, rotate: -1 },
+  // 1: Bottom Left Front Card
+  { x: 5, y: 50, z: 90, w: 25, h: 42, rotate: 1 },
   // 2: Top Center Middle Card
-  { x: 42, y: 17, z: 40, w: 21, h: 30, rotate: -0.5 },
+  { x: 40, y: 10, z: 30, w: 20, h: 28, rotate: -0.5 },
   // 3: Middle Left Deep Card
-  { x: 36, y: 42, z: -220, w: 10, h: 18, rotate: 0 },
+  { x: 34, y: 40, z: -200, w: 10, h: 16, rotate: 0 },
   // 4: Center Low Deep Card
-  { x: 31, y: 64, z: -120, w: 10, h: 14, rotate: 1.5 },
+  { x: 30, y: 62, z: -100, w: 10, h: 14, rotate: 1 },
   // 5: Bottom Center Mid-Front Card
-  { x: 45, y: 72, z: 80, w: 16, h: 24, rotate: -1 },
+  { x: 43, y: 66, z: 70, w: 15, h: 26, rotate: -1 },
   // 6: Top Right Large Front Card
-  { x: 67, y: 10, z: 150, w: 30, h: 42, rotate: 1.5 },
+  { x: 65, y: 5, z: 130, w: 28, h: 38, rotate: 1 },
   // 7: Mid Right Deep Card
-  { x: 64, y: 44, z: -260, w: 13, h: 16, rotate: 0 },
+  { x: 63, y: 40, z: -220, w: 12, h: 15, rotate: 0 },
   // 8: Right Center Mid Card
-  { x: 79, y: 50, z: -100, w: 17, h: 22, rotate: -1 },
+  { x: 76, y: 46, z: -80, w: 16, h: 20, rotate: -1 },
   // 9: Bottom Right Small Deep Card
-  { x: 65, y: 66, z: -180, w: 10, h: 12, rotate: 1 },
+  { x: 64, y: 64, z: -160, w: 9, h: 12, rotate: 1 },
   // 10: Bottom Right Large Front Card
-  { x: 73, y: 64, z: 120, w: 25, h: 32, rotate: 1 },
+  { x: 70, y: 54, z: 100, w: 24, h: 36, rotate: 1 },
 ];
 
 const DEFAULT_IMAGES = [
@@ -211,8 +211,8 @@ const ParallaxCardItem: React.FC<ParallaxCardItemProps> = ({
 }) => {
   // Parallax offset multiplier based on depth Z: front cards move more than deep cards
   const depthFactor = 1 + (layout.z + 300) / 450;
-  const moveX = useTransform(mouseX, [-0.5, 0.5], [-25 * mouseSensitivity * depthFactor, 25 * mouseSensitivity * depthFactor]);
-  const moveY = useTransform(mouseY, [-0.5, 0.5], [-25 * mouseSensitivity * depthFactor, 25 * mouseSensitivity * depthFactor]);
+  const moveX = useTransform(mouseX, [-0.5, 0.5], [-8 * mouseSensitivity * depthFactor, 8 * mouseSensitivity * depthFactor]);
+  const moveY = useTransform(mouseY, [-0.5, 0.5], [-8 * mouseSensitivity * depthFactor, 8 * mouseSensitivity * depthFactor]);
 
   // Depth fog calculations: distant cards (z < 0) are blurred and faded
   const isDeep = layout.z < 0;
