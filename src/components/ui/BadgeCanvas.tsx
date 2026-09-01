@@ -12,6 +12,7 @@ import {
   RapierRigidBody,
 } from '@react-three/rapier';
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
+import { cn } from '../../lib/utils';
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
@@ -143,7 +144,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
 
   return (
     <>
-      <group position={[0, 4, 0]}>
+      <group position={[0, 2.88, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
         <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
@@ -232,9 +233,9 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
   );
 }
 
-export function BadgeCanvas() {
+export function BadgeCanvas({ className }: { className?: string } = {}) {
   return (
-    <div className="relative w-full h-[520px] sm:h-[560px] lg:h-[600px] flex items-center justify-center select-none overflow-visible">
+    <div className={cn("relative w-full h-[520px] sm:h-[580px] lg:h-[640px] flex items-start justify-center select-none overflow-visible", className)}>
       <Canvas
         camera={{ position: [0, 0, 13], fov: 25 }}
         gl={{ alpha: true, antialias: true }}

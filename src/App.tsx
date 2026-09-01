@@ -280,8 +280,8 @@ export const App: React.FC = () => {
 
               </div>
 
-              {/* Right Column: 3D Badge — pulled up to hang from navbar */}
-              <div className="lg:col-span-5 w-full flex items-start justify-center -mt-12 sm:-mt-20 lg:-mt-28">
+              {/* Right Column: 3D Badge — hangs right from navbar */}
+              <div className="lg:col-span-5 w-full flex items-start justify-center -mt-20 sm:-mt-28 lg:-mt-36">
                 <BadgeCanvas />
               </div>
 
