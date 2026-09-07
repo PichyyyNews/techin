@@ -77,7 +77,7 @@ export const App: React.FC = () => {
             : 'bg-white border-b border-neutral-200/80'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           
           {/* Brand / Logo */}
           <a href="#" className="flex items-center gap-2.5 group">
@@ -180,15 +180,15 @@ export const App: React.FC = () => {
           {/* Content: fades and drifts up as user scrolls */}
           <motion.div
             style={{ opacity: heroContentOpacity, y: heroContentY }}
-            className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full flex items-center"
+            className="relative z-10 max-w-7xl 2xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 w-full h-full flex items-center"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-12 items-center w-full py-4 sm:py-8 lg:py-12">
               
               {/* Left Column (Desktop) / Main Flow (Mobile) */}
-              <div className="lg:col-span-7 max-w-2xl flex flex-col justify-center py-2 sm:py-4">
+              <div className="lg:col-span-7 max-w-2xl 2xl:max-w-3xl flex flex-col justify-center py-2 sm:py-4">
                 
                 {/* 1. Headline */}
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#09090B] leading-[1.15] [text-wrap:balance]">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl font-bold tracking-tight text-[#09090B] leading-[1.15] [text-wrap:balance]">
                   <TextType
                     text="Teaching Practicum Performance & Activity Log"
                     typingSpeed={65}
@@ -200,7 +200,7 @@ export const App: React.FC = () => {
                 </h1>
 
                 {/* 2. Sub-headline */}
-                <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-neutral-600 leading-relaxed font-normal max-w-xl [text-wrap:balance]">
+                <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg 2xl:text-xl text-neutral-600 leading-relaxed font-normal max-w-xl 2xl:max-w-2xl [text-wrap:balance]">
                   Track daily teaching operations, lesson plans, and educational innovations.
                 </p>
 
@@ -213,7 +213,7 @@ export const App: React.FC = () => {
                 <div className="mt-4 sm:mt-6 lg:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
                   <a
                     href="#logs"
-                    className="inline-flex items-center justify-center gap-2 bg-neutral-900/10 backdrop-blur-sm hover:bg-neutral-900/20 text-[#09090B] text-sm font-medium px-6 py-3 rounded-md transition-all border border-neutral-200/60 group w-full sm:w-auto min-h-[44px]"
+                    className="inline-flex items-center justify-center gap-2 bg-neutral-900/10 backdrop-blur-sm hover:bg-neutral-900/20 text-[#09090B] text-sm 2xl:text-base font-medium px-6 py-3 2xl:px-8 2xl:py-3.5 rounded-md transition-all border border-neutral-200/60 group w-full sm:w-auto min-h-[44px]"
                   >
                     <span>Explore Activity Log</span>
                     <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
@@ -221,7 +221,7 @@ export const App: React.FC = () => {
 
                   <a
                     href="#plans"
-                    className="inline-flex items-center justify-center gap-2 bg-white/40 backdrop-blur-sm hover:bg-white/60 text-neutral-700 hover:text-[#09090B] text-sm font-medium px-6 py-3 rounded-md transition-all border border-neutral-200/40 w-full sm:w-auto min-h-[44px]"
+                    className="inline-flex items-center justify-center gap-2 bg-white/40 backdrop-blur-sm hover:bg-white/60 text-neutral-700 hover:text-[#09090B] text-sm 2xl:text-base font-medium px-6 py-3 2xl:px-8 2xl:py-3.5 rounded-md transition-all border border-neutral-200/40 w-full sm:w-auto min-h-[44px]"
                   >
                     <span>View Lesson Plans</span>
                   </a>
@@ -230,8 +230,8 @@ export const App: React.FC = () => {
               </div>
 
               {/* Desktop-only Right Column 3D Badge */}
-              <div className="hidden lg:flex lg:col-span-5 w-full items-center justify-center -mt-4 lg:-mt-6">
-                <BadgeCanvas className="h-[520px] sm:h-[580px] lg:h-[640px]" />
+              <div className="hidden lg:flex lg:col-span-5 w-full items-center justify-center -mt-4 lg:-mt-6 2xl:-mt-8">
+                <BadgeCanvas className="h-[520px] sm:h-[580px] lg:h-[640px] 2xl:h-[720px]" />
               </div>
 
             </div>
@@ -273,13 +273,13 @@ export const App: React.FC = () => {
                   />
                 </div>
 
-                <div className="relative z-10 max-w-7xl mx-auto w-full">
+                <div className="relative z-10 max-w-7xl 2xl:max-w-[1536px] mx-auto w-full">
                   {/* Section Header */}
-                  <div className="max-w-3xl ml-auto text-right mb-4 sm:mb-6">
-                    <p className="font-mono text-[10px] sm:text-xs text-neutral-400 uppercase tracking-widest mb-1 sm:mb-1.5">
+                  <div className="max-w-3xl 2xl:max-w-4xl ml-auto text-right mb-4 sm:mb-6">
+                    <p className="font-mono text-[10px] sm:text-xs 2xl:text-sm text-neutral-400 uppercase tracking-widest mb-1 sm:mb-1.5">
                       Curriculum
                     </p>
-                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-[#09090B]">
+                    <h2 className="text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl font-bold tracking-tight text-[#09090B]">
                       <TextType
                         text="Teaching Practicum Courses"
                         typingSpeed={65}
@@ -290,15 +290,15 @@ export const App: React.FC = () => {
                         startOnVisible={true}
                       />
                     </h2>
-                    <p className="mt-1 text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal ml-auto max-w-xl">
+                    <p className="mt-1 text-xs sm:text-sm 2xl:text-base text-neutral-600 leading-relaxed font-normal ml-auto max-w-xl 2xl:max-w-2xl">
                       Active learning methodologies focused on practical software engineering, computational thinking, and digital innovation.
                     </p>
                   </div>
 
                   {/* 3x Depth Cards Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 justify-items-center">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 2xl:gap-8 justify-items-center">
                     {/* Card 1: Web Application Development */}
-                    <div className="w-full max-w-[360px] flex justify-center">
+                    <div className="w-full max-w-[360px] 2xl:max-w-[420px] flex justify-center">
                       <DepthCard
                         width="100%"
                         height={360}
@@ -321,7 +321,7 @@ export const App: React.FC = () => {
                     </div>
 
                     {/* Card 2: Computer Programming */}
-                    <div className="w-full max-w-[360px] flex justify-center">
+                    <div className="w-full max-w-[360px] 2xl:max-w-[420px] flex justify-center">
                       <DepthCard
                         width="100%"
                         height={360}
@@ -344,7 +344,7 @@ export const App: React.FC = () => {
                     </div>
 
                     {/* Card 3: Microcontroller & IoT */}
-                    <div className="w-full max-w-[360px] flex justify-center">
+                    <div className="w-full max-w-[360px] 2xl:max-w-[420px] flex justify-center">
                       <DepthCard
                         width="100%"
                         height={360}
@@ -407,11 +407,11 @@ export const App: React.FC = () => {
 
                   {/* STATIC CENTERED TITLE (No background frame, stays completely static while 3D cards move) */}
                   <div className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-none px-4 text-center">
-                    <div className="max-w-2xl mx-auto flex flex-col items-center text-center select-none">
-                      <p className="font-mono text-[11px] sm:text-xs text-neutral-400 uppercase tracking-widest mb-1.5 sm:mb-2 font-medium drop-shadow-xs">
+                    <div className="max-w-2xl 2xl:max-w-3xl mx-auto flex flex-col items-center text-center select-none">
+                      <p className="font-mono text-[11px] sm:text-xs 2xl:text-sm text-neutral-400 uppercase tracking-widest mb-1.5 sm:mb-2 font-medium drop-shadow-xs">
                         Environment & Facilities
                       </p>
-                      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#09090B] text-center drop-shadow-sm">
+                      <h2 className="text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl font-bold tracking-tight text-[#09090B] text-center drop-shadow-sm">
                         <TextType
                           text="Practicum Institution & Infrastructure"
                           typingSpeed={65}
@@ -422,7 +422,7 @@ export const App: React.FC = () => {
                           startOnVisible={true}
                         />
                       </h2>
-                      <p className="mt-2.5 text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal max-w-lg mx-auto text-center drop-shadow-xs">
+                      <p className="mt-2.5 text-xs sm:text-sm 2xl:text-base text-neutral-600 leading-relaxed font-normal max-w-lg 2xl:max-w-2xl mx-auto text-center drop-shadow-xs">
                         Specialized computing laboratories, project development studios, and student mentorship spaces supporting active vocational learning.
                       </p>
                     </div>

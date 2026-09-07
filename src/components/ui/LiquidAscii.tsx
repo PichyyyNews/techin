@@ -522,7 +522,8 @@ export const LiquidAscii: React.FC<LiquidAsciiProps> = ({
     if (!el) return;
     const rect = el.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) return;
-    const cSize = propsRef.current.cellSize;
+    const baseCellSize = propsRef.current.cellSize;
+    const cSize = rect.width > 2000 ? Math.round(baseCellSize * (rect.width / 1920)) : baseCellSize;
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     let charW = 0.6 * cSize;

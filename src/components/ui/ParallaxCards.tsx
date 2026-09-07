@@ -131,13 +131,13 @@ export const ParallaxCards: React.FC<ParallaxCardsProps> = ({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        'relative w-full h-[600px] sm:h-[700px] lg:h-[800px] overflow-hidden select-none cursor-default flex items-center justify-center',
+        'relative w-full h-full overflow-hidden select-none cursor-default flex items-center justify-center',
         className
       )}
       style={{ perspective: `${perspective}px` }}
     >
       <motion.div
-        className="relative w-full h-full max-w-[1400px]"
+        className="relative w-full max-w-[min(94vw,1800px)] aspect-[16/9] max-h-[calc(100vh-6rem)] 2xl:max-h-[calc(100vh-8rem)]"
         style={{
           rotateX,
           rotateY,
